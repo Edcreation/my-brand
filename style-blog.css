@@ -1,3 +1,4 @@
+
 /*-----------------------------Top BLock-----------------*/
 .blog {
     color: #fff;
@@ -28,18 +29,15 @@
     justify-content: flex-start;
     border-radius: 5px;
     align-items: flex-start;  
-    background: #2C2C2C;  
     padding: 20px;
     overflow-x: scroll;
     scroll-behavior: smooth;
     
 }
-::-webkit-scrollbar {
-    display: none;
-}
+
 .blog-card {
-    width: 300px;
-    background: #02041E;
+    
+    background: #292727;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -51,6 +49,9 @@
     width: 300px;
     height: 200px;
     align-self: center;
+}
+.blog-card .image {
+    overflow: hidden;
 }
 .over {
     display: flex;
@@ -148,11 +149,17 @@
 .box form {
 }
 form input,form textarea {
+    font-size: 18px;
     width: 100%;
     outline: none;
-    border: none;
     padding: 10px;
     font-weight: 500;
+}
+form input{
+    border: none;
+    color: #fff;
+    background: rgba(255, 255, 255, 0);
+    border-bottom: 2px solid #00DAE8;
 }
 form button {
     margin-top: 20px;
@@ -168,6 +175,9 @@ form button {
     .q-card {
         flex-direction: column;
         height: auto;
+    }
+    .q-card p {
+        margin: 0;
     }
     .quote {
         height: auto;

@@ -1,0 +1,117 @@
+.login-container {
+    color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 700px;
+}
+.container-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    padding: 10px;
+    border: 0.1px solid #fff;
+    border-radius: 8px;
+}
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 2px solid #00DAE8;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+}
+.container-box form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+form input {
+    width: 80%;
+    margin-bottom: 20px;
+    font-size: 18px;
+    outline: none;
+    color: #fff;
+    background: #02041E;
+    border-bottom: 2px solid #00DAE8;
+    border-radius: 5px;
+}
+form input:nth-child(2){
+    color: #00DAE8;
+}
+form .title {
+    width: 100%;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 28px;
+    color: #00DAE8;
+    text-decoration: underline;
+    text-align: center;
+}
+.container-box form button {
+    background: #00DAE8;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 1s;
+}
+.container-box form button:hover {
+    background: #02041E;
+    color: #00DAE8;
+}
+.left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+.left p {
+    font-size: 24px;
+    color: #00DAE8;
+}
+.left a {
+    color: #535252;
+}
+.lock img {
+    width: 250px;
+}
+
+/*--------------------------------Responsiveness-----------------*/
+
+@media screen and (max-width: 700px) {
+    .container-box .left .lock img{
+        display: none;
+    }
+    .container-box {
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+    }
+    .container-box .right {
+        width: 100%;
+        border: none;
+    }
+    .container-box .right form input {
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .container-box .left {
+        display: none;
+    }
+    .container-box {
+        width: 80%;
+    }
+    
+    
+}

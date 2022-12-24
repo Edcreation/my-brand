@@ -4,11 +4,10 @@
 html {
     scroll-behavior: smooth;
 }
-
+::-webkit-scrollbar {
+    display: none;
+}
 body {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
     margin: 0;
     background: #02041E;
 }
@@ -151,9 +150,44 @@ nav .menu img{
     }
   }
   
-  
-  
-  
+/*-----------------------------------Footer CSs---------------------------------*/
+
+.footer{
+    height: 70px;
+    display: flex;
+    height: 70px;
+    flex-direction: column;
+    background: #000;
+    justify-content: center;
+    width: 100%;
+  }
+  .social{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+  }
+  .footer-box a:nth-child(2) {
+    margin: 0 10px 0 10px;
+  }
+ .footer-box a:nth-child(3),.footer-box a:nth-child(4) {
+    margin: 0 10px 0 0px;
+  }
+  .footer-box img{
+    width: 20px;
+    height: 20px;
+  }
+  .copyright{
+    display: flex;
+    color: #fff;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .copyright p{
+    font-size: 10px;
+  }
 
 /*-------------------------------------------------HomePage-----------------------------------------------*/
 
@@ -442,7 +476,6 @@ svg {
 
 .message {
     width: 100%;
-    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
