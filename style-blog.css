@@ -1,0 +1,184 @@
+/*-----------------------------Top BLock-----------------*/
+.blog {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.blogs-block {
+    width: 80%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.blogs-block .title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: start;
+}
+.blog-cards {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    border-radius: 5px;
+    align-items: flex-start;  
+    background: #2C2C2C;  
+    padding: 20px;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    
+}
+::-webkit-scrollbar {
+    display: none;
+}
+.blog-card {
+    width: 300px;
+    background: #02041E;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10px;
+    margin: 0 10px;
+    border-radius: 8px;
+}
+.blog-card .image img {
+    width: 300px;
+    height: 200px;
+    align-self: center;
+}
+.over {
+    display: flex;
+    flex-direction: row;
+}
+.over .text {
+    margin: 5px 10px;
+}
+.over .ico {
+    display: flex;
+    flex-direction: row;
+}
+.like {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.like img {
+    width: 20px;
+    height: 20px;
+}
+.add {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+}
+/*----------------------Daily Quote-----------------------*/
+.quote {
+    margin-top:  30px;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: url("./images/quote.jpg") no-repeat;
+    
+    background-size: cover;
+}
+.quote .title {
+    font-size: 28px;
+    margin-top: 30px;
+    width: 80%;
+    text-align: start;
+    margin-bottom: 30px;
+
+}
+.q-card {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background: #02041E;
+
+}
+.q-card p {
+    width: 40%;
+    padding: 10px;
+    text-align: center;
+    margin-left: 30px;
+    font-size: 20px;
+}
+.q-card img {
+    width: 250px;
+    margin: 10px;
+}
+
+/*-----------------------------------Blog--------------------*/
+
+.sug {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 30px;
+    justify-content: center;
+    padding-bottom: 50px;
+    background: url("./images/write.jpg") no-repeat;
+    background-size: cover;
+}
+.sug .box .title {
+    font-size: 28px;
+    text-align: center;
+}
+.sug .box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.box form {
+}
+form input,form textarea {
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 10px;
+    font-weight: 500;
+}
+form button {
+    margin-top: 20px;
+    padding: 10px;
+    font-weight: 500;
+    background: #00DAE8;
+    cursor: pointer;
+}
+
+/*----------------------------Responsiveness-------------------------*/
+
+@media screen and (max-width: 700px) {
+    .q-card {
+        flex-direction: column;
+        height: auto;
+    }
+    .quote {
+        height: auto;
+        padding-bottom: 20px;
+    }
+}
+@media screen and (max-width: 700px) {
+    .box form {
+        width: 80%;
+    }
+    .q-card p {
+        width: 90%;
+    }
+}

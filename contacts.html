@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-contacts.css">
+    <script src="./navbar.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="./home.html"><img src="./images/ED.png" alt="logo"></a>
+            <div class="menu" onclick="toggleNav()">
+                <img src="./images/menu.png" alt="">
+            </div>
+        </div>
+        <div id="actions" >
+            <div class="links">
+                <a href="./index.html#skills" >Skills</a>
+                <a href="./index.html#about-me">About Me</a>
+                <a href="./blog.html">Blog</a>
+                <a href="./contacts.html">Contacts</a>
+            </div>
+            <div class="login">
+                <button>Login</button>
+            </div>
+        </div>
+    </nav>
+    <div class="contacts">
+        <div class="contact-me">
+            <form action="" method="post">
+                <div class="title">Contact Me</div>
+                <input type="email" name="email" id="email" placeholder="Email">
+                <input type="text" name="name" id="name" placeholder="Your Name">
+                <textarea name="msg" id="msg" cols="30" rows="10" placeholder="Message"></textarea>
+                <button>Send</button>
+                <div class="icons">
+                    <a href=""><i class="fa-brands fa-instagram"></i>a</a>
+                    <a href=""><i class="fa-brands fa-twitter"></i>a</a>
+                    <a href=""><i class="fa-brands fa-linkedin-in"></i>a</a>
+
+                </div>
+            </form>
+            <div class="mapouter">
+                <div class="gmap_canvas">
+                    <iframe class="gmap_iframe" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=372&amp;height=526&amp;hl=en&amp;q=Kg 348 St&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                    <a href="https://www.gachacute.com/">www.gachacute.com</a>
+            </div><style>.mapouter{position:relative;text-align:right; width:100%;height:526px;}.gmap_canvas {overflow:hidden;border-bottom-right-radius: 8px;border-top-right-radius: 8px;background:none!important;width:100%;height:526px;}.gmap_iframe {height:526px!important;}</style></div>
+        </div>
+    </div>
+    
+</body>
+</html>
