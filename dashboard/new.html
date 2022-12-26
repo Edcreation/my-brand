@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+    <script src="../navbar.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <nav>
+        <div class="logo"><img src="../images/ED.png" alt=""></div>
+        <div class="links">
+            <a href="../index.html">Portfolio</a>
+            <a href="">Help</a>
+            <div class="dp">
+                <img src="../images/dp.jpg" alt="dp">
+            </div>
+        </div>
+    </nav>
+    <div class="dash-container">
+        <div id="dash-nav">
+            <a href="./dashboard.html">Dashboard</a>
+            <a href="./new.html">New Blog</a>
+            <a href="">Messages</a>
+            <a href="">Settings</a>
+            
+        </div>
+        <span onclick="toggleDashNav()">></span>
+        <div class="new">
+            <div class="new-box">
+                <div class="title">New Blog</div>
+                <form action="">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title">
+                    <label for="file">Add Photo</label>
+                    <input type="file" name="file" id="file">
+                    <label for="content">Blog Content</label>
+                    <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                    <button>ADD BLOG</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
