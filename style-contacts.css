@@ -85,3 +85,23 @@ form .icons {
         border-radius: 0px;    
     }
 }
+@media screen and (max-width: 700px) {
+    .contact-me{
+        margin-top: 50px;
+        flex-direction: column;
+        border: none;
+    }
+    .contact-me form .title {
+        padding-top: 10px;
+        font-size: 29px;
+    }
+    .contacts{
+        height: auto;
+    }
+    form {
+        margin-bottom: 20px;
+    }
+    .gmap_canvas{
+        border-radius: 0px;    
+    }
+}

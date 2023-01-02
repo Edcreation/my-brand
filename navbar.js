@@ -10,3 +10,14 @@ function toggleNav(){
         open = false; 
   }
 }
+function toggleDashNav() {
+  if(open==false){
+    navUl = document.getElementById("dash-nav");
+    navUl.style.display="flex";
+    open = true;
+}else{
+      navUl = document.getElementById("dash-nav");
+      navUl.style.display="none";
+      open = false; 
+}
+}
