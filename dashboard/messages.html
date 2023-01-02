@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+    <script src="../navbar.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <nav>
+        <div class="logo"><img src="../images/ED.png" alt=""></div>
+        <div class="links">
+            <a href="../index.html">Portfolio</a>
+            <a href="">Help</a>
+            <div class="dp">
+                <img src="../images/dp.jpg" alt="dp">
+            </div>
+        </div>
+    </nav>
+    <div class="dash-container">
+        <div id="dash-nav">
+            <a href="./dashboard.html">Dashboard</a>
+            <a href="./new.html">New Blog</a>
+            <a href="./messages.html">Messages</a>
+            <a href="">Settings</a>
+            
+        </div>
+        <span onclick="toggleDashNav()"><img src="../images/menu2.png" alt="menu"></span>
+        <div class="messages">
+            <div class="msg-box">
+                <div class="title">Messages</div>
+                <div class="msg-container">
+                    <div class="msg">
+                        <div class="msg-icon"><img src="../images/msg.png" alt="msg"></div>
+                        <div class="name">Receiver Name</div>
+                        <div class="content">
+                            Lorem ipsum dolor sit amet 
+                            consectetur adipisicing elit. Temporibus 
+                            aperiam ullam exercitationem, enim error 
+                            beatae cum inventore illo, nostrum asperiores voluptatibus, 
+                            harum commodi optio laborum vero. Esse hic tempore quod!</div>
+                        <div class="ops">
+                            <BUTton><img src="../images/reply.png" alt="reply"></BUTton>
+                            <BUTton><img src="../images/trash.png" alt="trash"></BUTton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="msg-box">
+                <div class="title">Blog Suggestions</div>
+                <div class="msg-container">
+                    <div class="msg">
+                        <div class="msg-icon"><img src="../images/msg.png" alt="msg"></div>
+                        <div class="name">Topic Here</div>
+                        <div class="content">Suggestion here</div>
+                        <div class="ops">
+                            <BUTton><img src="../images/reply.png" alt="reply"></BUTton>
+                            <BUTton><img src="../images/trash.png" alt="trash"></BUTton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

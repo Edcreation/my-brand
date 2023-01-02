@@ -40,15 +40,16 @@ nav {
     border: 4px dashed #00dae8;
 }
 /*---------------------------------left Navbar------------------*/
-
+.dash-container {
+    display: flex;
+}
 #dash-nav {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    position: fixed;
     left: 0px;
-    top: 47px;
+    top: 57px;
     width: 180px;
     height: 600px;
     border-right: 2px solid #00dae8;
@@ -72,10 +73,10 @@ nav {
     background: #000000;
 }
 .dash-container span {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     font-size: larger;
-    background: #000;
+    background: #2c2c2c;
     color: #00dae8;
     text-align: center;
     font-weight: 700;
@@ -85,6 +86,10 @@ nav {
     left: 0px;
     display: none;
     top: 47px;
+    cursor: pointer;
+}
+.dash-container span img {
+    width: 40px;
 }
 @keyframes slideInFromLeft {
     0% {
@@ -214,7 +219,8 @@ nav {
 .new {
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
+    width: 100%; 
 }
 .new-box {
     display: flex;
@@ -272,15 +278,120 @@ nav {
 .new-box form button:hover {
     scale: 1.1;
 }
+/*---------------------------------------------Messages---------------------------------*/
 
+.messages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+.msg-box {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: #02041E;
+    padding: 10px;
+    height: 300px;
+    box-shadow: 8px 8px 20px 5px rgba(0, 0, 0, 0.25);
+    margin-top: 20px;
+}
+.msg-box .title {
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+.msg-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+.msg {
+    width: 90%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #05092E;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: .8s;
+}
+.msg:hover {
+    background: rgb(0, 0, 0);
+}
+.msg .msg-icon {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+    border-right: 1px solid #00dae8;
+}
+.msg .msg-icon img{
+    width: 30px;
+}
+
+.msg .name {
+    color: #fff;
+    font-weight: 600;
+    text-align: start;
+    align-items: center;
+    text-decoration: underline;
+    width: 50%;
+    margin-left: 10px;
+}
+.msg .content {
+    height: 50px;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+    text-align:start;
+    align-items: center;
+    width: 100%;
+    border-left: 1px solid #00dae8;
+    border-right: 1px solid #00dae8;
+    padding: 5px;
+}
+.msg .ops {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 30%;
+}
+.msg .ops button {
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    background: none;
+    cursor: pointer;
+    transition: .8s;
+}
+.msg .ops button:hover {
+    background: #2c2c2c;
+}
+.msg .ops button:nth-child(2):hover {
+    background: rgb(167, 0, 0);
+}
+.msg .ops button img {
+    width: 30px;
+}
 
 
 
 
 /*-------------------------Responsiveness----------------------------*/
-
-@media screen and (max-width: 1111px) {
-    .new {
+@media screen and (max-width: 1190px) {
+    .messages {
         justify-content: end;
     }
 }
@@ -288,17 +399,44 @@ nav {
     .dash-container span{
         display: block;
     }
+    .msg-box {
+        width: 95%;
+    }
     
     #dash-nav{
         display: none;
-        background: rgba(0, 0, 0, 0.643);
+        background: #2c2c2c;
         border-right: none;
         width: 150px;
         height: 500px;
+        border: 1px solid #000;
+        position: fixed;
     }
     .dash-box {
         margin-top: 30px;
     }
+    .msg {
+        flex-direction: column;
+        height: auto;
+    }
+    .msg .name {
+        width: 100%;
+    }
+    
+    .msg .ops {
+        width: 100%;
+        margin-top: 10px;
+    }
+    .msg .msg-icon {
+        border: none;
+    }
+    .msg .content {
+        height: 50px;
+        width: 100%;
+        margin-top: 10px;
+        border: none;
+    }
+
 }
 @media screen and (max-width: 700px) {
     .dash-box-up {
