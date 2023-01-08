@@ -2,15 +2,53 @@
     color: #fff;
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     height: 700px;
+}
+@-webkit-keyframes slide-bottom {
+    0% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+    100% {
+      -webkit-transform: translateY(100px);
+              transform: translateY(100px);
+    }
+  }
+  @keyframes slide-bottom {
+    0% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+    100% {
+      -webkit-transform: translateY(100px);
+              transform: translateY(100px);
+    }
+  }
+#pop-up {
+    display: flex;
+    height: 50px;
+    width: 160px;
+    background: green;
+    color: #fff;
+    border-radius: 10px;
+    z-index: 2;
+    top: -4px;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    -webkit-animation: slide-bottom 0.8s cubic-bezier(0.860, 0.000, 0.070, 1.000) both;
+    animation: slide-bottom 0.8s cubic-bezier(0.860, 0.000, 0.070, 1.000) both;
 }
 .container-box {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-top: 30px;
     width: 50%;
     padding: 10px;
     border: 0.1px solid #fff;
@@ -34,13 +72,17 @@
 
 form input {
     width: 80%;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-size: 18px;
-    outline: none;
     color: #fff;
+    border: none;
     background: #02041E;
     border-bottom: 2px solid #00DAE8;
-    border-radius: 5px;
+    outline: none;
+    transition: .8s;
+}
+form input:focus {
+    border-bottom: 2px solid #e90101;
 }
 form input:nth-child(2){
     color: #00DAE8;
@@ -51,8 +93,23 @@ form .title {
     font-weight: bold;
     font-size: 28px;
     color: #00DAE8;
-    text-decoration: underline;
     text-align: center;
+}
+form a {
+    margin-top: 15px;
+    color: #fff;
+    font-size: 18px;
+    transition: .8s;
+
+}
+form p {
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: start;
+    width: 90%;
+}
+form a:hover {
+    color: #00DAE8;
 }
 .container-box form button {
     background: #00DAE8;
@@ -63,6 +120,7 @@ form .title {
     border: none;
     outline: none;
     transition: 1s;
+    margin-top: 10px;
 }
 .container-box form button:hover {
     background: #02041E;
@@ -89,7 +147,7 @@ form .title {
 /*--------------------------------Responsiveness-----------------*/
 
 @media screen and (max-width: 700px) {
-    .container-box .left .lock img{
+    .container-box .left {
         display: none;
     }
     .container-box {

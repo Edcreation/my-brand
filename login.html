@@ -11,15 +11,15 @@
 <body>
     <nav>
         <div class="logo">
-            <a href="./home.html"><img src="./images/ED.png" alt="logo"></a>
+            <a href="./index.html"><img src="./images/ED.png" alt="logo"></a>
             <div class="menu" onclick="toggleNav()">
                 <img src="./images/menu.png" alt="">
             </div>
         </div>
         <div id="actions" >
             <div class="links">
-                <a href="./index.html#skills" >Skills</a>
                 <a href="./index.html#about-me">About Me</a>
+                <a href="./index.html#skills" >Skills</a>
                 <a href="./blog.html">Blog</a>
                 <a href="./contacts.html">Contacts</a>
             </div>
@@ -33,19 +33,13 @@
                 <div class="lock">
                     <img src="./images/Lock.png" alt="Lock">
                 </div>
-                <p>
-                    Only The Website Owner can Login Here. 
-                    <a href="">Click Here</a> to request access
-                </p>
             </div>
             <div class="right">
-                <form action="">
-                    <div class="title">Login as ADMIN</div>
-                    
-                    <input type="email" name="email" id="email">
-                    
-                    <input type="password" name="pass" id="pass">
-                    <button>Login</button>
+                <form action="/login" method="post">
+                    <div class="title">LOG IN</div>
+                    <input type="text" name="username" id="name" placeholder="User Name" required>
+                    <input type="password" name="password" id="pass" placeholder="Password" required>
+                    <button>Log In</button> <a href="/signup">Sign Up</a>
                 </form>
             </div>
         </div>
