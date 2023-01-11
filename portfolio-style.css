@@ -139,6 +139,7 @@
     width: 300px;
     height: 300px;
     display: flex;
+    border: 1px solid #ffffff5e;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
