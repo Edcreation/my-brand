@@ -18,7 +18,7 @@ nav {
     padding-top: 5px;
 }
 .logo img {
-    margin-left: 30px;
+    margin-left: 10px;
     height: 30px;
 }
 .links {
@@ -49,11 +49,10 @@ nav {
     align-items: center;
     justify-content: space-around;
     left: 0px;
-    top: 57px;
-    width: 180px;
-    height: 600px;
+    width: 200px;
+    height: 700px;
     border-right: 2px solid #00dae8;
-    margin-top: 40px;
+    margin-top: 0px;
     animation: slideInFromLeft .8s ease-in-out;
 }
 #dash-nav a {
@@ -72,9 +71,9 @@ nav {
     color: #00dae8;
     background: #000000;
 }
-.dash-container span {
-    width: 40px;
-    height: 40px;
+nav span {
+    width: 30px;
+    height: 30px;
     font-size: larger;
     background: #2c2c2c;
     color: #00dae8;
@@ -82,14 +81,12 @@ nav {
     font-weight: 700;
     padding: 5px;
     align-items: center;
-    position: fixed;
     left: 0px;
     display: none;
-    top: 47px;
     cursor: pointer;
 }
-.dash-container span img {
-    width: 40px;
+nav span img {
+    width: 30px;
 }
 @keyframes slideInFromLeft {
     0% {
@@ -396,7 +393,7 @@ nav {
     }
 }
 @media screen and (max-width: 800px) {
-    .dash-container span{
+    nav span{
         display: block;
     }
     .msg-box {
@@ -408,9 +405,10 @@ nav {
         background: #2c2c2c;
         border-right: none;
         width: 150px;
-        height: 500px;
+        height: 100%;
         border: 1px solid #000;
         position: fixed;
+        top: 0;
     }
     .dash-box {
         margin-top: 30px;

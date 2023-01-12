@@ -549,7 +549,17 @@ svg {
 
 
 /*-------------------------------------------------------Responsiveness----------------------------------------------*/
-
+@media screen and  (max-width: 900px) {
+    .timeline .card {
+        max-width: 170px;
+    }  
+    .timeline .card .title {
+        font-size: 17px;
+    }
+    .timeline .card .content {
+        font-size: 15px;
+    }
+}
 @media screen and  (max-width: 800px) {
     .companies img {
         height: 50px;
@@ -583,17 +593,6 @@ svg {
     .companies {
         margin-top: 20px;
         margin-bottom: 20px;
-    }
-}
-@media screen and  (max-width: 900px) {
-    .timeline .card {
-        max-width: 170px;
-    }  
-    .timeline .card .title {
-        font-size: 17px;
-    }
-    .timeline .card .content {
-        font-size: 15px;
     }
 }
 @media screen and  (max-width: 700px) {
