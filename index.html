@@ -32,6 +32,19 @@
         </div>
     </nav>
     <div class="portfolio">
+        <script>
+            function hire() {
+                document.getElementById('emailpop').style.display = "flex"
+            }
+            function rehide() {
+                document.getElementById("emailpop").style.display = "none"
+            }
+        </script>
+        <div id="emailpop">
+            <p>Thank you!! Our Journey Begins Here.</p>
+            <input type="text" name="mail" id="mail" placeholder="Enter Your Email">
+            <button onclick="rehide()">Start</button>
+        </div>
         <div id="portfolio-intro">
             <div class="dp">
                 <img src="./images/dp.jpg" alt="eddy">
@@ -41,7 +54,7 @@
                     I am a web developer 
                     who does both Front End and Back End.</p>
                 <div class="btns">
-                    <button>Hire Me</button>
+                    <button onclick="hire()" >Hire Me</button>
                     <a href="https://edcreation.github.io/CV-html-css-javascript">Download CV</a>
                 </div>
             </div>
@@ -49,7 +62,7 @@
         <div id="about-me">
             <h2>About Me</h2>
             <p>I spent most of my time coding in different languages. Where I did many projects 
-                in each one of those languages, some of those languages include JavaScript, Python and Dart. Click here to see some of my Projects
+                in each one of those languages, some of those languages include JavaScript, Python and Dart. Click <a href="https://github.com/Edcreation">here</a> to see some of my Projects
             </p>
             <p>Apart from coding, 
                 I also enjoy talking and having great 

@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style-blog.css">
     <link rel="icon" href="/images/icon.png" > 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <script src="./navbar.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blogs</title>
@@ -29,81 +31,94 @@
                 <a href="./login.html"><button>Login</button></a>            </div>
         </div>
     </nav>
+    <div id="pp">
+        <p>Like the Content? Donate For More.</p>
+        <button>Donate</button>
+        <b onclick="rehide()">Not Today</b>
+    </div>
+    <script>
+        function myFunction(x) {
+            x.classList.toggle("l1");
+          }
+        setTimeout(function(){
+            document.getElementById("pp").style.display = "flex"
+          },6000); 
+        function rehide() {
+            document.getElementById("pp").style.display = "none"
+        }
+    </script>
     <div class="blog">
+
         <div class="blogs-block">
             <div class="title">Top</div>
             <div class="blog-cards">
-                <a href="/blog-detail.html" class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
-                    <div class="over">
-                        <div class="text">
-                            How to host a website for free
-                        </div>
-                        <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                        </div>
-                    </div>
-                </a>
-                <a href="/blog-detail.html" class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
-                    <div class="over">
-                        <div class="text">
-                            How to host a website for free
-                        </div>
-                        <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            
-                        </div>
-                    </div>
-                </a>
-                <a href="/blog-detail.html" class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
-                    <div class="over">
-                        <div class="text">
-                            How to host a website for free
-                        </div>
-                        <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            
-                        </div>
-                    </div>
-                </a>
                 <div class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
                     <div class="over">
-                        <div class="text">
+                        <div class="text" >
                             How to host a website for free
                         </div>
                         <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
                         </div>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
                     <div class="over">
-                        <div class="text">
+                        <div class="text" >
                             How to host a website for free
                         </div>
                         <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
                         </div>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
                     <div class="over">
-                        <div class="text">
+                        <div class="text" >
                             How to host a website for free
                         </div>
                         <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
                         </div>
                     </div>
                 </div>
+                <div class="blog-card">
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
+                    <div class="over">
+                        <div class="text" >
+                            How to host a website for free
+                        </div>
+                        <div class="ico">
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
+                    <div class="over">
+                        <div class="text" >
+                            How to host a website for free
+                        </div>
+                        <div class="ico">
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
+                    <div class="over">
+                        <div class="text" >
+                            How to host a website for free
+                        </div>
+                        <div class="ico">
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
         <div class="quote">
@@ -122,77 +137,72 @@
             <div class="title">Recommended</div>
             <div class="blog-cards">
                 <div class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
                     <div class="over">
-                        <div class="text">
+                        <div class="text" >
                             How to host a website for free
                         </div>
                         <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            <div class="add"><img src="./images/add.png" alt="add"></div>
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
                         </div>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
                     <div class="over">
-                        <div class="text">
+                        <div class="text" >
                             How to host a website for free
                         </div>
                         <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            <div class="add"><img src="./images/add.png" alt="add"></div>
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
                         </div>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
                     <div class="over">
-                        <div class="text">
+                        <div class="text" >
                             How to host a website for free
                         </div>
                         <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            <div class="add"><img src="./images/add.png" alt="add"></div>
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
                         </div>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
                     <div class="over">
-                        <div class="text">
+                        <div class="text" >
                             How to host a website for free
                         </div>
                         <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            <div class="add"><img src="./images/add.png" alt="add"></div>
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
                         </div>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
                     <div class="over">
-                        <div class="text">
+                        <div class="text" >
                             How to host a website for free
                         </div>
                         <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            <div class="add"><img src="./images/add.png" alt="add"></div>
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
                         </div>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="image"><img src="./images/img1.jpg" alt="image"></div>
+                    <a class="image" href="/blog-detail.html"><img src="./images/img1.jpg" alt="image"></a>
                     <div class="over">
-                        <div class="text">
+                        <div class="text" >
                             How to host a website for free
                         </div>
                         <div class="ico">
-                            <div class="like"><img src="./images/like.png" alt="like"><p>10</p></div>
-                            <div class="add"><img src="./images/add.png" alt="add"></div>
+                            <div class="like"><div class="l" onclick="myFunction(this)"></div><p>10</p></div>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
         <div class="sug">

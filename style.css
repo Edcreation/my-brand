@@ -144,7 +144,7 @@ nav .menu img{
               transform: translateX(100%);
     }
   }
- @-webkit-keyframes slide-out-left {
+  @-webkit-keyframes slide-out-left {
     0% {
       -webkit-transform: translateX(0);
               transform: translateX(0);
@@ -171,6 +171,144 @@ nav .menu img{
   
   
 /*-----------------------------------Footer CSs---------------------------------*/
+@-webkit-keyframes bounce-in-fwd {
+    0% {
+      -webkit-transform: scale(0);
+              transform: scale(0);
+      -webkit-animation-timing-function: ease-in;
+              animation-timing-function: ease-in;
+      opacity: 0;
+    }
+    38% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      -webkit-animation-timing-function: ease-out;
+              animation-timing-function: ease-out;
+      opacity: 1;
+    }
+    55% {
+      -webkit-transform: scale(0.7);
+              transform: scale(0.7);
+      -webkit-animation-timing-function: ease-in;
+              animation-timing-function: ease-in;
+    }
+    72% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      -webkit-animation-timing-function: ease-out;
+              animation-timing-function: ease-out;
+    }
+    81% {
+      -webkit-transform: scale(0.84);
+              transform: scale(0.84);
+      -webkit-animation-timing-function: ease-in;
+              animation-timing-function: ease-in;
+    }
+    89% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      -webkit-animation-timing-function: ease-out;
+              animation-timing-function: ease-out;
+    }
+    95% {
+      -webkit-transform: scale(0.95);
+              transform: scale(0.95);
+      -webkit-animation-timing-function: ease-in;
+              animation-timing-function: ease-in;
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      -webkit-animation-timing-function: ease-out;
+              animation-timing-function: ease-out;
+    }
+  }
+  @keyframes bounce-in-fwd {
+    0% {
+      -webkit-transform: scale(0);
+              transform: scale(0);
+      -webkit-animation-timing-function: ease-in;
+              animation-timing-function: ease-in;
+      opacity: 0;
+    }
+    38% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      -webkit-animation-timing-function: ease-out;
+              animation-timing-function: ease-out;
+      opacity: 1;
+    }
+    55% {
+      -webkit-transform: scale(0.7);
+              transform: scale(0.7);
+      -webkit-animation-timing-function: ease-in;
+              animation-timing-function: ease-in;
+    }
+    72% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      -webkit-animation-timing-function: ease-out;
+              animation-timing-function: ease-out;
+    }
+    81% {
+      -webkit-transform: scale(0.84);
+              transform: scale(0.84);
+      -webkit-animation-timing-function: ease-in;
+              animation-timing-function: ease-in;
+    }
+    89% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      -webkit-animation-timing-function: ease-out;
+              animation-timing-function: ease-out;
+    }
+    95% {
+      -webkit-transform: scale(0.95);
+              transform: scale(0.95);
+      -webkit-animation-timing-function: ease-in;
+              animation-timing-function: ease-in;
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      -webkit-animation-timing-function: ease-out;
+              animation-timing-function: ease-out;
+    }
+  }
+#emailpop {
+    background: #f6e4e4;
+    padding: 20px;
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 8px;
+    position: absolute;
+    z-index: 4;
+    top: 450px;
+    -webkit-animation: bounce-in-fwd 1.1s both;
+    animation: bounce-in-fwd 1.1s both;
+}
+#emailpop input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin-top: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+#emailpop button {
+    padding: 10px;
+    background: #00DAE8;
+    border: none;
+    border-radius: 5px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+}
 
 .footer{
     height: 70px;
@@ -625,6 +763,7 @@ svg {
         background: #05092E;
         right: 0;
         animation: slideInFromLeft .8s;
+        
     }
     .login {
         justify-content: center;

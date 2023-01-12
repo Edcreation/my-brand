@@ -17,8 +17,13 @@ nav {
     justify-content: space-between;
     padding-top: 5px;
 }
+.logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+}
 .logo img {
-    margin-left: 10px;
     height: 30px;
 }
 .links {
