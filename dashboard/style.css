@@ -398,11 +398,10 @@ nav span img {
     margin-top: 40px;
 }
 .set-box {
-    height: 40px;
-    width: 100px;
     padding: 10px;
     align-items: center;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     text-align: center;
     background: #02041E;
@@ -410,6 +409,9 @@ nav span img {
     cursor: pointer;
     transition: .6s;
     font-weight: 500;
+}
+.set-box img {
+    width: 90px;
 }
 .set-box:hover {
     background: #00dae8;
@@ -504,6 +506,9 @@ nav span img {
     }
     .created {
         height: 600px;
+    }
+    .settings-container {
+        grid-template-columns: auto auto;
     }
 }
 @media screen and (max-width: 400px) {
