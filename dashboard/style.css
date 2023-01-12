@@ -52,7 +52,7 @@ nav {
     width: 200px;
     height: 700px;
     border-right: 2px solid #00dae8;
-    margin-top: 0px;
+    margin-top: 37px;
     animation: slideInFromLeft .8s ease-in-out;
 }
 #dash-nav a {
