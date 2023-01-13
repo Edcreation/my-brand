@@ -868,3 +868,18 @@ svg {
         width: 90%;
     }
 }
+
+@media screen and (max-width: 300px) {
+    .btns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        height: 200px;
+    }
+    .btns button {
+        margin-right: 0;
+    }
+
+}

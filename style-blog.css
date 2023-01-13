@@ -285,3 +285,23 @@ form button {
         width: 90%;
     }
 }
+@media screen and (max-width: 400px) {
+    .sug .box .title {
+        font-size: 16px;
+    }
+    .blog-card {
+        width: 200px;
+        height: 200px;
+    }
+    .blog-card img {
+        width: 100%;
+    }
+    #pp {
+        width: 200px;
+        padding: 10px;
+        text-align: center;
+    }
+    .q-card img {
+        width: 150px;
+    }
+}

@@ -388,5 +388,26 @@
 
 }
 @media screen and  (max-width: 400px) {
-    
+    .dp {
+        width: 100px;
+        height: 100px;
+    }
+    .dp img {
+        width: 100px;
+        height: 100px;
+        scale: 1.4;
+        transform: translateY(15px);
+    }
+    .dp img:hover {
+        scale: 1;
+    }
+    .trait-card {
+        width: 200px;
+    }
+    .trait-card .trait-title {
+        font-size: 16px;
+    }
+    .trait-card .trait-des {
+        font-size: small;
+    }
 }
