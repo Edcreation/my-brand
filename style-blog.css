@@ -150,14 +150,14 @@
     display: none;
 }
 .like .l {
-    background: url("/images/like.png");
+    background: url("./images/like.png");
     height: 25px;
     width: 25px;
     background-size: contain;
     align-self: center;
 }
 .like .l1 {
-    background: url("/images/like2.png");
+    background: url("./images/like2.png");
     height: 25px;
     width: 25px;
     background-size: contain;
