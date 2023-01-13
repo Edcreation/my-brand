@@ -7,6 +7,29 @@
     align-items: center;
     height: 700px;
 }
+#donepop {
+    background: #04a804;
+    padding: 10px;
+    width: 180px;
+    border-radius: 8px;
+    font-weight: 500;
+    position: absolute;
+    left: 190px;
+    display: none;
+    cursor: pointer;
+}
+#failpop {
+    display: none;
+    background: #f40101;
+    color: #fff;
+    padding: 10px;
+    width: 180px;
+    border-radius: 8px;
+    font-weight: 500;
+    position: absolute;
+    left: 190px;
+    cursor: pointer;
+}
 @-webkit-keyframes slide-bottom {
     0% {
       -webkit-transform: translateY(0);

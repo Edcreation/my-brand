@@ -8,6 +8,7 @@
     <link rel="icon" href="/images/icon.png" >
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style-login.css">
+    <script src="./navbar.js"></script>
 </head>
 <body>
     <nav>
@@ -28,6 +29,17 @@
                 <a href="./login.html"><button>Login</button></a>            </div>
         </div>
     </nav>
+    <div id="failpop" onclick="rehide()">
+        Log In Failed. Try Again.
+    </div>
+    <script>
+        function hide() {
+            document.getElementById('failpop').style.display = "block"
+        }
+        function rehide() {
+            document.getElementById("failpop").style.display = "none"
+        }
+    </script>
     <div class="login-container">
         <div class="container-box">
             <div class="left">
@@ -36,11 +48,11 @@
                 </div>
             </div>
             <div class="right">
-                <form action="/login" method="post">
+                <form >
                     <div class="title">LOG IN</div>
                     <input type="text" name="username" id="name" placeholder="User Name" required>
                     <input type="password" name="password" id="pass" placeholder="Password" required>
-                    <button>Log In</button> <a href="/signup.html">Sign Up</a>
+                    <button onclick="hide()" >Log In</button> <a href="/signup.html">Sign Up</a>
                 </form>
             </div>
         </div>

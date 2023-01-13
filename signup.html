@@ -29,6 +29,17 @@
                 <a href="./login.html"><button>Login</button></a>            </div>
         </div>
     </nav>
+    <div id="donepop" onclick="rehide()">
+        Account Created.Log In
+    </div>
+    <script>
+        function hide() {
+            document.getElementById('donepop').style.display = "block"
+        }
+        function rehide() {
+            document.getElementById("donepop").style.display = "none"
+        }
+    </script>
     <div class="login-container">
         <div class="container-box">
             <div class="left">
@@ -36,12 +47,12 @@
                     <img src="./images/Lock.png" alt="Lock">
                 </div>
             </div>
-            <div class="right">
-                <form action="/signup" method="post">
+            <div class="right" >
+                <form onclick="hide()">
                     <div class="title">SIGN UP</div>
-                    <input type="email" name="email" id="email" placeholder="Email" required>
-                    <input type="text" name="name" id="name" placeholder="New User Name" required>
-                    <input type="password" name="pass" id="pass"  placeholder="New Password" required>
+                    <input type="email" name="email" id="email" placeholder="Email" >
+                    <input type="text" name="name" id="name" placeholder="New User Name" >
+                    <input type="password" name="pass" id="pass"  placeholder="New Password" >
                     <button>Sign Up</button> <a href="/login.html">Log In</a>
                     
                 </form>
