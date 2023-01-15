@@ -101,7 +101,7 @@ nav button:hover {
 }
 nav .logo {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 nav .logo a{
@@ -756,13 +756,15 @@ svg {
 
     #actions {
         display: none;
-        width: 100%;
+        width: 40%;
+        position: absolute;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
         background: #05092E;
+        top: 60px;
         right: 0;
-        animation: slideInFromLeft .8s;
+        /* /animation: slideInFromLeft .8s; */
         
     }
     .login {

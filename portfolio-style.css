@@ -38,8 +38,7 @@
     width: 250px;
     height: 250px;
     border-radius: 50%;
-    outline: 8px solid #00DAE8;
-    outline-style: dashed;
+    outline: 2px solid #00DAE8;
     margin-top: 70px;
     margin-bottom: 20px; 
     animation: 1s ease-out 0s 1 dpanimate;
