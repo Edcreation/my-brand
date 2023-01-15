@@ -49,11 +49,11 @@
                 </div>
             </div>
             <div class="right">
-                <form >
+                <form onsubmit="event.preventDefault(); loginUser()">
                     <div class="title">LOG IN</div>
-                    <input type="text" name="username" id="name" placeholder="User Name" required>
-                    <input type="password" name="password" id="pass" placeholder="Password" required>
-                    <button onclick="hide()" >Log In</button> <a href="./signup.html">Sign Up</a>
+                    <input type="text" name="name" id="name" placeholder="User Name" required>
+                    <input type="password" name="pass" id="pass" placeholder="Password" required>
+                    <button >Log In</button> <a href="./signup.html">Sign Up</a>
                 </form>
             </div>
         </div>

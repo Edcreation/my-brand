@@ -287,8 +287,8 @@ form button {
         font-size: 16px;
     }
     .blog-card {
-        width: 200px;
-        height: 200px;
+        width: 300px;
+        height: 300px;
     }
     .blog-card img {
         width: 100%;
@@ -300,5 +300,11 @@ form button {
     }
     .q-card img {
         width: 150px;
+    }
+    .over .text {
+        overflow-x: hidden;
+        margin: 5px 10px;
+        font-size: small;
+        font-size: 17px;
     }
 }

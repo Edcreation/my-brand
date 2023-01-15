@@ -44,7 +44,7 @@
                             <div class="content">${id['message']}</div>
                             <div class="ops">
                                 <BUTton><img src="../images/reply.png" alt="reply"></BUTton>
-                                <BUTton onclick="deleteMessage(${index})"><img src="../images/trash.png" alt="trash"></BUTton>
+                                <BUTton onclick="deleteMessage(${index})"> <img src="../images/trash.png" alt="trash"></BUTton>
                             </div></div>`).join("")}`
                           }
                         function deleteAllMessages() {
@@ -52,12 +52,13 @@
                             window.localStorage.removeItem("Messages");
                             location.reload();
                         }
-                        function deleteMessage(x) {
-                            const index = Messages.indexOf(x);
-                            if (index > -1) { // only splice array when item is found
-                            Messages.splice(index, 1); // 2nd parameter means remove one item only
+                        function deleteMessage(m) {
+                            console.log(m)
+                            if (m > -1) { // only splice array when item is found
+                                Messages.splice(m, 1); // 2nd parameter means remove one item only
+                                window.localStorage.setItem("Messages", JSON.stringify(Messages));
+                            }
                         }
-                      }
                     </script>
                 </div>
             </div>

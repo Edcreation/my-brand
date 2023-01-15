@@ -8,6 +8,21 @@ body {
 ::-webkit-scrollbar {
     display: none;
 }
+#donepop {
+    background: #04a804;
+    padding: 10px;
+    width: 180px;
+    border-radius: 8px;
+    font-weight: 500;
+    position: absolute;
+    left: 43%;
+    display: none;
+    top: 30px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
 /*----------------------------------------Dashboard Navbar--------------------------------------------------------------------------------*/
 nav {
     width: 100%;
@@ -250,6 +265,14 @@ nav span img {
     font-weight: 500;
     margin-top: 20px;
 }
+.new-box  .title button {
+    font-size: 20px;
+    background: #d00000;
+    color: #cecece;
+    padding: 5px;
+    cursor: pointer;
+}
+
 
 .new-box form label {
     color: #cecece;

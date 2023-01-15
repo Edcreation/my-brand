@@ -21,6 +21,17 @@
             </div>
         </div>
     </nav>
+    <div id="donepop" onclick="rehide()">
+        Blog Posted
+    </div>
+    <script>
+        function hide() {
+            document.getElementById('donepop').style.display = "block"
+        }
+        function rehide() {
+            document.getElementById("donepop").style.display = "none"
+        }
+    </script>
     <div class="dash-container">
         <div id="dash-nav">
             <a href="./dashboard.html">Dashboard</a>
@@ -32,12 +43,12 @@
         
         <div class="new">
             <div class="new-box">
-                <div class="title">New Blog</div>
-                <form action="">
+                <div class="title">New Blog <button onclick="deleteAllBlogs()">Delete All</button></div>
+                <form onsubmit="event.preventDefault(); createBlog()" id="frm">
                     <label for="title">Title</label>
                     <input type="text" name="title" id="title">
                     <label for="file">Add Photo</label>
-                    <input type="file" name="file" id="file">
+                    <input type="text" name="image" id="image">
                     <label for="content">Blog Content</label>
                     <textarea name="content" id="content" cols="30" rows="10"></textarea>
                     <button>ADD BLOG</button>

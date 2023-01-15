@@ -52,8 +52,8 @@ function insertItem(details) {
   details = {id:id,email,name:name,message:message}
   Messages.push(details);
   window.localStorage.setItem("Messages", JSON.stringify(Messages));
-  alert("Message Sent");
   location.reload();
+  alert("Message Sent");
 }
 function deleteMessage(x) {
       const index = Messages.indexOf(x);
@@ -61,14 +61,59 @@ function deleteMessage(x) {
       formDetails.splice(index, 1); // 2nd parameter means remove one item only
   }
 }
-function checkUser() {
-  if (window.localStorage.getItem(document.getElementById('email').value === window.localStorage.getItem("formDetail") )) {
-      console.log("ok")      
-  }
-  else {
-      for (let i = 0; i < localStorage.length; i++) {
-          console.log(localStorage.getItem(localStorage.key(i)));
-      } 
+/** ------------------- Authentication-----------*/
+let Users = JSON.parse(localStorage.getItem("Users") || "[]")
+function createUser() {
+  const userData = {
+      email: document.getElementById('email').value,
+      name: document.getElementById('name').value,
+      password: document.getElementById('pass').value
+  };
+  Users.push(userData);
+  localStorage.setItem('Users', JSON.stringify(Users));
+  hide()
+  var element = document.getElementById("frm")
+  element.reset()
+}
+function loginUser() {
+  
+  const name = document.getElementById('name').value
+  const pass = document.getElementById('pass').value
+  if (localStorage.getItem('Users')) {
+      const data = JSON.parse(localStorage.getItem('Users'))
+      console.log(data[0].name)
+      for (let i = 0; i < data.length; i++) {
+        if (name === data[i].name && pass === data[i].password) {
+          location.replace("http://127.0.0.1:3000/dashboard/dashboard.html");
+          continue;
+        }
+        else{
+          hide();
+        }
+      }
+  } else {
+      console.log('Not a registered user')
   }
 }
+/**--------------------------Blogs Using Local Storage------------------------------- */
+let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
+function createBlog() {
+  const blogData = {
+    title: document.getElementById('title').value,
+    image: document.getElementById('image').value,
+    content: document.getElementById('content').value,
+    likeCount: 0,
+  }
+  Blogs.push(blogData);
+  localStorage.setItem('Blogs', JSON.stringify(Blogs));
+  hide()
+  var element = document.getElementById("frm")
+  element.reset()
+}
+function deleteAllBlogs() {
+  Blogs = []
+  window.localStorage.removeItem("Blogs");
+  location.reload();
+}
+
 
