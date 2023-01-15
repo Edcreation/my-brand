@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style-contacts.css">
     <link rel="icon" href="/images/icon.png" >
-    <script src="./navbar.js"></script>
+    <script src="./script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacts</title>
 </head>
@@ -33,7 +33,7 @@
     </nav>
     <div class="contacts">
         <div class="contact-me">
-            <form action="" method="post">
+            <form onsubmit="event.preventDefault(); contact()">
                 <div class="title">Contact Me</div>
                 <input type="email" name="email" id="email" placeholder="Email">
                 <input type="text" name="name" id="name" placeholder="Your Name">
