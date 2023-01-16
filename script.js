@@ -5,8 +5,8 @@ function popContact(x) {
   setTimeout(() => {
     document.querySelector('#popcontact').style.display = "none";
   }, 2000);
-} 
-popContact()
+}
+
 function toggleNav(){
   var myImage = document.getElementById('ig');
   if(open==false){
@@ -116,20 +116,36 @@ function loginUser() {
   }
 }
 /**--------------------------Blogs Using Local Storage------------------------------- */
+
+
 function createBlog() {
   let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
-  const blogData = {
-    title: document.getElementById('title').value,
-    image: document.getElementById('image').value,
-    content: document.getElementById('content').value,
-    likeCount: 0,
+  const title = document.getElementById('title').value
+  const image = window.localStorage.getItem("tempImage")
+  const content = document.getElementById('content').value
+  // -----------Form Valodarion----------------
+  if (title === "" || content === "" || image === "") {
+    popContact("Please Fill out All Fields")
+  } else {
+    if (title.length > 500) {
+      popContact(" Title too Long ")
+    } else {
+      const blogData = {
+        title: title,
+        image: image,
+        content: content,
+        likeCount: 0,
+      }
+      Blogs.push(blogData);
+      localStorage.setItem('Blogs', JSON.stringify(Blogs));
+      var element = document.getElementById("frm")
+      element.reset()
+      popContact("Blog Created")
+      window.localStorage.removeItem("tempImage")
+    } 
   }
-  Blogs.push(blogData);
-  localStorage.setItem('Blogs', JSON.stringify(Blogs));
-  hide()
-  var element = document.getElementById("frm")
-  element.reset()
 }
+
 function deleteAllBlogs() {
   let Bloga = JSON.parse(localStorage.getItem("Blogs") || "[]");
   Bloga = []
@@ -166,7 +182,6 @@ function navigate(n) {
   window.location.href = link;
   console.log(n)
 }
-
 
 
 

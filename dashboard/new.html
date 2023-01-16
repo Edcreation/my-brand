@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="../images/icon.png" >    
-    <script src="../script.js"></script>
+    <script src="../script.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 </head>
@@ -21,17 +21,9 @@
             </div>
         </div>
     </nav>
-    <div id="donepop" onclick="rehide()">
+    <div id="popcontact" onclick="rehide()">
         Blog Posted
     </div>
-    <script>
-        function hide() {
-            document.getElementById('donepop').style.display = "block"
-        }
-        function rehide() {
-            document.getElementById("donepop").style.display = "none"
-        }
-    </script>
     <div class="dash-container">
         <div id="dash-nav">
             <a href="./dashboard.html">Dashboard</a>
@@ -40,9 +32,8 @@
             <a href="./settings.html">Settings</a>
             
         </div>
-        
         <div class="new">
-            <div class="new-box">
+            <div class="new-box" id="imgreceiver">
                 <div class="title">New Blog </div>
                 <form onsubmit="event.preventDefault(); createBlog()" id="frm">
                     <label for="title">Title</label>
@@ -56,5 +47,23 @@
             </div>
         </div>
     </div>
+    <script>
+        fileEl = document.getElementById('image')
+        fileEl.addEventListener('change', () => {
+            const fr = new FileReader();
+            fr.readAsDataURL(fileEl.files[0]);
+            fr.addEventListener('load', () => {
+                url = fr.result;
+                const imge = new Image()
+                imge.src = url
+                imge.classList.add("insertedImage")
+                let m = document.querySelector("#imgreceiver")
+                window.localStorage.setItem("tempImage", url)
+                document.body.appendChild(imge)
+            })
+        })  
+
+
+    </script>
 </body>
 </html>
