@@ -101,13 +101,13 @@
     
         const List = document.querySelector('#box');
         List.innerHTML = `${Blogs.map((title, index)=>`<div class="blog-card">
-            <a class="image" href="./blog-detail.html"><img src="${title['image']}" alt="image"></a>
+            <a class="image"><img src="${title['image']}" alt="image" onclick="navigate(${index})"></a>
             <div class="over">
                 <div class="text" >
                     ${title['title']}
                 </div>
                 <div class="ico">
-                    <div class="like"><div class="l" onclick="myFunction(this)"></div><p>${title['likeCount']}</p></div>
+                    <div class="like"><div class="l" onclick="myFunction(this); getLikes(${index})" id="l"></div><p>${title['likeCount']}</p></div>
                 </div>
             </div>
         </div>`).join("")}`

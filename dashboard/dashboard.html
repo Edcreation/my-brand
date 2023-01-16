@@ -53,37 +53,30 @@
                 </div>
                 <div class="dash-box-down">
                     <div class="created">
-                        <div class="title1">Blogs Created</div>
-                        <div class="items">
-                            <div class="item">
-                                <div class="img"><img src="../images/img1.jpg" alt="" srcset=""></div>
-                                <div class="words">
-                                    <div class="title"> How to  host a website for free</div>
-                                    <p>There are many ways to host a website, What most people wonder is, can you host a website or webapp for free? ...</p>
-                                    <div class="date">19/12/2022</div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="img"><img src="../images/img1.jpg" alt="" srcset=""></div>
-                                <div class="words">
-                                    <div class="title"> How to  host a website for free</div>
-                                    <p>There are many ways to host a website, What most people wonder is, can you host a website or webapp for free? ...</p>
-                                    <div class="date">19/12/2022</div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="img"><img src="../images/img1.jpg" alt="" srcset=""></div>
-                                <div class="words">
-                                    <div class="title"> How to  host a website for free</div>
-                                    <p>There are many ways to host a website, What most people wonder is, can you host a website or webapp for free? ...</p>
-                                    <div class="date">19/12/2022</div>
-                                </div>
-                            </div>
+                        <div class="title1">Blogs Created <button onclick="deleteAllBlogs()">Delete All</button></div>
+                        <div class="items" id="box">
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        window.onload = blogList();
+        function blogList() {
+    
+        const List = document.querySelector('#box');
+        List.innerHTML = `${Blogs.map((title, index)=>`
+            <div class="item">
+            <div class="img"><img src="${title['image']}" alt="image"></div>
+            <div class="words">
+                <div class="title">${title['title']}</div>
+                <p>${title['content']}</p>
+                <div class="date">19/12/2022 <Button onclick="deleteBlog(${index})"> <img src="../images/trash.png" alt="trash"></Button> </div>
+            </div>
+        </div>`).join("")}`
+        }
+    </script>
 </body>
 </html>

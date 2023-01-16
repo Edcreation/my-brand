@@ -183,6 +183,20 @@ nav span img {
     text-align: center;
     margin-bottom: 20px;
     font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 10px;
+    align-items: center;
+}
+.created .title1 button {
+    background: #d00 ;
+    color: #cecece;
+    padding: 10px;
+    margin-left: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
 .items {
     width: 95%;
@@ -216,14 +230,18 @@ nav span img {
 }
 .words .title {
     width: 95%;
-    font-size: 17px;
+    font-size: 15px;
+    margin-top: 5px;
     font-weight: 600;
 }
 .words p {
     color: #fff;
     text-align: start;
     width: 90%;
-    margin-left: 15px;
+    margin-left: 5px;
+    text-overflow: ellipsis;
+    height: 100px;
+    overflow-y: scroll;
     
 }
 .date {
@@ -231,7 +249,31 @@ nav span img {
     text-align: end;
     margin-right: 10px;
     font-size: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
 }
+.date button {
+    margin: 0 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: .3s;
+}
+.date button:hover {
+    background: #d00000;
+}
+
+
 /*------------------------------------------------------------Add New Blog------------------------------*/
 .new {
     display: flex;
@@ -331,15 +373,7 @@ nav span img {
     color: #fff;
     margin-bottom: 10px;
 }
-.msg-box .title button {
-    background: #d00 ;
-    color: #cecece;
-    padding: 10px;
-    margin-left: 20px;
-    border: none;
-    outline: none;
-    cursor: pointer;
-}
+
 .msg-container {
     width: 100%;
     display: flex;

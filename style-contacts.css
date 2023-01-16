@@ -1,5 +1,13 @@
 
 /*------------------------Contacts------------------*/
+#popcontact {
+    padding: 10px;
+    display: none;
+    background: green;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 5;
+}
 .contacts {
     color: #fff;
     width: 100%;

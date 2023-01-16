@@ -32,36 +32,51 @@
             </div>
         </div>
     </nav> 
-    
-    <div class="blog-article">
+
+    <div class="blog-article" id="view">
+        
+    </div>
+    <div class="footer">
+        <div class="footer-box">
+          <div class="social">
+            <a href='https://www.instagram.com/___e.d.d.y/' target="_blank"><img src="./images/instagram.png" alt='instagram' /></a>
+            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/linkedin.png" alt='linkedin' /></a>
+            
+            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/twitter.png" alt='twitter' /></a>
+            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/whatsapp.png" alt='whatsapp' /></a>
+            <a href='' target="_blank"><img src="./images/gmail.png" alt='gmail' /></a>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>All rights reserved by M.J.Eddy 2022 &copy;</p>
+        </div>
+    </div>
+    <script>
+        window.onload = blogView();
+        function blogView() {
+        let id;
+        var parts = window.location.search.substr(1).split("&");
+        var $_GET = {};
+        for (var i = 0; i < parts.length; i++) {
+            var temp = parts[i].split("=");
+            $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
+            
+        }
+        id = $_GET['id']
+        console.log(id)
+        const List = document.querySelector('#view');
+        List.innerHTML = `
         <div class="bimage">
-            <img src="./images/img1.jpg" alt="image">
+            <img src="${Blogs[id].image}" alt="image">
         </div>
         <div class="blog-title">
-            WhatsApp is going to stop letting everyone see when you’re online  
+            ${Blogs[id].title}
         </div>
         <div class="date">
             09/01/2023 
         </div>
         <div class="blog-content">
-            WhatsApp announced several new privacy updates on Tuesday, including the ability for users to check their messages without other people knowing.
-The platform will soon allow people to control who can see when they’re online, prevent others from taking screenshots of certain messages, and leave groups without notifying entire channels.
-
-WhatsApp has more than 2 billion users globally, and is owned by Facebook (FB) parent Meta. Announcing the changes on Facebook and Instagram, CEO Mark Zuckerberg said the company would "keep building new ways to protect your messages and keep them as private and secure as face-to-face conversations."
-
-WhatsApp has long touted its use of end-to-end encryption, which means only the sender and recipient of a message can see its contents. And like other private messaging platforms, it already allows users to send messages that disappear after set periods of time.
-
-However, last year, WhatsApp was heavily scrutinized after an update to its terms of service.
-
-At the time, many users expressed concerns about a section of WhatsApp’s privacy policy that detailed what is shared with parent company Facebook, which has a troubled reputation when it comes to protecting user data.
-
-The update sent some people flocking to Signal, another popular encrypted messaging platform.
-
-Facebook tried to dispel confusion over the policy, saying that its data sharing practices were not new and did not "impact how people communicate privately with friends or family."
-
-Now, two of the new features being introduced on WhatsApp — which will let you choose who can see when you’re active, and to leave groups silently — will start rolling out to all WhatsApp users this month.
-
-*** The screenshot blocking tool, which will be made available on messages intended to be viewed just once, is still being tested and will be made available later, according to WhatsApp. ***
+            ${Blogs[id].content}
         </div>
         <div class="comments">
             <u>Comments</u>
@@ -85,20 +100,9 @@ Now, two of the new features being introduced on WhatsApp — which will let you
                 <button>Comment</button>
             </form>
         </div>
-    </div>
-    <div class="footer">
-        <div class="footer-box">
-          <div class="social">
-            <a href='https://www.instagram.com/___e.d.d.y/' target="_blank"><img src="./images/instagram.png" alt='instagram' /></a>
-            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/linkedin.png" alt='linkedin' /></a>
-            
-            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/twitter.png" alt='twitter' /></a>
-            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/whatsapp.png" alt='whatsapp' /></a>
-            <a href='' target="_blank"><img src="./images/gmail.png" alt='gmail' /></a>
-          </div>
-        </div>
-        <div class="copyright">
-          <p>All rights reserved by M.J.Eddy 2022 &copy;</p>
-        </div>
-    </div>
+
+
+        `
+        }
+    </script>
 </body>

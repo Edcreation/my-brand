@@ -32,8 +32,11 @@
         </div>
     </nav>
     <div class="contacts">
+        <div id="popcontact">
+            Message Sent !
+        </div>
         <div class="contact-me">
-            <form onsubmit="event.preventDefault(); contact()">
+            <form onsubmit="event.preventDefault(); contact()" id="frm">
                 <div class="title">Contact Me</div>
                 <input type="email" name="email" id="email" placeholder="Email">
                 <input type="text" name="name" id="name" placeholder="Your Name">

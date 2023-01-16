@@ -28,9 +28,7 @@ function toggleDashNav() {
       open = false; 
 }
 }
-
 //---------------------Messages Using Local Storage-----------------/
-
 function contact() {
   var formData = readContact();
   insertItem(formData);
@@ -52,8 +50,12 @@ function insertItem(details) {
   details = {id:id,email,name:name,message:message}
   Messages.push(details);
   window.localStorage.setItem("Messages", JSON.stringify(Messages));
-  location.reload();
-  alert("Message Sent");
+  document.getElementById('frm').reset()
+  
+  function popContact() {
+    document.getElementById('popcontact').style.display = "block";
+  }
+  popContact()
 }
 function deleteMessage(x) {
       const index = Messages.indexOf(x);
@@ -115,5 +117,34 @@ function deleteAllBlogs() {
   window.localStorage.removeItem("Blogs");
   location.reload();
 }
+function deleteBlog(m) {
+  console.log(m)
+  if (m > -1) { // only splice array when item is found
+      Blogs.splice(m, 1); // 2nd parameter means remove one item only
+      window.localStorage.setItem("Blogs", JSON.stringify(Blogs));
+      location.reload()
+  }
+}
+function getLikes(x) {
+  if (x > -1) {
+    let likes = Blogs[x].likeCount;
+    likes = likes + 1
+    Blogs[x].likeCount = likes
+    localStorage.setItem('Blogs', JSON.stringify(Blogs));
+    console.log(Blogs[x].likeCount)
+    console.log(Blogs)
+    l = document.getElementById("l")
+    l.classList.remove("l");
+    l.classList.add("l1");
+    location.reload()
+    
+  }
+}
+function navigate(n) {
+  let link = "blog-detail.html?id=" + n
+  window.location.href = link;
+  console.log(n)
+}
+
 
 
