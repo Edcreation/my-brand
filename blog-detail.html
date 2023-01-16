@@ -53,7 +53,9 @@
     </div>
     <script>
         window.onload = blogView();
+        
         function blogView() {
+            let Blogsd = JSON.parse(localStorage.getItem("Blogs"));
         let id;
         var parts = window.location.search.substr(1).split("&");
         var $_GET = {};
@@ -67,16 +69,16 @@
         const List = document.querySelector('#view');
         List.innerHTML = `
         <div class="bimage">
-            <img src="${Blogs[id].image}" alt="image">
+            <img src="${Blogsd[id].image}" alt="image">
         </div>
         <div class="blog-title">
-            ${Blogs[id].title}
+            ${Blogsd[id].title}
         </div>
         <div class="date">
             09/01/2023 
         </div>
         <div class="blog-content">
-            ${Blogs[id].content}
+            ${Blogsd[id].content}
         </div>
         <div class="comments">
             <u>Comments</u>

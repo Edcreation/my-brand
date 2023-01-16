@@ -162,7 +162,7 @@ function getLikes(x) {
   }
 }
 function navigate(n) {
-  let link = "blog-detail.html?id=" + n
+  let link = "./blog-detail.html?id=" + n
   window.location.href = link;
   console.log(n)
 }
