@@ -98,8 +98,9 @@
     <script>
         window.onload = blogList();
         function blogList() {
-    
+            
         const List = document.querySelector('#box');
+        let Blogs = JSON.parse(localStorage.getItem("Blogs"));
         List.innerHTML = `${Blogs.map((title, index)=>`<div class="blog-card">
             <a class="image"><img src="${title['image']}" alt="image" onclick="navigate(${index})"></a>
             <div class="over">

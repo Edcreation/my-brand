@@ -28,7 +28,9 @@
             <a href="./messages.html">Messages</a>
             <a href="./settings.html">Settings</a>
         </div>
-        
+        <div id="popcontact">
+
+        </div>
         <div class="dashboard">
             <div class="dash-box">
                 <div class="dash-box-up">
@@ -65,8 +67,8 @@
     <script>
         window.onload = blogList();
         function blogList() {
-    
         const List = document.querySelector('#box');
+        let Blogs = JSON.parse(localStorage.getItem("Blogs"));
         List.innerHTML = `${Blogs.map((title, index)=>`
             <div class="item">
             <div class="img"><img src="${title['image']}" alt="image"></div>

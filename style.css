@@ -15,6 +15,20 @@ body {
     margin: 0;
     background: #02041E;
 }
+#popcontact {
+    padding: 10px;
+    display: none;
+    background: rgb(0, 186, 0);
+    border-radius: 5px;
+    position: absolute;
+    z-index: 2;
+    top: 70px;
+    right: 45%;
+    color: #000;
+    font-weight: 400;
+    -webkit-animation: bounce-in-fwd 0.4s both;
+    animation: bounce-in-fwd 0.5s both;
+}
 /*--------------------Navbar--------------------*/
 @keyframes slideInFromLeft {
     0% {

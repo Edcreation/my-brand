@@ -1,4 +1,12 @@
-let open = false;    
+let open = false; 
+function popContact(x) {
+  document.querySelector('#popcontact').style.display = "block";
+  document.getElementById('popcontact').innerHTML = x
+  setTimeout(() => {
+    document.querySelector('#popcontact').style.display = "none";
+  }, 2000);
+} 
+popContact()
 function toggleNav(){
   var myImage = document.getElementById('ig');
   if(open==false){
@@ -29,77 +37,87 @@ function toggleDashNav() {
 }
 }
 //---------------------Messages Using Local Storage-----------------/
-function contact() {
-  var formData = readContact();
-  insertItem(formData);
-}
-function readContact() {
-  var formData = {};
-  formData["email"] = document.getElementById("email").value;
-  formData["name"] = document.getElementById("name").value;
-  formData["Message"] = document.getElementById("msg").value;
-  return formData;
-}
-let Messages = JSON.parse(localStorage.getItem("Messages") || "[]");
-function insertItem(details) {
+function getMessage() {
+  let Messages = JSON.parse(localStorage.getItem("Messages") || "[]");
   const email = document.getElementById("email").value;
   const name = document.getElementById("name").value;
   const message = document.getElementById("msg").value;
-
   let id = Math.floor(Math.random() * 999);
-  details = {id:id,email,name:name,message:message}
+  details = {
+    id:id,
+    email:email,
+    name:name,
+    message:message
+  }
+  console.log(details)
   Messages.push(details);
   window.localStorage.setItem("Messages", JSON.stringify(Messages));
   document.getElementById('frm').reset()
+  popContact("Message Sent")
   
-  function popContact() {
-    document.getElementById('popcontact').style.display = "block";
-  }
-  popContact()
 }
-function deleteMessage(x) {
-      const index = Messages.indexOf(x);
-      if (index > -1) { // only splice array when item is found
-      formDetails.splice(index, 1); // 2nd parameter means remove one item only
-  }
-}
+
 /** ------------------- Authentication-----------*/
-let Users = JSON.parse(localStorage.getItem("Users") || "[]")
 function createUser() {
-  const userData = {
-      email: document.getElementById('email').value,
-      name: document.getElementById('name').value,
-      password: document.getElementById('pass').value
-  };
-  Users.push(userData);
-  localStorage.setItem('Users', JSON.stringify(Users));
-  hide()
-  var element = document.getElementById("frm")
-  element.reset()
+  let Users = JSON.parse(localStorage.getItem("Users") || "[]")
+  const users = JSON.parse(window.localStorage.getItem("Users"));
+  const email = document.getElementById('email').value;
+  const name = document.getElementById('name').value;
+  const password = document.getElementById('pass').value;
+  if (email === "" || name === "" || password === "") {
+    popContact("Please Fill out All Fields.")
+  }
+  else {
+    if ( users.some(item => item.email === email)) {
+      popContact("Email Already Exists.");
+    }
+    else {
+      if (password.length < 5) {
+        popContact("Password is Too Short")
+      } else {
+        const userData = {
+            email: email,
+            name: name,
+            password: password,
+        };
+        Users.push(userData);
+        localStorage.setItem('Users', JSON.stringify(Users));
+        var element = document.getElementById("frm")
+        element.reset()
+        popContact("Account Created.")
+        
+      }
+    }
+
+  }
+  
+
 }
 function loginUser() {
-  
-  const name = document.getElementById('name').value
+  let users = JSON.parse(localStorage.getItem("Users") || "[]")
+  let arr = JSON.parse(localStorage.getItem("Users") || "[]")
+  const email = document.getElementById('email').value
   const pass = document.getElementById('pass').value
-  if (localStorage.getItem('Users')) {
-      const data = JSON.parse(localStorage.getItem('Users'))
-      console.log(data[0].name)
-      for (let i = 0; i < data.length; i++) {
-        if (name === data[i].name && pass === data[i].password) {
-          location.replace("http://127.0.0.1:3000/dashboard/dashboard.html");
-          continue;
-        }
-        else{
-          hide();
-        }
+  if (email === "" || pass === "") {
+    popContact("Please Fill out All Fields");
+  }
+  else {
+    if(users.some(item => item.email === email)){
+      if (users.some(item => item.password === pass)) {
+        let link = "./dashboard/dashboard.html?name=" + email
+        window.location.href = link
+      } else {
+        popContact("Password Incorrect.")
       }
-  } else {
-      console.log('Not a registered user')
+    }
+    else {
+      popContact("Email Doesn't Exist")
+    }
   }
 }
 /**--------------------------Blogs Using Local Storage------------------------------- */
-let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
 function createBlog() {
+  let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
   const blogData = {
     title: document.getElementById('title').value,
     image: document.getElementById('image').value,
@@ -113,15 +131,18 @@ function createBlog() {
   element.reset()
 }
 function deleteAllBlogs() {
-  Blogs = []
+  let Bloga = JSON.parse(localStorage.getItem("Blogs") || "[]");
+  Bloga = []
   window.localStorage.removeItem("Blogs");
   location.reload();
 }
 function deleteBlog(m) {
+  let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
+  let Blogsa = JSON.parse(localStorage.getItem("Blogs"));
   console.log(m)
   if (m > -1) { // only splice array when item is found
-      Blogs.splice(m, 1); // 2nd parameter means remove one item only
-      window.localStorage.setItem("Blogs", JSON.stringify(Blogs));
+      Blogsa.splice(m, 1); // 2nd parameter means remove one item only
+      window.localStorage.setItem("Blogs", JSON.stringify(Blogsa));
       location.reload()
   }
 }
@@ -145,6 +166,7 @@ function navigate(n) {
   window.location.href = link;
   console.log(n)
 }
+
 
 
 

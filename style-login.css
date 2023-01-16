@@ -7,33 +7,7 @@
     align-items: center;
     height: 700px;
 }
-#donepop {
-    background: #04a804;
-    padding: 10px;
-    width: 180px;
-    border-radius: 8px;
-    font-weight: 500;
-    position: absolute;
-    left: 43%;
-    display: none;
-    top: 0;
-    cursor: pointer;
-    animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-#failpop {
-    display: none;
-    background: #f40101;
-    color: #fff;
-    padding: 10px;
-    width: 180px;
-    top: 0;
-    border-radius: 8px;
-    font-weight: 500;
-    position: absolute;
-    left: 190px;
-    cursor: pointer;
-    animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
+
 @-webkit-keyframes slide-bottom {
     0% {
       -webkit-transform: translateY(0);

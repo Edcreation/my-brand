@@ -22,6 +22,9 @@
         </div>
     </nav>
     <div class="dash-container">
+        <div id="popcontact">
+            
+        </div>
         <div id="dash-nav">
             <a href="./dashboard.html">Dashboard</a>
             <a href="./new.html">New Blog</a>
@@ -36,7 +39,7 @@
                     <script >
                         window.onload = list();
                         function list() {
-
+                            let Messages = JSON.parse(localStorage.getItem("Messages"));
                             const list = document.querySelector('#box');
                             let arr = window.localStorage.getItem("Messages")
                             list.innerHTML = `${Messages.map((id, index)=>`<div class="msg" onclick="list()"><div class="msg-icon"><img src="../images/msg.png" alt="msg"></div>
@@ -50,13 +53,20 @@
                         function deleteAllMessages() {
                             Messages = []
                             window.localStorage.removeItem("Messages");
-                            location.reload();
+                            popContact("All Messages Deleted")
+                            setTimeout( () => {
+                                location.reload();
+
+                            } , 5000)
                         }
                         function deleteMessage(m) {
+                            let Messages = JSON.parse(localStorage.getItem("Messages"));
+
                             console.log(m)
                             if (m > -1) { // only splice array when item is found
                                 Messages.splice(m, 1); // 2nd parameter means remove one item only
                                 window.localStorage.setItem("Messages", JSON.stringify(Messages));
+                                popContact("Message Deleted")
                             }
                         }
                     </script>

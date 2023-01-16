@@ -8,6 +8,18 @@ body {
 ::-webkit-scrollbar {
     display: none;
 }
+#popcontact {
+    padding: 10px;
+    display: none;
+    background: rgb(0, 186, 0);
+    border-radius: 5px;
+    position: absolute;
+    z-index: 2;
+    top: 70px;
+    right: 45%;
+    color: #000;
+    font-weight: 400;
+}
 #donepop {
     background: #04a804;
     padding: 10px;
@@ -123,14 +135,14 @@ nav span img {
     height: 700px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 .dash-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width:  70%;
+    width:  80%;
     height: 500px;
     align-items: center;
     margin-top: 70px;
@@ -141,8 +153,7 @@ nav span img {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-
+    align-items: flex-start;
 }
 .box {
     box-shadow: 8px 8px 20px 5px rgba(0, 0, 0, 0.25);
@@ -165,8 +176,8 @@ nav span img {
     background: #05092E;
     box-shadow: 8px 8px 20px 5px rgba(0, 0, 0, 0.25);
     width: 100%;
-    height: 600px;
-    margin-top: 20px;
+    height: 300px;
+    margin-top: 0px;
 }
 .created {
     width: 100%;
@@ -274,7 +285,7 @@ nav span img {
 }
 
 
-/*------------------------------------------------------------Add New Blog------------------------------*/
+/*-------------------Add New Blog------------------------------*/
 .new {
     display: flex;
     justify-content: center;
@@ -345,7 +356,7 @@ nav span img {
 .new-box form button:hover {
     scale: 1.1;
 }
-/*---------------------------------------------Messages---------------------------------*/
+/*---------Messages---------------------------------*/
 
 .messages {
     display: flex;
@@ -372,6 +383,13 @@ nav span img {
     font-size: 22px;
     color: #fff;
     margin-bottom: 10px;
+}
+.msg-box .title button {
+    padding: 5px;
+    background: #d00000;
+    color: #fff;
+    border: none;
+    outline: none;
 }
 
 .msg-container {
