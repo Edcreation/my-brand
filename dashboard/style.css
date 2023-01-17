@@ -503,7 +503,7 @@ nav span img {
     display: grid;
     grid-template-columns: auto auto auto;
     gap: 20px;
-    margin-top: 40px;
+    margin-top: 80px;
 }
 .set-box {
     padding: 10px;

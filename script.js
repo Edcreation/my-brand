@@ -60,7 +60,7 @@ function getMessage() {
 /** ------------------- Authentication-----------*/
 function createUser() {
   let Users = JSON.parse(localStorage.getItem("Users") || "[]")
-  const users = JSON.parse(window.localStorage.getItem("Users"));
+  const users = JSON.parse(window.localStorage.getItem("Users") || "[]");
   const email = document.getElementById('email').value;
   const name = document.getElementById('name').value;
   const password = document.getElementById('pass').value;
