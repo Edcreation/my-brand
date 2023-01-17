@@ -25,9 +25,16 @@
                 <a href="./blog.html">Blog</a>
                 <a href="./contacts.html">Contacts</a>
             </div>
-            <div class="login">
-                <a href="./login.html"><button>Login</button></a>
+            <a href="./login.html" ><button id="loginbutton"  >Login</button></a>
+            <img class="propic" id="profilePic" onclick="displayWow()">
+            </img>
+            <div class="wow-menu" id="wowM">
+                <button>Profile</button>
+                <button onclick="logOut()">Log Out</button>
             </div>
+            <script>
+                window.onload = showLoginButton();
+            </script>
         </div>
     </nav>
     <script>
@@ -73,6 +80,8 @@
           <p>All rights reserved by M.J.Eddy 2022 &copy;</p>
         </div>
     </div>
-    
+    <script>
+        document.getElementById("loginbutton").style.display = "none" 
+    </script>
 </body>
 </html>

@@ -59,6 +59,14 @@ nav {
     justify-content: space-between;
     padding-top: 5px;
 }
+nav button {
+    background: #d00;
+    color: #cecece;
+    border: none;
+    outline: none;
+    padding: 10px;
+    cursor: pointer;
+}
 .logo {
     display: flex;
     justify-content: flex-start;
@@ -84,7 +92,7 @@ nav {
 .dp img{
     height: 30px;
     border-radius: 50%;
-    border: 4px dashed #00dae8;
+    border: 1px solid #00d9e896;
 }
 /*---------------------------------left Navbar------------------*/
 .dash-container {
@@ -644,6 +652,9 @@ nav span img {
     }
     .dash-box-down {
         width: 100%;
+    }
+    .logo {
+        display: none;
     }
 
 

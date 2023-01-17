@@ -5,8 +5,9 @@
     display: none;
     background: green;
     border-radius: 10px;
-    position: absolute;
+    position: fixed;
     z-index: 5;
+    right: 0;
 }
 .contacts {
     color: #fff;

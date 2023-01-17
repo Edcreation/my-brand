@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="./script.js"></script>
+    <!-- <script>
+        window.onload = checkUser()
+    </script> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blogs</title>
 </head>
@@ -27,9 +30,16 @@
                 <a href="./blog.html">Blog</a>
                 <a href="./contacts.html">Contacts</a>
             </div>
-            <div class="login">
-                <a href="./login.html"><button>Login</button></a>
+            <a href="./login.html" ><button id="loginbutton"  >Login</button></a>
+            <img class="propic" id="profilePic" onclick="displayWow()">
+            </img>
+            <div class="wow-menu" id="wowM">
+                <button>Profile</button>
+                <button onclick="logOut()">Log Out</button>
             </div>
+            <script>
+                window.onload = showLoginButton();
+            </script>
         </div>
     </nav>
     <div id="pp">
@@ -115,6 +125,13 @@
         </div>`).sort().join("")}`
         }
         
+    </script>
+    <script>
+        const image = JSON.parse(window.localStorage.getItem("tempLog")).image
+        var profilePic = document.getElementById("profilePic")
+        profilePic.src = image;
+        //profilePic.style.display = "none"
+
     </script>
 </body>
 </html>

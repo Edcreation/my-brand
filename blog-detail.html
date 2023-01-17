@@ -10,7 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
     <script src="./script.js"></script>
-
+    <script>
+        window.onload = checkUser()
+    </script>
 </head>
 <body>
     <nav>
@@ -27,9 +29,16 @@
                 <a href="./blog.html">Blog</a>
                 <a href="./contacts.html">Contacts</a>
             </div>
-            <div class="login">
-                <a href="./login.html"><button>Login</button></a>
+            <a href="./login.html" ><button id="loginbutton"  >Login</button></a>
+            <img class="propic" id="profilePic" onclick="displayWow()">
+            </img>
+            <div class="wow-menu" id="wowM">
+                <button>Profile</button>
+                <button onclick="logOut()">Log Out</button>
             </div>
+            <script>
+                window.onload = showLoginButton();
+            </script>
         </div>
     </nav>
 
@@ -52,6 +61,7 @@
           <p>All rights reserved by M.J.Eddy 2022 &copy;</p>
         </div>
     </div>
+    
     <script>
         window.onload = blogView();
         function blogView() {
@@ -88,13 +98,11 @@
         <div class="comments" id="com">
             
         </div>
-        <div class="com-form">
+        <div class="com-form" id="cwow">
             <div class= "popcontact" id="popcontact" >
             </div>
             <form onsubmit="event.preventDefault(); addComment(${id})">
                 <div class="com-form-title">Leave a Comment</div>
-                <p>Name Here:</p>
-                <input type="text" name="com-name" id="cname" required>
                 <p>Comment:</p>
                 <textarea name="com-content" id="ccontent" cols="30" rows="10" required></textarea>
                 <button>Comment</button>
@@ -102,4 +110,19 @@
         </div>`
         }
     </script>
+    <script>
+        const image = JSON.parse(window.localStorage.getItem("tempLog")).image
+        var profilePic = document.getElementById("profilePic")
+        profilePic.src = image;
+    </script>
+    <script>
+        const x = document.getElementById("cwow")
+        if (wow == false) {
+            x.style.display = "none"
+        }
+        else {
+            x.style.display = "flex"
+        }
+    </script>
+
 </body>

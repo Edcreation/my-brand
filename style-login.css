@@ -7,7 +7,25 @@
     align-items: center;
     height: 700px;
 }
-
+#loginbutton {
+    height: 30px;
+    width: 70px;
+    display: none;
+    text-align: center;
+    align-items: center;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-size: 17px;
+    font-weight: bold;
+    background-color: #00DAE8;
+    border-radius: 2px;
+    transition: 0.6s;
+    border: none;
+    cursor: pointer;
+}
+nav a {
+    text-decoration: none;
+}
 @-webkit-keyframes slide-bottom {
     0% {
       -webkit-transform: translateY(0);
