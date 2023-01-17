@@ -233,7 +233,7 @@ function addComment(id) {
     localStorage.setItem('Blogs', JSON.stringify(Blogs));
     popContact("Comment Added")
     setTimeout(() => {
-      location.reload()
+      window.location.reload()
     }, 3000);
   } else {
     //popContact("Please Create Account Before Commenting.")
@@ -253,8 +253,8 @@ function getLikes(x) {
       Blogsl[x].likeCount = likes
       localStorage.setItem('Blogs', JSON.stringify(Blogsl));
       l = document.getElementById("l")
-      l.classList.remove("l");
-      l.classList.add("l1");
+      // l.classList.remove("l");
+      // l.classList.add("l1");
       location.reload()
       
     }
@@ -267,7 +267,7 @@ function navigate(n) {
 }
 function displayComments(id) {
   com = document.getElementById("com")
-  let Blogsd = JSON.parse(localStorage.getItem("Blogs"));
+  let Blogsd = JSON.parse(localStorage.getItem("Blogs")).sort((a, b) => (a > b ? -1 : 1));
   let output = " <div class=\"comment\">"  + " <div class=\"com-name\"> " + "</div> "
           + " <div class=\"com-content\"> " + "</div> " +
           "<div class=\"com-date\">09/01/2023</div> </div>"
@@ -276,11 +276,11 @@ function displayComments(id) {
   } else {
     
   }
-  for(let i = 0; i < Blogsd[id].comments.length; i++)
+  for(let i = Blogsd[id].comments.length; i > 0; i--)
   {
-    let m = new Date(Blogsd[id].comments[i].date)
-    output += " <div class=\"comment\">"  + " <div class=\"com-name\"> "+ "<img src="+ Blogsd[id].comments[i].image + " alt=\"image \">" + Blogsd[id].comments[i].name + "</div> "
-    + " <div class=\"com-content\"> " + Blogsd[id].comments[i].comment + "</div> " +
+    let m = new Date(Blogsd[id].comments[i-1].date)
+    output += " <div class=\"comment\">"  + " <div class=\"com-name\"> "+ "<img src="+ Blogsd[id].comments[i-1].image + " alt=\"image \">" + Blogsd[id].comments[i-1].name + "</div> "
+    + " <div class=\"com-content\"> " + Blogsd[id].comments[i-1].comment + "</div> " +
     "<div class=\"com-date\">" + m.toDateString() + "</div> </div>"
   }
   //console.log(output)

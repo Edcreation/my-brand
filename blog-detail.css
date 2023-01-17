@@ -64,18 +64,26 @@ body {
     margin-top: 15px;
     color: rgb(108, 108, 108);
 }
+.comments-container {
+    border-left: 1px solid #00DAE8;
+    border-right: 1px solid #00DAE8;
+    width: 90%;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
 .comments {
     overflow-y: scroll;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
     align-items: center;
-    width: 90%;
-    border-left: 1px solid #00DAE8;
-    border-right: 1px solid #00DAE8;
     padding: 10px;
+    width: 100%;
     max-height: 400px;
-    padding: 30px 0px;
 
 }
 .comment {
@@ -84,13 +92,12 @@ body {
     background: rgba(81, 91, 109, 0.531);
     color: #fff;
     border-radius: 8px;
-    width: 90%;
+    width: 80%;
+    align-self: center;
 }
+
 .comment:nth-child(1) {
     display: none;
-}
-.comment:nth-child(2) {
-    margin-top: 50px;
 }
  u {
     width: 100%;
