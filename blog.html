@@ -109,9 +109,10 @@
                 </div>
                 <div class="ico">
                     <div class="like"><div class="l" onclick="myFunction(this); getLikes(${index})" id="l"></div><p>${title['likeCount']}</p></div>
+                    <div class="like"><div class="com" id="l"></div><p>${title['comments'].length}</p></div>
                 </div>
             </div>
-        </div>`).join("")}`
+        </div>`).sort().join("")}`
         }
         
     </script>

@@ -74,8 +74,8 @@
     text-align: start;
 }
 .blog-cards {
-    width: 100%;
     display: flex;
+    width: 100%;
     flex-direction: row;
     justify-content: flex-start;
     border-radius: 5px;
@@ -162,6 +162,14 @@
     width: 25px;
     background-size: contain;
     align-self: center;
+}
+.like .com {
+    background: url("./images/com.png");
+    height: 25px;
+    width: 25px;
+    background-size: contain;
+    align-self: center;
+    margin-left: 10px;
 }
 .like p {
     margin-left: 5px;

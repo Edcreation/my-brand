@@ -43,17 +43,22 @@ function getMessage() {
   const name = document.getElementById("name").value;
   const message = document.getElementById("msg").value;
   let id = Math.floor(Math.random() * 999);
-  details = {
-    id:id,
-    email:email,
-    name:name,
-    message:message
+  if (email === "" || name === "" || message === "") {
+    popContact("Please Fill Out All Fields")
+  } else {
+    details = {
+      id:id,
+      email:email,
+      name:name,
+      message:message
+    }
+    console.log(details)
+    Messages.push(details);
+    window.localStorage.setItem("Messages", JSON.stringify(Messages));
+    document.getElementById('frm').reset()
+    popContact("Message Sent")
+    
   }
-  console.log(details)
-  Messages.push(details);
-  window.localStorage.setItem("Messages", JSON.stringify(Messages));
-  document.getElementById('frm').reset()
-  popContact("Message Sent")
   
 }
 
@@ -135,6 +140,8 @@ function createBlog() {
         image: image,
         content: content,
         likeCount: 0,
+        comments: [],
+        date: new Date().toLocaleDateString()
       }
       Blogs.push(blogData);
       localStorage.setItem('Blogs', JSON.stringify(Blogs));
@@ -162,14 +169,42 @@ function deleteBlog(m) {
       location.reload()
   }
 }
+function addComment(id) {
+  let Blogs = JSON.parse(localStorage.getItem("Blogs"));
+  let users = JSON.parse(localStorage.getItem("Users"));
+  let comment = document.getElementById("ccontent").value
+  let cname = document.getElementById("cname").value
+  if (users.some(item => item.name === cname)) {
+    const tempComment = {
+      id : id,
+      name : cname,
+      comment : comment,
+      date: Date.now()
+    }
+    console.log(cname)
+    Blogs[id].comments.push(tempComment);
+    localStorage.setItem('Blogs', JSON.stringify(Blogs));
+    popContact("Comment Added")
+    setTimeout(() => {
+      location.reload()
+    }, 3000);
+  } else {
+    //popContact("Please Create Account Before Commenting.")
+    alert("Please Create Account Before Commenting.")
+  }
+
+
+
+}
 function getLikes(x) {
   if (x > -1) {
-    let likes = Blogs[x].likeCount;
+    let Blogsl = JSON.parse(localStorage.getItem("Blogs"));
+    let likes = Blogsl[x].likeCount;
     likes = likes + 1
-    Blogs[x].likeCount = likes
-    localStorage.setItem('Blogs', JSON.stringify(Blogs));
-    console.log(Blogs[x].likeCount)
-    console.log(Blogs)
+    Blogsl[x].likeCount = likes
+    localStorage.setItem('Blogs', JSON.stringify(Blogsl));
+    console.log(Blogsl[x].likeCount)
+    console.log(Blogsl)
     l = document.getElementById("l")
     l.classList.remove("l");
     l.classList.add("l1");
@@ -181,6 +216,28 @@ function navigate(n) {
   let link = "./blog-detail.html?id=" + n
   window.location.href = link;
   console.log(n)
+}
+function displayComments(id) {
+  com = document.getElementById("com")
+  let Blogsd = JSON.parse(localStorage.getItem("Blogs"));
+  let output = " <div class=\"comment\">"  + " <div class=\"com-name\"> " + "</div> "
+          + " <div class=\"com-content\"> " + "</div> " +
+          "<div class=\"com-date\">09/01/2023</div> </div>"
+  if (Blogsd[id].comments.length < 1) {
+    output = "No Comments"
+  } else {
+    
+  }
+  for(let i = 0; i < Blogsd[id].comments.length; i++)
+  {
+    let m = new Date(Blogsd[id].comments[i].date)
+    output += " <div class=\"comment\">"  + " <div class=\"com-name\"> " + Blogsd[id].comments[i].name + "</div> "
+    + " <div class=\"com-content\"> " + Blogsd[id].comments[i].comment + "</div> " +
+    "<div class=\"com-date\">" + m.toLocaleDateString() + "</div> </div>"
+  }
+  //console.log(output)
+  com.innerHTML = output;
+  
 }
 
 

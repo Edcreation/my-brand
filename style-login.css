@@ -28,22 +28,7 @@
               transform: translateY(100px);
     }
   }
-#pop-up {
-    display: flex;
-    height: 50px;
-    width: 160px;
-    background: green;
-    color: #fff;
-    border-radius: 10px;
-    z-index: 2;
-    top: -4px;
-    position: fixed;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    -webkit-animation: slide-bottom 0.8s cubic-bezier(0.860, 0.000, 0.070, 1.000) both;
-    animation: slide-bottom 0.8s cubic-bezier(0.860, 0.000, 0.070, 1.000) both;
-}
+
 .container-box {
     display: flex;
     flex-direction: row;

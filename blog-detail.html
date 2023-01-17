@@ -15,9 +15,9 @@
 <body>
     <nav>
         <div class="logo">
-            <a href="./index.html#portfolio-intro"><img src="./images/ED.png" alt="logo"></a>
-            <div class="menu" onclick="toggleNav()">
-                <img src="./images/menu.png" alt="menu" class="ham">
+            <a href="./index.html#portfolio-intro"><img  src="./images/ED.png" alt="logo"></a>
+            <div class="menu" onclick="toggleNav()" >
+                <img  src="./images/open.png" id="ig"  alt="image">
             </div>
         </div>
         <div id="actions"  >
@@ -31,7 +31,8 @@
                 <a href="./login.html"><button>Login</button></a>
             </div>
         </div>
-    </nav> 
+    </nav>
+
 
     <div class="blog-article" id="view">
         
@@ -53,24 +54,27 @@
     </div>
     <script>
         window.onload = blogView();
-        
         function blogView() {
             let Blogsd = JSON.parse(localStorage.getItem("Blogs"));
-        let id;
-        var parts = window.location.search.substr(1).split("&");
-        var $_GET = {};
-        for (var i = 0; i < parts.length; i++) {
-            var temp = parts[i].split("=");
-            $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
-            
-        }
-        id = $_GET['id']
-        console.log(id)
+            let id;
+            var parts = window.location.search.substr(1).split("&");
+            var $_GET = {};
+            for (var i = 0; i < parts.length; i++) {
+                var temp = parts[i].split("=");
+                $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
+                
+            }
+            id = $_GET['id']
+            setTimeout(() => {
+                displayComments(id);
+            } , 1000)
+        
         const List = document.querySelector('#view');
         List.innerHTML = `
         <div class="bimage">
             <img src="${Blogsd[id].image}" alt="image">
         </div>
+
         <div class="blog-title">
             ${Blogsd[id].title}
         </div>
@@ -80,31 +84,22 @@
         <div class="blog-content">
             ${Blogsd[id].content}
         </div>
-        <div class="comments">
-            <u>Comments</u>
-            <div class="comment">
-                <div class="com-name">Commenter's name</div>
-                <div class="com-content">
-                    Lorem ipsum dolor, 
-                    sit amet consectetur adipisicing elit. 
-                    Repudiandae ab maxime veritatis labore eveniet.
-                </div>
-                <div class="com-date">09/01/2023</div>
-            </div>
+        <u>Comments</u>
+        <div class="comments" id="com">
+            
         </div>
         <div class="com-form">
-            <form action="">
+            <div class= "popcontact" id="popcontact" >
+            </div>
+            <form onsubmit="event.preventDefault(); addComment(${id})">
                 <div class="com-form-title">Leave a Comment</div>
                 <p>Name Here:</p>
-                <input type="text" name="com-name" id="cname">
+                <input type="text" name="com-name" id="cname" required>
                 <p>Comment:</p>
-                <textarea name="com-content" id="ccontent" cols="30" rows="10"></textarea>
+                <textarea name="com-content" id="ccontent" cols="30" rows="10" required></textarea>
                 <button>Comment</button>
             </form>
-        </div>
-
-
-        `
+        </div>`
         }
     </script>
 </body>

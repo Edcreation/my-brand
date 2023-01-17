@@ -6,6 +6,18 @@ body {
 ::-webkit-scrollbar {
     display: none;
 }
+
+#popcontact {
+    padding: 10px;
+    display: none;
+    background: rgb(0, 186, 0);
+    border-radius: 5px;
+    z-index: 6;
+    top: 50%;
+    right: 45%;
+    color: #000;
+    font-weight: 400;
+}
 .blog-article {
     width: 100%;
     display: flex;
@@ -55,11 +67,15 @@ body {
 .comments {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
     border-left: 1px solid #00DAE8;
     border-right: 1px solid #00DAE8;
     padding: 10px;
+    height: 400px;
     overflow-y: scroll;
+    padding-top: 0px;
 }
 .comment {
     margin: 10px 20px;
@@ -67,14 +83,19 @@ body {
     background: rgb(0, 33, 91);
     color: #fff;
     border-radius: 10px;
+    width: 90%;
     border-bottom-right-radius: 0;
 }
-.comments u {
+.comment:nth-child(1) {
+    display: none;
+}
+ u {
     width: 100%;
     text-align: center;
     align-self: center; 
     font-size: 23px;
     font-style: italic;
+    margin-bottom: 20px;
 }
 .com-name {
     font-style: italic;
