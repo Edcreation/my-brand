@@ -53,6 +53,7 @@ nav {
     z-index: 4;
     top: 0;
     position: sticky;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.132);
     
 
 }

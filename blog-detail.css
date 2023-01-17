@@ -80,11 +80,12 @@ body {
 .comment {
     margin: 10px 20px;
     padding: 10px;
-    background: rgb(0, 33, 91);
+    background: rgba(81, 91, 109, 0.531);
     color: #fff;
     border-radius: 10px;
     width: 90%;
-    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }
 .comment:nth-child(1) {
     display: none;

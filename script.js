@@ -1,4 +1,5 @@
 let open = false; 
+
 function popContact(x) {
   document.querySelector('#popcontact').style.display = "block";
   document.getElementById('popcontact').innerHTML = x
@@ -61,7 +62,6 @@ function getMessage() {
   }
   
 }
-
 /** ------------------- Authentication-----------*/
 function createUser() {
   let Users = JSON.parse(localStorage.getItem("Users") || "[]")
@@ -233,7 +233,7 @@ function displayComments(id) {
     let m = new Date(Blogsd[id].comments[i].date)
     output += " <div class=\"comment\">"  + " <div class=\"com-name\"> " + Blogsd[id].comments[i].name + "</div> "
     + " <div class=\"com-content\"> " + Blogsd[id].comments[i].comment + "</div> " +
-    "<div class=\"com-date\">" + m.toLocaleDateString() + "</div> </div>"
+    "<div class=\"com-date\">" + m.toDateString() + "</div> </div>"
   }
   //console.log(output)
   com.innerHTML = output;
