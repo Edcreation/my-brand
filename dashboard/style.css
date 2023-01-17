@@ -23,6 +23,7 @@ body {
     display: none;
     background: rgb(0, 186, 0);
     border-radius: 5px;
+    color: #cecece;
     position: absolute;
     z-index: 2;
     top: 70px;

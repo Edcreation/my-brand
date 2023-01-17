@@ -73,9 +73,9 @@ body {
     border-left: 1px solid #00DAE8;
     border-right: 1px solid #00DAE8;
     padding: 10px;
-    height: 400px;
+    max-height: 400px;
     overflow-y: scroll;
-    padding-top: 0px;
+    padding: 30px 0px;
 }
 .comment {
     margin: 10px 20px;

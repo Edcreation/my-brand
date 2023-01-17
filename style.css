@@ -18,6 +18,8 @@ body {
 #popcontact {
     padding: 10px;
     display: none;
+    text-align: center;
+    align-items: center;
     background: rgb(0, 186, 0);
     border-radius: 5px;
     position: ficed;
