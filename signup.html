@@ -59,7 +59,10 @@
                     </div>
                     <input type="email" name="email" id="email" placeholder="Email" >
                     <input type="text" name="name" id="name" placeholder="New User Name" >
-                    <input type="password" name="pass" id="pass"  placeholder="New Password" >
+                    <div class="pass">
+                        <input type="password" name="pass" id="pass"  placeholder="New Password" >
+                        <input type="checkbox" class="checkbox" onclick="togglePasswordVisibility()">
+                    </div>
                     <button>Sign Up</button> <a href="./login.html">Log In</a>
                 </form>
             </div>
@@ -81,6 +84,13 @@
         </div>
     </div>
     <script>
+        function popContact(x) {
+            document.querySelector('#popcontact').style.display = "block";
+            document.getElementById('popcontact').innerHTML = x
+            setTimeout(() => {
+              document.querySelector('#popcontact').style.display = "none";
+            }, 5000);
+          }
         fileEl = document.getElementById('image')
         fileEl.addEventListener('change', () => {
             const fr = new FileReader();
@@ -89,11 +99,25 @@
                 url = fr.result;
                 img = document.getElementById("imageReceiver")
                 img.src = url;
-                window.localStorage.setItem('tempImage', url);
+                console.log(url)
+                try {
+                    window.localStorage.setItem('tempImage', url);
+                  } catch(e) {
+                    if (e.code == 22) {
+                      popContact("Image Too Big")
+                    }
+                  }
             })
         }) 
         document.getElementById("loginbutton").style.display = "none" 
-
+        function togglePasswordVisibility() {
+            var x = document.getElementById("pass");
+            if (x.type === "password") {
+              x.type = "text";
+            } else {
+              x.type = "password";
+            }
+          }
 
     </script>
 </body>

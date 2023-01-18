@@ -77,7 +77,7 @@
     display: flex;
     width: 100%;
     flex-direction: row-reverse;
-    justify-content: flex-end;
+    justify-content: center;
     border-radius: 5px;
     align-items: flex-start;  
     padding: 20px;

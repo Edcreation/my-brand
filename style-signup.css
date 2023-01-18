@@ -119,6 +119,29 @@ form p {
 form a:hover {
     color: #00DAE8;
 }
+form .pass {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+form .pass #pass {
+    width: 100%;
+}
+form .pass .checkbox {
+    width: 30px;
+    height: 30px;
+    margin: 1px;
+    margin-left: 5px;
+    margin-bottom: 30px;
+    background: #00DAE8;
+    border: none;
+    outline: none;
+}
+form .pass .checkbox:checked {
+    background: #00DAE8;
+}
 .container-box form button {
     background: #00DAE8;
     border-radius: 5px;

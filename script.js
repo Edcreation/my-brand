@@ -185,6 +185,7 @@ function createBlog() {
         content: content,
         likeCount: 0,
         comments: [],
+        liked: [],
         date: new Date().toLocaleDateString()
       }
       Blogs.push(blogData);
@@ -234,7 +235,7 @@ function addComment(id) {
     popContact("Comment Added")
     setTimeout(() => {
       window.location.reload()
-    }, 3000);
+    }, 500);
   } else {
     //popContact("Please Create Account Before Commenting.")
     // alert("Please Create Account Before Commenting.")
@@ -244,19 +245,69 @@ function addComment(id) {
 
 
 }
+
 function getLikes(x) {
   if (wow === true) {
+    function contains(arr, key, val) {
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i][key] === val) return true;
+      }
+      return false;
+    }
+    
     if (x > -1) {
       let Blogsl = JSON.parse(localStorage.getItem("Blogs"));
+      let id = JSON.parse(localStorage.getItem("tempLog")).email
       let likes = Blogsl[x].likeCount;
-      likes = likes + 1
-      Blogsl[x].likeCount = likes
-      localStorage.setItem('Blogs', JSON.stringify(Blogsl));
-      l = document.getElementById("l")
-      // l.classList.remove("l");
-      // l.classList.add("l1");
-      location.reload()
-      
+        if (Blogsl[x].liked.length === 0) {
+          likes++
+          Blogsl[x].likeCount = likes
+          Blogsl[x].liked.push(id)
+          localStorage.setItem('Blogs', JSON.stringify(Blogsl));
+          l = document.getElementById("l")
+          l.classList.remove("l");
+          l.classList.add("l1");
+          location.reload()
+        }
+        else {
+          for (let i = 0 ; i < Blogsl[x].liked.length ; i++) {
+            if ( Blogsl[x].liked[i] !== id ) {
+              likes = likes + 1
+              Blogsl[x].likeCount = likes
+              Blogsl[x].liked.push(id)
+              localStorage.setItem('Blogs', JSON.stringify(Blogsl));
+              // l = document.getElementById("l")
+              // l.classList.remove("l");
+              // l.classList.add("l1");
+              location.reload()
+              break;
+            }
+            else if ( Blogsl[x].liked[i] == id ) {
+              function removeItemAll(arr, value) {
+                var i = 0;
+                while (i < arr.length) {
+                  if (arr[i] === value) {
+                    arr.splice(i, 1);
+                  } else {
+                    ++i;
+                  }
+                }
+                return arr;
+              }
+              likes--
+              Blogsl[x].likeCount = likes
+              const arr = removeItemAll(Blogsl[x].liked, id)
+              console.log(arr)
+              localStorage.setItem('Blogs', JSON.stringify(Blogsl));
+              // l = document.getElementById("l")
+              // l.classList.remove("l");
+              // l.classList.add("l1");
+              location.reload()
+              break;
+            }
+
+          }
+        }
     }
   }
 }
@@ -306,3 +357,4 @@ function che() {
     window.location.href = link
   }
 }
+
