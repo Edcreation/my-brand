@@ -9,10 +9,6 @@
     <link rel="icon" href="./images/icon.png" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
-    <script src="./script.js"></script>
-    <script>
-        window.onload = checkUser()
-    </script>
 </head>
 <body>
     <nav>
@@ -36,9 +32,7 @@
                 <button onclick="toProfile()">Profile</button>
                 <button onclick="logOut()">Log Out</button>
             </div>
-            <script>
-                window.onload = showLoginButton();
-            </script>
+
         </div>
     </nav>
 
@@ -55,12 +49,14 @@
             <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/twitter.png" alt='twitter' /></a>
             <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/whatsapp.png" alt='whatsapp' /></a>
             <a href='' target="_blank"><img src="./images/gmail.png" alt='gmail' /></a>
-          </div>
-        </div>
-        <div class="copyright">
-          <p>All rights reserved by M.J.Eddy 2022 &copy;</p>
         </div>
     </div>
+    
+    <div class="copyright">
+        <p>All rights reserved by M.J.Eddy 2022 &copy;</p>
+    </div>
+</div>
+    <script src="./script.js"></script>
     
     <script>
         window.onload = blogView();
@@ -100,6 +96,7 @@
                 
             </div>  
         </div>
+        <div id="rwow"><button onclick="toSignUp()">Sign Up</button> or <button onclick="tologin()">Log In</button> to comment.</div>
         <div class="com-form" id="cwow">
             <div class= "popcontact" id="popcontact" >
             </div>
@@ -110,8 +107,8 @@
                 <button>Comment</button>
             </form>
         </div>`
-        }
-    </script>
+    }
+</script>
     <script>
         const image = JSON.parse(window.localStorage.getItem("tempLog")).image
         var profilePic = document.getElementById("profilePic")
@@ -119,12 +116,20 @@
     </script>
     <script>
         const x = document.getElementById("cwow")
+        const y = document.getElementById("rwow")
         if (wow == false) {
             x.style.display = "none"
+            y.style.display = "flex"
         }
         else {
             x.style.display = "flex"
+            y.style.display = "none"
         }
     </script>
-
+    <script>
+        window.onload = showLoginButton();
+    </script>
+    <script>
+        window.onload = checkUser()
+    </script>
 </body>

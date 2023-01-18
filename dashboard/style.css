@@ -24,30 +24,16 @@ body {
     background: rgb(0, 186, 0);
     border-radius: 5px;
     color: #cecece;
-    position: absolute;
+    position: fixed;
     z-index: 2;
-    top: 70px;
+    top: 200px;
     right: 45%;
     color: #000;
     font-weight: 400;
     -webkit-animation: bounce-in-fwd 0.4s both;
     animation: bounce-in-fwd 0.5s both;
 }
-#donepop {
-    background: #04a804;
-    padding: 10px;
-    width: 180px;
-    border-radius: 8px;
-    font-weight: 500;
-    position: absolute;
-    left: 43%;
-    display: none;
-    top: 30px;
-    color: #fff;
-    text-align: center;
-    cursor: pointer;
-    animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
+
 /*----------------------------------------Dashboard Navbar--------------------------------------------------------------------------------*/
 
 nav {
@@ -237,17 +223,17 @@ nav span img {
 .items {
     width: 95%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: auto auto auto;
     overflow-y: scroll;
 }
 
 .item {
-    width: 100%;
+    width: 200px;
+    height: 300px;
+    padding: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
     background: #02041E;
@@ -260,15 +246,18 @@ nav span img {
 }
 .words {
     display: flex;
+    width: 100%;
     flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
-    justify-content: space-around;
+    height: 50%;
 }
 .words .title {
-    width: 95%;
+    width: 100%;
     font-size: 15px;
     margin-top: 5px;
     font-weight: 600;
+    text-align: start;
 }
 .words p {
     color: #fff;
@@ -276,9 +265,8 @@ nav span img {
     width: 90%;
     margin-left: 5px;
     text-overflow: ellipsis;
-    height: 100px;
+    height: 100%;
     overflow-y: scroll;
-    
 }
 .date {
     width: 100%;
@@ -287,7 +275,7 @@ nav span img {
     font-size: 10px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-evenly;
     align-items: center;
     margin-bottom: 10px;
 }
@@ -323,7 +311,6 @@ nav span img {
     justify-content: center;
     align-items: center;
     width: 600px;
-    height: 550px;
     background: #05092E;
     box-shadow: 8px 8px 20px 5px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
@@ -358,7 +345,7 @@ nav span img {
     width: 90%;
     text-align: start;
 }
-.new-box form input,.new-box form textarea {
+.new-box form input {
     width: 90%;
     background: #02041E;
     color: #00dae8;
@@ -366,6 +353,25 @@ nav span img {
     outline: none;
     border: none;
     padding: 5px;
+    height: 30px;
+}
+#content {
+    width: 90%;
+    height: 500px;
+    font-size: 20px;
+    outline: none;
+    border: none;
+    background: #cecece;
+    color: #000;
+}
+.ql-toolbar {
+    width: 90%;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    background: #fff;
+    align-items: center;
+    margin-top: 20px;
 }
 .new-box form button {
     padding: 10px;
@@ -601,6 +607,9 @@ nav span img {
         border: none;
         justify-content: center;
     }
+    .items {
+        grid-template-columns: auto auto;
+    }
 
 }
 @media screen and (max-width: 700px) {
@@ -645,7 +654,15 @@ nav span img {
     }
 }
 @media screen and (max-width: 400px) {
-    
+    .items {
+        grid-template-columns: auto;
+        align-content: center;
+    }
+    .item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .created {
         width: 100%;
         height: 600px;

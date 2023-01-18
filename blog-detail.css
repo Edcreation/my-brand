@@ -44,6 +44,19 @@ body {
     border-left: 1px solid #00DAE8;
     padding: 10px;
 }
+#rwow {
+    color: #00DAE8;
+    font-style: italic; 
+    margin: 30px 0;  
+} 
+#rwow button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    text-decoration: underline;
+}
 .bimage {
     overflow: hidden;
     width: 80%;

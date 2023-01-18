@@ -132,6 +132,9 @@ function loginUser() {
   let arr = JSON.parse(localStorage.getItem("Users") || "[]")
   const email = document.getElementById('email').value
   const pass = document.getElementById('pass').value
+  var x = users.findIndex(obj => obj.email == email);
+  var y = users.findIndex(obj => obj.password == pass);
+  console.log(x, y)
   if (email === "admin@mail.com" && pass=== "pass") {
     window.location.href = "./dashboard/dashboard.html"
     const admin = {
@@ -146,16 +149,16 @@ function loginUser() {
     }
     else {
       if(users.some(item => item.email === email)){
-        if (users.some(item => item.password === pass)) {
+        if ( x == y ) {
           let link = "./index.html"
           for (let i = 0; i < arr.length; i++) {
             if (users[i].email === email) {
               window.localStorage.setItem("tempLog", JSON.stringify(users[i]))
             }
-            
           }
           window.location.href = link
-        } else {
+        } 
+        else {
           popContact("Password Incorrect.")
         }
       }
@@ -180,13 +183,23 @@ function logOut() {
 }
 /**--------------------------Blogs Using Local Storage------------------------------- */
 
-
+var quill = new Quill('#content', {
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      ['image', 'code-block']
+    ]
+  },
+  placeholder: 'Compose an epic...',
+  theme: 'snow'  // or 'bubble'
+});
 function createBlog() {
   let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
   const title = document.getElementById('title').value
   const image = window.localStorage.getItem("tempImage")
-  const content = document.getElementById('content').value
-  // -----------Form Validation----------------
+  const content = quill.root.innerHTML
+  //-----------Form Validation----------------
   if (title === "" || content === "" || image === "") {
     popContact("Please Fill out All Fields")
   } else {
@@ -373,6 +386,11 @@ function che() {
 function tologin() {
   if (!localStorage.getItem("tempLog")) {
     window.location.href = "./login.html"
+  }
+}
+function toSignUp() {
+  if (!localStorage.getItem("tempLog")) {
+    window.location.href = "./signup.html"
   }
 }
 function toProfile() {

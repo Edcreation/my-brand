@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="../images/icon.png" >    
-    <script src="../script.js" ></script>
-    <script>
-        window.onload = che()
-    </script>
+    <link rel="icon" href="../images/icon.png" >
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet"> 
+    <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>  
+    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 </head>
@@ -44,7 +44,7 @@
                     <label for="file">Add Photo</label>
                     <input type="file" name="image" id="image">
                     <label for="content">Blog Content</label>
-                    <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                    <div name="content" id="content" cols="30" rows="10"></div>
                     <button>ADD BLOG</button>
                 </form>
             </div>
@@ -68,6 +68,11 @@
 
 
     </script>
-
+    
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="../script.js" ></script>
+    <script>
+        window.onload = che()
+    </script>
 </body>
 </html>
