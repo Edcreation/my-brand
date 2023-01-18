@@ -1,0 +1,210 @@
+.login-container {
+    color: #fff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 700px;
+}
+
+@-webkit-keyframes slide-bottom {
+    0% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+    100% {
+      -webkit-transform: translateY(100px);
+              transform: translateY(100px);
+    }
+  }
+  @keyframes slide-bottom {
+    0% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+    100% {
+      -webkit-transform: translateY(100px);
+              transform: translateY(100px);
+    }
+  }
+
+.container-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    width: 50%;
+    padding: 10px;
+    border-radius: 8px;
+}
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #ffffff85;
+    border-radius: 10px;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 10px;
+}
+.container-box form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+form input {
+    width: 80%;
+    margin-bottom: 30px;
+    font-size: 18px;
+    color: #fff;
+    border: none;
+    background: #02041E;
+    border-bottom: 2px solid #00DAE8;
+    outline: none;
+    transition: .8s;
+}
+form input:focus {
+    border-bottom: 2px solid #e90101;
+}
+form input:nth-child(2){
+    color: #00DAE8;
+}
+form .title {
+    width: 100%;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 28px;
+    color: #00DAE8;
+    text-align: center;
+}
+form .lock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    width: 100%;
+    /* background: url("./images/Lock.png") no-repeat; */
+    background-size: cover;
+}
+form .lock input {
+    width: 80%;
+    margin-bottom: 20px;
+}
+form .lock img {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #00d9e876;
+    margin: 20px 0;
+}
+form a {
+    margin-top: 15px;
+    color: #fff;
+    font-size: 18px;
+    transition: .8s;
+
+}
+form p {
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: start;
+    width: 90%;
+}
+form a:hover {
+    color: #00DAE8;
+}
+form .pass {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+form .pass #pass {
+    width: 100%;
+}
+form .pass #pass1 {
+    width: 100%;
+}
+form .pass .checkbox {
+    width: 30px;
+    height: 30px;
+    margin: 1px;
+    margin-left: 5px;
+    margin-bottom: 30px;
+    background: #00DAE8;
+    border: none;
+    outline: none;
+}
+form .pass .checkbox:checked {
+    background: #00DAE8;
+}
+.container-box form button {
+    background: #00DAE8;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 1s;
+    margin-top: 10px;
+}
+.container-box form button:hover {
+    background: #02041E;
+    color: #00DAE8;
+}
+.left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+.left p {
+    font-size: 24px;
+    color: #00DAE8;
+}
+.left a {
+    color: #535252;
+}
+.lock img {
+    width: 250px;
+    border-radius: 50%;
+}
+
+/*--------------------------------Responsiveness-----------------*/
+
+@media screen and (max-width: 700px) {
+    .container-box .left {
+        display: none;
+    }
+    .container-box {
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+    }
+    .container-box .right {
+        width: 100%;
+        border: none;
+    }
+    .container-box .right form input {
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .container-box .left {
+        display: none;
+    }
+    .container-box {
+        width: 80%;
+    }
+    
+    
+}

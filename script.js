@@ -8,8 +8,6 @@ function displayWow(){
   } else {
     w.style.display = "flex"
   }
-  
-
 }
 window.onload = checkUser()
 function popContact(x) {
@@ -82,31 +80,47 @@ function createUser() {
   const name = document.getElementById('name').value;
   const image = window.localStorage.getItem("tempImage")
   const password = document.getElementById('pass').value;
+  function ValidateEmail(inputText)
+  {
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(inputText.match(mailformat))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
   if (email === "" || name === "" || password === "" ) {
     popContact("Please Fill out All Fields.")
   }
   else {
-    if ( users.some(item => item.email === email)) {
-      popContact("Email Already Exists.");
-    }
-    else {
-      if (password.length < 5) {
-        popContact("Password is Too Short")
-      } else {
-        const userData = {
-            email: email,
-            name: name,
-            image: image,
-            password: password,
-        };
-        Users.push(userData);
-        localStorage.setItem('Users', JSON.stringify(Users));
-        var element = document.getElementById("frm")
-        element.reset()
-        window.localStorage.removeItem("tempImage")
-        popContact("Account Created.")
-        
+    if ( ValidateEmail(email) ) {
+      if ( users.some(item => item.email === email)) {
+        popContact("Email Already Exists.");
       }
+      else {
+        if (password.length < 5) {
+          popContact("Password is Too Short")
+        } else {
+          const userData = {
+              email: email,
+              name: name,
+              image: image,
+              password: password,
+          };
+          Users.push(userData);
+          localStorage.setItem('Users', JSON.stringify(Users));
+          var element = document.getElementById("frm")
+          element.reset()
+          window.localStorage.removeItem("tempImage")
+          popContact("Account Created.")
+          
+        }
+      }
+    } else {
+      popContact("Invalid Email")
     }
 
   }
@@ -172,7 +186,7 @@ function createBlog() {
   const title = document.getElementById('title').value
   const image = window.localStorage.getItem("tempImage")
   const content = document.getElementById('content').value
-  // -----------Form Valodarion----------------
+  // -----------Form Validation----------------
   if (title === "" || content === "" || image === "") {
     popContact("Please Fill out All Fields")
   } else {
@@ -270,7 +284,7 @@ function getLikes(x) {
           location.reload()
         }
         else {
-          for (let i = 0 ; i < Blogsl[x].liked.length ; i++) {
+          for (let i = 1 ; i < Blogsl[x].liked.length ; i++) {
             if ( Blogsl[x].liked[i] !== id ) {
               likes = likes + 1
               Blogsl[x].likeCount = likes
@@ -280,9 +294,8 @@ function getLikes(x) {
               // l.classList.remove("l");
               // l.classList.add("l1");
               location.reload()
-              break;
             }
-            else if ( Blogsl[x].liked[i] == id ) {
+            if ( Blogsl[x].liked[i] == id ) {
               function removeItemAll(arr, value) {
                 var i = 0;
                 while (i < arr.length) {
@@ -357,4 +370,58 @@ function che() {
     window.location.href = link
   }
 }
+function tologin() {
+  if (!localStorage.getItem("tempLog")) {
+    window.location.href = "./login.html"
+  }
+}
+function toProfile() {
+  window.location.href = "./profile.html"
+
+}
+
+function changeUser() {
+  let Users = JSON.parse(localStorage.getItem("Users") || "[]")
+  const email = JSON.parse(window.localStorage.getItem("tempLog")).email;
+  //const id = Users.indexOf(window.localStorage.getItem("Users"))
+  var id = Users.findIndex(obj => obj.email == email);
+  const name = document.getElementById('name').value;
+  const image = window.localStorage.getItem("tempImage")
+  const password = document.getElementById('pass').value;
+  const password1 = document.getElementById('pass1').value;
+  const mypassword = JSON.parse(window.localStorage.getItem("tempLog")).password
+  if (email === "" || name === "" || password === "" ) {
+    popContact("Please Fill out All Fields.")
+  }
+  else {
+    if (password != mypassword ) {
+      popContact("Old Password Is Wrong")
+    } else {
+      if (password1.length < 5) {
+        popContact("New Password is Too Short")
+      } else {
+        const userData = {
+            email: email,
+            name: name,
+            image: image,
+            password: password1,
+        };
+        if (id > -1) { // only splice array when item is found
+          Users.splice(id, 1); // 2nd parameter means remove one item only
+        }
+        Users.push(userData);
+        localStorage.setItem('Users', JSON.stringify(Users));
+        var element = document.getElementById("frm")
+        element.reset()
+        window.localStorage.removeItem("tempImage")
+        popContact("Profile Changed.")
+        setTimeout( logOut() , 1000);
+        
+      }
+
+    }
+    }
+
+
+  }
 

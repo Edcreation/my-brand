@@ -22,11 +22,12 @@ body {
     align-items: center;
     background: rgb(0, 186, 0);
     border-radius: 5px;
-    position: ficed;
+    position: fixed;
     z-index: 2;
-    top: 70px;
+    top: 100px;
     color: #000;
     font-weight: 400;
+    color: #fff;
     -webkit-animation: bounce-in-fwd 0.4s both;
     animation: bounce-in-fwd 0.5s both;
 }

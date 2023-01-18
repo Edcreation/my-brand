@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignUp</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style-signup.css">
+    <link rel="stylesheet" href="profile.css">
     <script src="./script.js"></script>
+    <script>
+        window.onload = tologin()
+    </script>
 </head>
 <body>
     <nav>
@@ -29,7 +32,7 @@
             <img class="propic" id="profilePic" onclick="displayWow()">
             </img>
             <div class="wow-menu" id="wowM">
-                <button onclick="toProfile()">Profile</button>
+                <button>Profile</button>
                 <button onclick="logOut()">Log Out</button>
             </div>
             <script>
@@ -51,19 +54,22 @@
         </div>
         <div class="container-box">
             <div class="right" >
-                <form onsubmit="event.preventDefault(); createUser()" id="frm">
-                    <div class="title">SIGN UP</div>
+                <form onsubmit="event.preventDefault(); changeUser()" id="frm" autocomplete="off">
+                    <div class="title" id="username">Hi</div>
                     <div class="lock">
                         <img src="./images/addimage.png" alt="" id="imageReceiver">
                         <input type="file" name="image" id="image">
                     </div>
-                    <input type="email" name="email" id="email" placeholder="Email" >
-                    <input type="text" name="name" id="name" placeholder="New User Name" >
+                    <input type="text" name="name" id="name" placeholder="Change User Name" autocomplete="off">
                     <div class="pass">
-                        <input type="password" name="pass" id="pass"  placeholder="New Password" >
+                        <input type="password" name="pass" id="pass"  placeholder="Old Password" autocomplete="new-password">
                         <input type="checkbox" class="checkbox" onclick="togglePasswordVisibility()">
                     </div>
-                    <button>Sign Up</button> <a href="./login.html">Log In</a>
+                    <div class="pass">
+                        <input type="password" name="pass1" id="pass1"  placeholder="New Password" autocomplete="new-password">
+                        <input type="checkbox" class="checkbox" onclick="togglePasswordVisibility()">
+                    </div>
+                    <button>Save</button>
                 </form>
             </div>
         </div>
@@ -91,6 +97,9 @@
               document.querySelector('#popcontact').style.display = "none";
             }, 5000);
           }
+        window.onload = document.getElementById("imageReceiver").src = JSON.parse(localStorage.getItem("tempLog")).image
+        window.onload = document.getElementById("username").innerHTML = JSON.parse(localStorage.getItem("tempLog")).name
+        window.onload = document.getElementById("profilePic").src = JSON.parse(localStorage.getItem("tempLog")).image
         fileEl = document.getElementById('image')
         fileEl.addEventListener('change', () => {
             const fr = new FileReader();
