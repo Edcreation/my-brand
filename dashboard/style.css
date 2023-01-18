@@ -532,6 +532,8 @@ nav span img {
     cursor: pointer;
     transition: .6s;
     font-weight: 500;
+    text-decoration: none;
+    color: #cecece;
 }
 .set-box img {
     width: 90px;
@@ -540,7 +542,60 @@ nav span img {
     background: #00dae8;
     color: #02041E;
 }
+/** 
+-------------User Settings-------------------
+*/
 
+.users {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+table {
+    margin-top: 100px;
+    width: 60%;
+}
+th {
+    background: #000;
+    color: #cecece;
+    padding: 5px;
+    transition: .5s;
+}
+th:hover {
+    background: #00dae8;
+    color: #000;
+
+}
+td {
+    padding: 5px;
+    background: #0000006b;
+    height: 35px;
+}
+td:hover {
+    background: #00dae8;
+    color: #000;
+}
+tr img {
+    height: 30px;
+    width: 30px;
+    border: 1px solid #00d9e88e;
+    border-radius: 50%;
+    margin-left: 20px;
+    margin-top: 10px;
+    transition: .7s;
+}
+tr:nth-child(even){
+    background-color: #1f1c1c4e;
+}
+tr img:hover {
+    width: 100px;
+    height: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
 
 /*-------------------------Responsiveness----------------------------*/
 @media screen and (max-width: 1190px) {

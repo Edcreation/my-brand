@@ -130,17 +130,22 @@ function createUser() {
 function loginUser() {
   let users = JSON.parse(localStorage.getItem("Users") || "[]")
   let arr = JSON.parse(localStorage.getItem("Users") || "[]")
+  const image = "./images/dp.jpg"
   const email = document.getElementById('email').value
   const pass = document.getElementById('pass').value
   var x = users.findIndex(obj => obj.email == email);
-  var y = users.findIndex(obj => obj.password == pass);
-  console.log(x, y)
+  const lastIndexOfName = name => {
+    let index = [...users].reverse().findIndex(obj => obj.password == pass);
+    return index >= 0 ? arr.length - 1 - index : index;
+  }
+  var y = lastIndexOfName(pass);
   if (email === "admin@mail.com" && pass=== "pass") {
     window.location.href = "./dashboard/dashboard.html"
     const admin = {
       email : "admin@mail.com",
       name: "Admin",
-      password: "pass"
+      password: "pass",
+      image : image
     }
     window.localStorage.setItem("tempLog", JSON.stringify(admin))
   } else {
@@ -148,23 +153,16 @@ function loginUser() {
       popContact("Please Fill out All Fields");
     }
     else {
-      if(users.some(item => item.email === email)){
-        if ( x == y ) {
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].email == email && users[i].password == pass) {
+          window.localStorage.setItem("tempLog", JSON.stringify(users[i]))
           let link = "./index.html"
-          for (let i = 0; i < arr.length; i++) {
-            if (users[i].email === email) {
-              window.localStorage.setItem("tempLog", JSON.stringify(users[i]))
-            }
-          }
           window.location.href = link
-        } 
-        else {
-          popContact("Password Incorrect.")
+          
+          break;
         }
       }
-      else {
-        popContact("Email Doesn't Exist")
-      }
+      popContact("Invalid Credintials")
     }
   }
 }
@@ -248,7 +246,7 @@ function addComment(id) {
   let comment = document.getElementById("ccontent").value
   let cname = JSON.parse(localStorage.getItem("tempLog")).name
   let image = JSON.parse(localStorage.getItem("tempLog")).image
-  if (users.some(item => item.name === cname)) {
+  if (users.some(item => item.name === cname) || cname == "Admin") {
     const tempComment = {
       id : id,
       name : cname,
@@ -275,13 +273,6 @@ function addComment(id) {
 
 function getLikes(x) {
   if (wow === true) {
-    function contains(arr, key, val) {
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i][key] === val) return true;
-      }
-      return false;
-    }
-    
     if (x > -1) {
       let Blogsl = JSON.parse(localStorage.getItem("Blogs"));
       let id = JSON.parse(localStorage.getItem("tempLog")).email
@@ -291,9 +282,6 @@ function getLikes(x) {
           Blogsl[x].likeCount = likes
           Blogsl[x].liked.push(id)
           localStorage.setItem('Blogs', JSON.stringify(Blogsl));
-          l = document.getElementById("l")
-          l.classList.remove("l");
-          l.classList.add("l1");
           location.reload()
         }
         else {
@@ -303,12 +291,9 @@ function getLikes(x) {
               Blogsl[x].likeCount = likes
               Blogsl[x].liked.push(id)
               localStorage.setItem('Blogs', JSON.stringify(Blogsl));
-              // l = document.getElementById("l")
-              // l.classList.remove("l");
-              // l.classList.add("l1");
               location.reload()
             }
-            if ( Blogsl[x].liked[i] == id ) {
+            else if ( Blogsl[x].liked[i] == id ) {
               function removeItemAll(arr, value) {
                 var i = 0;
                 while (i < arr.length) {
@@ -325,13 +310,9 @@ function getLikes(x) {
               const arr = removeItemAll(Blogsl[x].liked, id)
               console.log(arr)
               localStorage.setItem('Blogs', JSON.stringify(Blogsl));
-              // l = document.getElementById("l")
-              // l.classList.remove("l");
-              // l.classList.add("l1");
               location.reload()
               break;
             }
-
           }
         }
     }
@@ -347,7 +328,7 @@ function displayComments(id) {
   let Blogsd = JSON.parse(localStorage.getItem("Blogs")).sort((a, b) => (a > b ? -1 : 1));
   let output = " <div class=\"comment\">"  + " <div class=\"com-name\"> " + "</div> "
           + " <div class=\"com-content\"> " + "</div> " +
-          "<div class=\"com-date\">09/01/2023</div> </div>"
+          "<div class=\"com-date\">09/01/2023</div>" + " </div>"
   if (Blogsd[id].comments.length < 1) {
     output = "No Comments"
   } else {
@@ -356,7 +337,7 @@ function displayComments(id) {
   for(let i = Blogsd[id].comments.length; i > 0; i--)
   {
     let m = new Date(Blogsd[id].comments[i-1].date)
-    output += " <div class=\"comment\">"  + " <div class=\"com-name\"> "+ "<img src="+ Blogsd[id].comments[i-1].image + " alt=\"image \">" + Blogsd[id].comments[i-1].name + "</div> "
+    output += " <div class=\"comment\">"  + " <div class=\"com-name\"> "+ "<img src="+ Blogsd[id].comments[i-1].image + " alt=\"image \">" + Blogsd[id].comments[i-1].name +  "</div> "
     + " <div class=\"com-content\"> " + Blogsd[id].comments[i-1].comment + "</div> " +
     "<div class=\"com-date\">" + m.toDateString() + "</div> </div>"
   }
@@ -388,6 +369,9 @@ function tologin() {
     window.location.href = "./login.html"
   }
 }
+function SignUp(m) {
+window.location.href = "./signup.html"
+}
 function toSignUp() {
   if (!localStorage.getItem("tempLog")) {
     window.location.href = "./signup.html"
@@ -395,7 +379,6 @@ function toSignUp() {
 }
 function toProfile() {
   window.location.href = "./profile.html"
-
 }
 
 function changeUser() {
@@ -441,5 +424,22 @@ function changeUser() {
     }
 
 
+}
+function userToTable(m) {
+  const table = document.getElementById("table")
+  const users = JSON.parse(window.localStorage.getItem("Users"))
+  for (let i = 0; i < users.length; i++) {
+    const tr = document.createElement("tr");
+    const tdimage = document.createElement("img");
+    const tdname = document.createElement("td");
+    const tdemail = document.createElement("td");
+    tdimage.src = users[i].image;
+    tr.appendChild(tdimage);
+    tr.appendChild(tdname);
+    tr.appendChild(tdemail);
+    table.appendChild(tr);
+    tdname.innerText = users[i].name;
+    tdemail.innerText = users[i].email;
   }
+}
 

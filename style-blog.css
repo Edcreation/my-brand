@@ -76,12 +76,12 @@
 .blog-cards {
     display: flex;
     width: 100%;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: flex-start;
     border-radius: 5px;
-    align-items: flex-start;  
+    align-items: center;  
     padding: 20px;
-    overflow-x: scroll;
+    overflow-x: auto;
     scroll-behavior: smooth;
     /*background: rgb(224, 224, 224);*/
     
