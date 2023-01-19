@@ -181,17 +181,7 @@ function logOut() {
 }
 /**--------------------------Blogs Using Local Storage------------------------------- */
 
-var quill = new Quill('#content', {
-  modules: {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline'],
-      ['image', 'code-block']
-    ]
-  },
-  placeholder: 'Compose an epic...',
-  theme: 'snow'  // or 'bubble'
-});
+
 function createBlog() {
   let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
   const title = document.getElementById('title').value
@@ -319,7 +309,6 @@ function getLikes(x) {
 function navigate(n) {
   let link = "./blog-detail.html?id=" + n
   window.location.href = link;
-  console.log(n)
 }
 function displayComments(id) {
   com = document.getElementById("com")
@@ -423,7 +412,7 @@ function changeUser() {
 
 
 }
-function userToTable(m) {
+function userToTable() {
   const table = document.getElementById("table")
   const users = JSON.parse(window.localStorage.getItem("Users"))
   for (let i = 0; i < users.length; i++) {
@@ -431,13 +420,60 @@ function userToTable(m) {
     const tdimage = document.createElement("img");
     const tdname = document.createElement("td");
     const tdemail = document.createElement("td");
+    const deleteButton = document.createElement("button")
+    deleteButton.innerText = "Delete"
+    deleteButton.setAttribute("id", "btn")
+    const x = "userDelete("+ "'"+ users[i].name+"'" + ")"
+    deleteButton.setAttribute("onclick", x)
     tdimage.src = users[i].image;
     tr.appendChild(tdimage);
     tr.appendChild(tdname);
     tr.appendChild(tdemail);
+    tr.appendChild(deleteButton);
     table.appendChild(tr);
     tdname.innerText = users[i].name;
     tdemail.innerText = users[i].email;
   }
 }
+function userDelete(id) {
+  const users = JSON.parse(window.localStorage.getItem("Users"))
+  for(var i = 0; i <= users.length - 1; i++){
+    if(users[i].name == id){
+        users.splice(i,1);
+        localStorage.setItem('Users', JSON.stringify(users));
+        location.reload()
+    }
+  }
+}
 
+//---------------------------Dashboard Count Users, Blogs, comments and Likes
+function countLikes() {
+  let blogLikes = JSON.parse(window.localStorage.getItem("Blogs"));
+  let count = 0;
+  for (let i = 0; i < blogLikes.length; i++) {
+    
+    count = blogLikes[i].likeCount + count
+  }
+  const likes = document.getElementById("likes")
+  likes.innerHTML = count + " Total Likes"
+}
+function countComments() {
+  let blogComments = JSON.parse(window.localStorage.getItem("Blogs"));
+  let count = 0;
+  for (let i = 0; i < blogComments.length; i++) {
+    
+    count = blogComments[i].comments.length + count
+  }
+  const likes = document.getElementById("comments")
+  likes.innerHTML = count + " Total Comments"
+}
+function countBlogs() {
+  let blogs = JSON.parse(window.localStorage.getItem("Blogs")).length;
+  const blogscount = document.getElementById("blogscount")
+  blogscount.innerHTML = blogs + " Blogs"
+}
+function countUsers() {
+  let users = JSON.parse(window.localStorage.getItem("Users")).length;
+  const blogscount = document.getElementById("visits")
+  blogscount.innerHTML = users + " Accounts"
+}

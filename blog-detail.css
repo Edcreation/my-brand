@@ -42,9 +42,16 @@ body {
     border-right: 1px solid #00DAE8;
     border-left: 1px solid #00DAE8;
     padding: 10px;
-    background: #fff;
-    color: #000;
+    background: #02041E;
+    color: #fff;
+    overflow-x: hidden;
+    text-align: center;
+    font-size: 20px;
 }
+.ql-syntax {
+    width: 100%;
+    text-overflow: ellipsis;
+} 
 #rwow {
     color: #00DAE8;
     font-style: italic; 

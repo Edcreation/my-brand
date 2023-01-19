@@ -51,17 +51,17 @@
         </div>
         <div class="container-box">
             <div class="right" >
-                <form onsubmit="event.preventDefault(); createUser()" id="frm">
+                <form onsubmit="event.preventDefault(); createUser()" id="frm" autocomplete="">
                     <div class="title">SIGN UP</div>
                     <div class="lock">
                         <img src="./images/addimage.png" alt="" id="imageReceiver">
                         <input type="file" name="image" id="image">
                     </div>
                     <input type="email" name="email" id="email" placeholder="Email" >
-                    <input type="text" name="name" id="name" placeholder="New User Name" >
+                    <input type="text" name="name" id="name" placeholder="New User Name" autocomplete="new-password">
                     <div class="pass">
-                        <input type="password" name="pass" id="pass"  placeholder="New Password" >
-                        <input type="checkbox" class="checkbox" onclick="togglePasswordVisibility()">
+                        <input type="password" name="pass" id="pass"  placeholder="New Password" autocomplete="new-password">
+                       
                     </div>
                     <button>Sign Up</button> <a href="./login.html">Log In</a>
                 </form>

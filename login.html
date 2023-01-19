@@ -56,10 +56,13 @@
                 </div>
             </div>
             <div class="right">
-                <form onsubmit="event.preventDefault(); loginUser()">
+                <form onsubmit="event.preventDefault(); loginUser()" autocomplete="off">
                     <div class="title">LOG IN</div>
                     <input type="email" name="email" id="email" placeholder="User Name" >
-                    <input type="password" name="pass" id="pass" placeholder="Password" >
+                    <div class="pass">
+                        <input type="password" name="pass" id="pass" placeholder="Password" autocomplete="new-password">
+                        <input type="checkbox" class="checkbox" onclick="togglePasswordVisibility()">
+                    </div>
                     <button >Log In</button> <a href="./signup.html">Sign Up</a>
                 </form>
             </div>
@@ -82,6 +85,14 @@
     </div>
     <script>
         document.getElementById("loginbutton").style.display = "none" 
+        function togglePasswordVisibility() {
+            var x = document.getElementById("pass");
+            if (x.type === "password") {
+              x.type = "text";
+            } else {
+              x.type = "password";
+            }
+          }
     </script>
 </body>
 </html>

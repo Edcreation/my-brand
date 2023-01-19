@@ -41,19 +41,25 @@
                     <div class="box">
                         <div class="centered">
                             <img src="../images/visits.png" alt="">
-                            <p>200 Visits</p>
+                            <p id="visits">200 Visits</p>
                         </div>
                     </div>
                     <div class="box">
                         <div class="centered">
                             <img src="../images/heart.png" alt="">
-                            <p>5.2k Likes</p>
+                            <p id="likes">5.2k Likes</p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="centered">
+                            <img src="../images/comment.png" alt="">
+                            <p id="comments"></p>
                         </div>
                     </div>
                     <div class="box">
                         <div class="centered">
                             <img src="../images/note.png" alt="">
-                            <p>100 Articles</p>
+                            <p id="blogscount">100 Articles</p>
                         </div>
                     </div>
                 </div>
@@ -70,6 +76,10 @@
     </div>
     <script>
         window.onload = blogList();
+        window.onload = countLikes();
+        window.onload = countBlogs();
+        window.onload = countUsers();
+        window.onload = countComments();
         function blogList() {
         const List = document.querySelector('#box');
         let Blogs = JSON.parse(localStorage.getItem("Blogs"));

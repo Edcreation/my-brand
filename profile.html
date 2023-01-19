@@ -100,6 +100,7 @@
         window.onload = document.getElementById("imageReceiver").src = JSON.parse(localStorage.getItem("tempLog")).image
         window.onload = document.getElementById("username").innerHTML = JSON.parse(localStorage.getItem("tempLog")).name
         window.onload = document.getElementById("profilePic").src = JSON.parse(localStorage.getItem("tempLog")).image
+        window.onload = window.localStorage.setItem("tempImage", JSON.parse(localStorage.getItem("tempLog")).image)
         fileEl = document.getElementById('image')
         fileEl.addEventListener('change', () => {
             const fr = new FileReader();

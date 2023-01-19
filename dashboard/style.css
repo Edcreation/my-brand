@@ -183,6 +183,10 @@ nav span img {
 .centered img {
     height: 60px;
 }
+.centered p {
+    font-size: 14px;
+    text-align: center;
+}
 .dash-box-down {
     background: #05092E;
     box-shadow: 8px 8px 20px 5px rgba(0, 0, 0, 0.25);
@@ -230,7 +234,7 @@ nav span img {
 
 .item {
     width: 200px;
-    height: 300px;
+    height: 220px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -271,13 +275,13 @@ nav span img {
 .date {
     width: 100%;
     text-align: end;
-    margin-right: 10px;
     font-size: 10px;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 .date button {
     margin: 0 10px;
@@ -557,6 +561,7 @@ nav span img {
 table {
     margin-top: 100px;
     width: 60%;
+    margin-bottom: 30px;
 }
 th {
     background: #000;
@@ -567,7 +572,6 @@ th {
 th:hover {
     background: #00dae8;
     color: #000;
-
 }
 td {
     padding: 5px;
@@ -590,6 +594,24 @@ tr img {
 tr:nth-child(even){
     background-color: #1f1c1c4e;
 }
+tr {
+    background: #00000094;
+    align-items: center;
+}
+tr button {
+    padding: 5px;
+    margin-bottom: 15px;
+    width: 100%;
+    background: #cecece;
+    color: #000;
+    cursor: pointer;
+    width: 60px;
+    margin-left: 10px;
+}
+tr button:hover {
+    background: #d00;
+    color: #cecece;
+}
 tr img:hover {
     width: 100px;
     height: 100px;
@@ -609,6 +631,9 @@ tr img:hover {
     }
     .msg-box {
         width: 95%;
+    }
+    table {
+        width: 90%;
     }
     
     #dash-nav{
@@ -679,11 +704,19 @@ tr img:hover {
         margin-top: 50px;
     }
     .centered img {
-        display: none;
+        width: 30px;
+        height: 30px;
+        margin-top: 10px;
+    }
+    .centered p {
+        margin-top: 5px;
+        width: 100%;
+        margin-bottom: 0;
     }
     .centered {
         padding: 0px;
-        height: auto;
+        height: 100px;
+        width: 100px;
     }
     .dash-box {
         height: auto;
@@ -708,6 +741,20 @@ tr img:hover {
         grid-template-columns: auto auto;
     }
 }
+@media screen and (max-width: 500px) {
+    .dash-box-up {
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: space-evenly;
+        margin-bottom: 30px;
+        margin-top: 0;
+        padding-top: 0;
+    }
+    .dash-box {
+        margin-top: 20px;
+        
+    }
+}
 @media screen and (max-width: 400px) {
     .items {
         grid-template-columns: auto;
@@ -727,6 +774,14 @@ tr img:hover {
     }
     .logo {
         display: none;
+    }
+    table {
+        width: 98%;
+    }
+    tr button {
+        margin: 0;
+        padding: 0;
+        width: 30px;
     }
 
 
