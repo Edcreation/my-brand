@@ -41,7 +41,7 @@ function toggleDashNav() {
       navUl.style.display="none";
       open = false; 
 }
-}
+};
 function displayWow(){
   const w = document.getElementById("wowM")
   if (w.style.display === "flex") {
@@ -77,11 +77,13 @@ function getMessage() {
 }
 /** ------------------- Authentication-----------*/
 function createUser() {
-  let Users = JSON.parse(localStorage.getItem("Users") || "[]")
-  const users = JSON.parse(window.localStorage.getItem("Users") || "[]");
+  let Users = JSON.parse(localStorage.getItem("Users") || "[]");
   const email = document.getElementById('email').value;
   const name = document.getElementById('name').value;
-  const image = window.localStorage.getItem("tempImage")
+  let image = window.localStorage.getItem("tempImage")
+  if ( image == null ) {
+    image = "./images/dpicon.png"
+  }
   const password = document.getElementById('pass').value;
   function ValidateEmail(inputText)
   {
@@ -100,7 +102,7 @@ function createUser() {
   }
   else {
     if ( ValidateEmail(email) ) {
-      if ( users.some(item => item.email === email)) {
+      if ( Users.some(item => item.email === email)) {
         popContact("Email Already Exists.");
       }
       else {
@@ -369,16 +371,25 @@ function che() {
 /**---------------------------Changing The user profile ----------------------------------- */
 function changeUser() {
   let Users = JSON.parse(localStorage.getItem("Users") || "[]")
-  const email = JSON.parse(window.localStorage.getItem("tempLog")).email;
-  //const id = Users.indexOf(window.localStorage.getItem("Users"))
-  var id = Users.findIndex(obj => obj.email == email);
-  const name = document.getElementById('name').value;
-  const image = window.localStorage.getItem("tempImage")
-  const password = document.getElementById('pass').value;
-  const password1 = document.getElementById('pass1').value;
+  const myemail = JSON.parse(window.localStorage.getItem("tempLog")).email;
+  const myname = JSON.parse(localStorage.getItem("tempLog")).name;
+  const myimage = JSON.parse(window.localStorage.getItem("tempLog")).image
   const mypassword = JSON.parse(window.localStorage.getItem("tempLog")).password
-  if (email === "" || name === "" || password === "" ) {
-    popContact("Please Fill out All Fields.")
+  const image = window.localStorage.getItem("tempImage")
+  var id = Users.findIndex(obj => obj.email == myemail);
+  let name = document.getElementById('name').value;
+  let password = document.getElementById('pass').value;
+  let password1 = document.getElementById('pass1').value;
+  if ( name === "" ) {
+    name = myname
+  }
+  if ( password === "" ) {
+    password = mypassword
+    password1 = mypassword
+  }
+
+  if ( name === myname && password == mypassword && image == myimage && password1 == mypassword ) {
+    popContact("Nothing to save.")
   }
   else {
     if (password != mypassword ) {
@@ -388,13 +399,13 @@ function changeUser() {
         popContact("New Password is Too Short")
       } else {
         const userData = {
-            email: email,
+            email: myemail,
             name: name,
             image: image,
             password: password1,
         };
-        if (id > -1) { // only splice array when item is found
-          Users.splice(id, 1); // 2nd parameter means remove one item only
+        if (id > -1) { 
+          Users.splice(id, 1);
         }
         Users.push(userData);
         localStorage.setItem('Users', JSON.stringify(Users));

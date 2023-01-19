@@ -43,7 +43,8 @@ nav {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding-top: 5px;
+    padding: 5px;
+    background: #000;
 }
 nav button {
     background: #d00;
@@ -62,23 +63,35 @@ nav button {
 .logo img {
     height: 30px;
 }
+
 .links {
-    display: flex;
-    flex-direction: row;
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    background: rgb(66, 66, 66);
+    right: 0;
+    top: 46px;
     justify-content: space-around;
     align-items: center;
-    width: 200px;
+    width: 150px;
+    height: 250px;
 }
 .links a {
     text-decoration: none;
     color: #00dae8;
     font-weight: 400;
     text-align: center;
+    padding: 10px;
+    transition: .7s;
+}
+.links a:hover {
+    text-decoration: underline;
 }
 .dp img{
     height: 30px;
     border-radius: 50%;
     border: 1px solid #00d9e896;
+    margin-right: 20px;
 }
 /*---------------------------------left Navbar------------------*/
 .dash-container {
@@ -92,10 +105,12 @@ nav button {
     justify-content: space-around;
     left: 0px;
     width: 150px;
-    height: 600px;
+    height: 100%;
     border-right: 2px solid #00dae8;
-    margin-top: 47.36px;
+    margin-top: 46px;
     animation: slideInFromLeft .8s ease-in-out;
+    background: #000;
+    z-index: 10;
 }
 #dash-nav a {
     text-decoration: none;
@@ -111,7 +126,10 @@ nav button {
 }
 #dash-nav a:hover {
     color: #00dae8;
-    background: #000000;
+    background: #141212;
+}
+#dash-nav a:nth-child(4) {
+    margin-bottom: 50px;
 }
 nav span {
     width: 30px;
@@ -142,7 +160,7 @@ nav span img {
 /*-------------------------Dashboard--------------------------*/
 .dashboard {
     width: 100%;
-    height: 700px;
+    height: 900px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -319,6 +337,7 @@ nav span img {
     box-shadow: 8px 8px 20px 5px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     margin-top: 50px;
+    margin-bottom: 30px;
 }
 .new-box form {
     display: flex;
@@ -395,7 +414,7 @@ nav span img {
 
 .messages {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     width: 100%;
@@ -517,6 +536,7 @@ nav span img {
     align-items: flex-start;
     flex-direction: row;
     width: 100%;
+    height: 700px;
 }
 .settings-container {
     display: grid;
@@ -628,6 +648,10 @@ tr img:hover {
 @media screen and (max-width: 800px) {
     nav span{
         display: block;
+        padding: 0;
+    }
+    span img {
+        padding: none;
     }
     .msg-box {
         width: 95%;

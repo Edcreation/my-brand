@@ -47,17 +47,6 @@
         <button>Donate</button>
         <b onclick="rehide()">Not Today</b>
     </div>
-    <script>
-        function myFunction(x) {
-            x.classList.toggle("l1");
-          }
-        setTimeout(function(){
-            document.getElementById("pp").style.display = "flex"
-          },560000); 
-        function rehide() {
-            document.getElementById("pp").style.display = "none"
-        }
-    </script>
     <div class="blog">
         <div class="blogs-block">
             <div class="title">Top</div>
@@ -118,7 +107,7 @@
                     ${title['title']}
                 </div>
                 <div class="ico">
-                    <div class="like"><div class="l" onclick="myFunction(this); getLikes(${index})" id="l"></div><p>${title['likeCount']}</p></div>
+                    <div class="like"><div class="l1" onclick="getLikes(${index})" id="l"></div><p>${title['likeCount']}</p></div>
                     <div class="like"><div class="com" id="l"></div><p>${title['comments'].length}</p></div>
                 </div>
             </div>
