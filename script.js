@@ -1,15 +1,10 @@
+/**---------------Usefull variables---------------------------------------------- */
 let open = false; 
 let wow = false;
 
-function displayWow(){
-  const w = document.getElementById("wowM")
-  if (w.style.display === "flex") {
-    w.style.display = "none"
-  } else {
-    w.style.display = "flex"
-  }
-}
+/**--------Check User onload-----------------------------------------------------*/
 window.onload = checkUser()
+/**----------------------Custom Pop up------------------------------------------ */
 function popContact(x) {
   document.querySelector('#popcontact').style.display = "block";
   document.getElementById('popcontact').innerHTML = x
@@ -17,7 +12,7 @@ function popContact(x) {
     document.querySelector('#popcontact').style.display = "none";
   }, 2000);
 }
-
+/**---------------------Toggle Menus-------------------------------------------- */
 function toggleNav(){
   var myImage = document.getElementById('ig');
   if(open==false){
@@ -47,7 +42,15 @@ function toggleDashNav() {
       open = false; 
 }
 }
-//---------------------Messages Using Local Storage-----------------/
+function displayWow(){
+  const w = document.getElementById("wowM")
+  if (w.style.display === "flex") {
+    w.style.display = "none"
+  } else {
+    w.style.display = "flex"
+  }
+};
+/**---------------------Messages Using Local Storage------------------------------*/
 function getMessage() {
   let Messages = JSON.parse(localStorage.getItem("Messages") || "[]");
   const email = document.getElementById("email").value;
@@ -179,9 +182,7 @@ function logOut() {
   wow = false
   location.reload()
 }
-/**--------------------------Blogs Using Local Storage------------------------------- */
-
-
+/**--------------------------Blogs Using Local Storage------------------------------------ */
 function createBlog() {
   let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
   const title = document.getElementById('title').value
@@ -212,7 +213,6 @@ function createBlog() {
     } 
   }
 }
-
 function deleteAllBlogs() {
   let Bloga = JSON.parse(localStorage.getItem("Blogs") || "[]");
   Bloga = []
@@ -229,7 +229,6 @@ function deleteBlog(m) {
       location.reload()
   }
 }
-
 function addComment(id) {
   let Blogs = JSON.parse(localStorage.getItem("Blogs"));
   let users = JSON.parse(localStorage.getItem("Users"));
@@ -260,7 +259,28 @@ function addComment(id) {
 
 
 }
-
+function displayComments(id) {
+  com = document.getElementById("com")
+  let Blogsd = JSON.parse(localStorage.getItem("Blogs")).sort((a, b) => (a > b ? -1 : 1));
+  let output = " <div class=\"comment\">"  + " <div class=\"com-name\"> " + "</div> "
+          + " <div class=\"com-content\"> " + "</div> " +
+          "<div class=\"com-date\">09/01/2023</div>" + " </div>"
+  if (Blogsd[id].comments.length < 1) {
+    output = "No Comments"
+  } else {
+    
+  }
+  for(let i = Blogsd[id].comments.length; i > 0; i--)
+  {
+    let m = new Date(Blogsd[id].comments[i-1].date)
+    output += " <div class=\"comment\">"  + " <div class=\"com-name\"> "+ "<img src="+ Blogsd[id].comments[i-1].image + " alt=\"image \">" + Blogsd[id].comments[i-1].name +  "</div> "
+    + " <div class=\"com-content\"> " + Blogsd[id].comments[i-1].comment + "</div> " +
+    "<div class=\"com-date\">" + m.toDateString() + "</div> </div>"
+  }
+  //console.log(output)
+  com.innerHTML = output;
+  
+}
 function getLikes(x) {
   if (wow === true) {
     if (x > -1) {
@@ -306,50 +326,10 @@ function getLikes(x) {
     }
   }
 }
+/**------------------------ Navigation Done by Buttons------------------------------------- */
 function navigate(n) {
   let link = "./blog-detail.html?id=" + n
   window.location.href = link;
-}
-function displayComments(id) {
-  com = document.getElementById("com")
-  let Blogsd = JSON.parse(localStorage.getItem("Blogs")).sort((a, b) => (a > b ? -1 : 1));
-  let output = " <div class=\"comment\">"  + " <div class=\"com-name\"> " + "</div> "
-          + " <div class=\"com-content\"> " + "</div> " +
-          "<div class=\"com-date\">09/01/2023</div>" + " </div>"
-  if (Blogsd[id].comments.length < 1) {
-    output = "No Comments"
-  } else {
-    
-  }
-  for(let i = Blogsd[id].comments.length; i > 0; i--)
-  {
-    let m = new Date(Blogsd[id].comments[i-1].date)
-    output += " <div class=\"comment\">"  + " <div class=\"com-name\"> "+ "<img src="+ Blogsd[id].comments[i-1].image + " alt=\"image \">" + Blogsd[id].comments[i-1].name +  "</div> "
-    + " <div class=\"com-content\"> " + Blogsd[id].comments[i-1].comment + "</div> " +
-    "<div class=\"com-date\">" + m.toDateString() + "</div> </div>"
-  }
-  //console.log(output)
-  com.innerHTML = output;
-  
-}
-
-
-function showLoginButton() {
-  const p = document.getElementById("profilePic")
-  const l = document.getElementById("loginbutton")
-  if ( wow === false) {
-    p.style.display = "none"
-    l.style.display = "block"
-  }
-}
-function che() {
-  const ano = JSON.parse(window.localStorage.getItem("tempLog"))
-  if (wow === true && ano.email === "admin@mail.com" && ano.password === "pass") {
-  }
-  else {
-    const link = "../index.html"
-    window.location.href = link
-  }
 }
 function tologin() {
   if (!localStorage.getItem("tempLog")) {
@@ -367,7 +347,26 @@ function toSignUp() {
 function toProfile() {
   window.location.href = "./profile.html"
 }
+function showLoginButton() {
+  const p = document.getElementById("profilePic")
+  const l = document.getElementById("loginbutton")
+  if ( wow === false) {
+    p.style.display = "none"
+    l.style.display = "block"
+  }
+}
+/**---------------------------Checking Admin Authority ------------------------------------ */
+function che() {
+  const ano = JSON.parse(window.localStorage.getItem("tempLog"))
+  if (wow === true && ano.email === "admin@mail.com" && ano.password === "pass") {
+  }
+  else {
+    const link = "../index.html"
+    window.location.href = link
+  }
+}
 
+/**---------------------------Changing The user profile ----------------------------------- */
 function changeUser() {
   let Users = JSON.parse(localStorage.getItem("Users") || "[]")
   const email = JSON.parse(window.localStorage.getItem("tempLog")).email;
@@ -412,6 +411,8 @@ function changeUser() {
 
 
 }
+
+/** ---------------------------Admin Manage User ------------------------------------------ */
 function userToTable() {
   const table = document.getElementById("table")
   const users = JSON.parse(window.localStorage.getItem("Users"))
@@ -446,7 +447,7 @@ function userDelete(id) {
   }
 }
 
-//---------------------------Dashboard Count Users, Blogs, comments and Likes
+/**---------------------------Dashboard Count Users, Blogs, comments and Likes-------------*/
 function countLikes() {
   let blogLikes = JSON.parse(window.localStorage.getItem("Blogs"));
   let count = 0;

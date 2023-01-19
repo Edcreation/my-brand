@@ -78,7 +78,7 @@
     width: 100%;
     flex-direction: row;
     justify-content: flex-start;
-    border-radius: 5px;
+    border-radius: 1px;
     align-items: center;  
     padding: 20px;
     overflow-x: auto;
@@ -96,7 +96,7 @@
     justify-content: space-between;
     padding: 0px;
     margin: 0 10px;
-    border-radius: 8px;
+    border-radius: 3px;
     cursor: pointer;
     text-decoration: none;
     height: 300px;
@@ -120,8 +120,8 @@
 }
 .blog-card .image {
     overflow: hidden;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
     height: 70%;
 }
 .over {
