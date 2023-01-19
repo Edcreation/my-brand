@@ -285,15 +285,8 @@ function getLikes(x) {
           location.reload()
         }
         else {
-          for (let i = 1 ; i < Blogsl[x].liked.length ; i++) {
-            if ( Blogsl[x].liked[i] !== id ) {
-              likes = likes + 1
-              Blogsl[x].likeCount = likes
-              Blogsl[x].liked.push(id)
-              localStorage.setItem('Blogs', JSON.stringify(Blogsl));
-              location.reload()
-            }
-            else if ( Blogsl[x].liked[i] == id ) {
+
+            if ( Blogsl[x].liked.some(item => item == id) ) {
               function removeItemAll(arr, value) {
                 var i = 0;
                 while (i < arr.length) {
@@ -311,9 +304,14 @@ function getLikes(x) {
               console.log(arr)
               localStorage.setItem('Blogs', JSON.stringify(Blogsl));
               location.reload()
-              break;
             }
-          }
+            else if ( Blogsl[x].liked.some(item => item != id)  ) {
+              likes = likes + 1
+              Blogsl[x].likeCount = likes
+              Blogsl[x].liked.push(id)
+              localStorage.setItem('Blogs', JSON.stringify(Blogsl));
+              location.reload()
+            }
         }
     }
   }
