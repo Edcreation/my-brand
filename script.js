@@ -426,7 +426,7 @@ function changeUser() {
   }
 
   if ( name === myname && password == mypassword && image == myimage && password1 == mypassword ) {
-    popContact("Nothing to save.")
+    popContact("Nothing to save.", "red")
   }
   else {
     if (password != mypassword ) {
@@ -449,7 +449,7 @@ function changeUser() {
         var element = document.getElementById("frm")
         element.reset()
         window.localStorage.removeItem("tempImage")
-        popContact("Profile Changed.")
+        popContact("Profile Changed.", "green")
         setTimeout( logOut() , 1000);
         
       }
