@@ -20,7 +20,6 @@ body {
     display: none;
     text-align: center;
     align-items: center;
-    background: rgb(0, 186, 0);
     border-radius: 5px;
     position: fixed;
     z-index: 2;
@@ -30,6 +29,14 @@ body {
     color: #fff;
     -webkit-animation: bounce-in-fwd 0.4s both;
     animation: bounce-in-fwd 0.5s both;
+}
+#dashbutton {
+    background: #00DAE8;
+    color: #000;
+    padding: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-weight: bold;
 }
 /*--------------------Navbar--------------------*/
 @keyframes slideInFromLeft {

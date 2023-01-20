@@ -84,13 +84,6 @@
         </div>
     </div>
     <script>
-        function popContact(x) {
-            document.querySelector('#popcontact').style.display = "block";
-            document.getElementById('popcontact').innerHTML = x
-            setTimeout(() => {
-              document.querySelector('#popcontact').style.display = "none";
-            }, 5000);
-          }
         fileEl = document.getElementById('image')
         fileEl.addEventListener('change', () => {
             const fr = new FileReader();

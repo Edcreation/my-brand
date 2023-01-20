@@ -52,6 +52,9 @@ body {
     width: 100%;
     text-overflow: ellipsis;
 } 
+.ql-align-justify img {
+    width: 80%;
+}
 #rwow {
     color: #00DAE8;
     font-style: italic; 

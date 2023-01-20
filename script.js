@@ -5,8 +5,9 @@ let wow = false;
 /**--------Check User onload-----------------------------------------------------*/
 window.onload = checkUser()
 /**----------------------Custom Pop up------------------------------------------ */
-function popContact(x) {
+function popContact(x,y) {
   document.querySelector('#popcontact').style.display = "block";
+  document.getElementById('popcontact').style.backgroundColor = y
   document.getElementById('popcontact').innerHTML = x
   setTimeout(() => {
     document.querySelector('#popcontact').style.display = "none";
@@ -53,16 +54,15 @@ function displayWow(){
 /**---------------------Messages Using Local Storage------------------------------*/
 function getMessage() {
   let Messages = JSON.parse(localStorage.getItem("Messages") || "[]");
-  const email = document.getElementById("email").value;
   const name = document.getElementById("name").value;
   const message = document.getElementById("msg").value;
   let id = Math.floor(Math.random() * 999);
   if (email === "" || name === "" || message === "") {
-    popContact("Please Fill Out All Fields")
+    popContact("Please Fill Out All Fields", "red")
   } else {
     details = {
       id:id,
-      email:email,
+      email: email,
       name:name,
       message:message
     }
@@ -70,10 +70,33 @@ function getMessage() {
     Messages.push(details);
     window.localStorage.setItem("Messages", JSON.stringify(Messages));
     document.getElementById('frm').reset()
-    popContact("Message Sent")
+    popContact("Message Sent","green")
     
   }
   
+}
+function deleteAllMessages() {
+  Messages = []
+  window.localStorage.removeItem("Messages");
+  popContact("All Messages Deleted")
+  setTimeout( () => {
+      location.reload();
+
+  } , 1000)
+}
+function deleteMessage(m) {
+  let Messages = JSON.parse(localStorage.getItem("Messages"));
+
+  console.log(m)
+  if (m > -1) { // only splice array when item is found
+      Messages.splice(m, 1); // 2nd parameter means remove one item only
+      window.localStorage.setItem("Messages", JSON.stringify(Messages));
+      popContact("Message Deleted")
+      setTimeout( () => {
+        location.reload();
+  
+      } , 1000)
+  }
 }
 /** ------------------- Authentication-----------*/
 function createUser() {
@@ -98,16 +121,16 @@ function createUser() {
     }
   }
   if (email === "" || name === "" || password === "" ) {
-    popContact("Please Fill out All Fields.")
+    popContact("Please Fill out All Fields.", "red")
   }
   else {
     if ( ValidateEmail(email) ) {
       if ( Users.some(item => item.email === email)) {
-        popContact("Email Already Exists.");
+        popContact("Email Already Exists.", "red");
       }
       else {
         if (password.length < 5) {
-          popContact("Password is Too Short")
+          popContact("Password is Too Short", "red")
         } else {
           const userData = {
               email: email,
@@ -120,12 +143,12 @@ function createUser() {
           var element = document.getElementById("frm")
           element.reset()
           window.localStorage.removeItem("tempImage")
-          popContact("Account Created.")
+          popContact("Account Created.", "green")
           
         }
       }
     } else {
-      popContact("Invalid Email")
+      popContact("Invalid Email","red")
     }
 
   }
@@ -155,7 +178,7 @@ function loginUser() {
     window.localStorage.setItem("tempLog", JSON.stringify(admin))
   } else {
     if (email === "" || pass === "") {
-      popContact("Please Fill out All Fields");
+      popContact("Please Fill out All Fields", "red");
     }
     else {
       for (let i = 0; i < users.length; i++) {
@@ -163,11 +186,13 @@ function loginUser() {
           window.localStorage.setItem("tempLog", JSON.stringify(users[i]))
           let link = "./index.html"
           window.location.href = link
-          
           break;
         }
       }
-      popContact("Invalid Credintials")
+      setTimeout(() => {
+        popContact("Invalid Credintials", "red")
+        
+      }, 1000);
     }
   }
 }
@@ -192,10 +217,10 @@ function createBlog() {
   const content = quill.root.innerHTML
   //-----------Form Validation----------------
   if (title === "" || content === "" || image === "") {
-    popContact("Please Fill out All Fields")
+    popContact("Please Fill out All Fields", "red")
   } else {
     if (title.length > 500) {
-      popContact(" Title too Long ")
+      popContact(" Title too Long ", "red")
     } else {
       const blogData = {
         title: title,
@@ -210,7 +235,7 @@ function createBlog() {
       localStorage.setItem('Blogs', JSON.stringify(Blogs));
       var element = document.getElementById("frm")
       element.reset()
-      popContact("Blog Created")
+      popContact("Blog Created", "green")
       window.localStorage.removeItem("tempImage")
     } 
   }
@@ -219,6 +244,7 @@ function deleteAllBlogs() {
   let Bloga = JSON.parse(localStorage.getItem("Blogs") || "[]");
   Bloga = []
   window.localStorage.removeItem("Blogs");
+  popContact("All Blogs Deleted", "yellow")
   location.reload();
 }
 function deleteBlog(m) {
@@ -228,6 +254,7 @@ function deleteBlog(m) {
   if (m > -1) { // only splice array when item is found
       Blogsa.splice(m, 1); // 2nd parameter means remove one item only
       window.localStorage.setItem("Blogs", JSON.stringify(Blogsa));
+      popContact("Blog Deleted", "yellow")
       location.reload()
   }
 }
@@ -248,14 +275,14 @@ function addComment(id) {
     console.log(cname)
     Blogs[id].comments.push(tempComment);
     localStorage.setItem('Blogs', JSON.stringify(Blogs));
-    popContact("Comment Added")
+    popContact("Comment Added", "green")
     setTimeout(() => {
       window.location.reload()
     }, 500);
   } else {
     //popContact("Please Create Account Before Commenting.")
     // alert("Please Create Account Before Commenting.")
-    popContact("Please Create Account Before Commenting.")
+    popContact("Please Create Account Before Commenting.", "red")
   }
 
 
@@ -349,6 +376,9 @@ function toSignUp() {
 function toProfile() {
   window.location.href = "./profile.html"
 }
+function toDashboard() {
+  window.location.href = "./dashboard/dashboard.html"
+}
 function showLoginButton() {
   const p = document.getElementById("profilePic")
   const l = document.getElementById("loginbutton")
@@ -361,13 +391,23 @@ function showLoginButton() {
 function che() {
   const ano = JSON.parse(window.localStorage.getItem("tempLog"))
   if (wow === true && ano.email === "admin@mail.com" && ano.password === "pass") {
+
   }
   else {
     const link = "../index.html"
     window.location.href = link
   }
 }
-
+function toDashButton() {
+  const dashbutton = document.getElementById("dashbutton")
+  const ano = JSON.parse(window.localStorage.getItem("tempLog"))
+  if (wow === true && ano.email === "admin@mail.com" && ano.password === "pass") {
+    dashbutton.style.display = "block"
+  }
+  else {
+    dashbutton.style.display = "none"
+  }
+}
 /**---------------------------Changing The user profile ----------------------------------- */
 function changeUser() {
   let Users = JSON.parse(localStorage.getItem("Users") || "[]")
@@ -453,7 +493,10 @@ function userDelete(id) {
     if(users[i].name == id){
         users.splice(i,1);
         localStorage.setItem('Users', JSON.stringify(users));
-        location.reload()
+        popContact("User Deleted", "yellow")
+        setTimeout(() => {
+          location.reload()
+        }, 1500);
     }
   }
 }
@@ -488,4 +531,9 @@ function countUsers() {
   let users = JSON.parse(window.localStorage.getItem("Users")).length;
   const blogscount = document.getElementById("visits")
   blogscount.innerHTML = users + " Accounts"
+}
+function countMessages() {
+  let Messages = JSON.parse(window.localStorage.getItem("Messages")).length;
+  const messagescount = document.getElementById("msgcount")
+  messagescount.innerHTML = Messages
 }

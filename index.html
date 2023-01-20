@@ -29,6 +29,7 @@
                 <a href="./blog.html">Blog</a>
                 <a href="./contacts.html">Contacts</a>
             </div>
+            <button id="dashbutton" onclick="toDashboard()">Dashboard</button>
             <button id="loginbutton" onclick="tologin()">Login</button>
             <img  src="./images/usrdp.png" class="propic" id="profilePic" onclick="displayWow()">
             </img>
@@ -36,8 +37,10 @@
                 <button onclick="toProfile()">Profile</button>
                 <button onclick="logOut()">Log Out</button>
             </div>
+            
             <script>
                 window.onload = showLoginButton();
+                window.onload = toDashButton();
             </script>
         </div>
     </nav>

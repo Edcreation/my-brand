@@ -65,13 +65,14 @@
             let Blogsd = JSON.parse(localStorage.getItem("Blogs"));
             let id;
             var parts = window.location.search.substr(1).split("&");
-            var $_GET = {};
+            var m = {};
             for (var i = 0; i < parts.length; i++) {
                 var temp = parts[i].split("=");
-                $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
+                
+                m[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
                 
             }
-            id = $_GET['id']
+            id = m['id']
             setTimeout(() => {
                 displayComments(id);
             } , 1000)

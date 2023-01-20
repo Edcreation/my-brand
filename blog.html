@@ -68,12 +68,17 @@
         </div>
         <div class="sug">
             <div class="box">
+                <div id="popcontact">
+                        
+                </div>
                 <div class="title">Want us to blog about Something? Write to us.</div>
-                <form action="">
+                <form onsubmit="event.preventDefault(); getMessage()" id="frm">
+                    <p>Email</p>
+                    <input type="email" name="email" id="email" placeholder="Email">
                     <p>Topic</p>
-                    <input type="topic" name="topic" id="topic">
+                    <input type="topic" name="topic" id="name" placeholder="Topic">
                     <p>Description</p>
-                    <textarea name="text" id="txt" cols="60" rows="10"></textarea>
+                    <textarea name="text" id="msg" cols="60" rows="10" placeholder="Your Idea"></textarea>
                     <button>SEND</button>
                 </form>
             </div>

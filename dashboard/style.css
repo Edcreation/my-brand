@@ -434,10 +434,22 @@ nav span img {
 }
 .msg-box .title {
     width: 100%;
+    display: flex;
+    height: 40px;
+    align-items: center;
+    justify-content: space-evenly;
     text-align: center;
     font-size: 22px;
     color: #fff;
     margin-bottom: 10px;
+}
+.msg-box .title p  {
+    color: rgb(2, 200, 2);
+    background: rgb(14, 14, 14);
+    border-radius: 10px;
+    padding: 5px;
+    width: 40px;
+    
 }
 .msg-box .title button {
     padding: 5px;
