@@ -25,15 +25,18 @@
                 <a href="./blog.html">Blog</a>
                 <a href="./contacts.html">Contacts</a>
             </div>
-            <a href="./login.html" ><button id="loginbutton"  >Login</button></a>
-            <img class="propic" id="profilePic" onclick="displayWow()">
+            <button id="dashbutton" onclick="toDashboard()">Dashboard</button>
+            <button id="loginbutton" onclick="tologin()">Login</button>
+            <img  src="./images/usrdp.png" class="propic" id="profilePic" onclick="displayWow()">
             </img>
             <div class="wow-menu" id="wowM">
                 <button onclick="toProfile()">Profile</button>
                 <button onclick="logOut()">Log Out</button>
             </div>
+            
             <script>
                 window.onload = showLoginButton();
+                window.onload = toDashButton();
             </script>
         </div>
     </nav>
