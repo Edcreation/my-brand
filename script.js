@@ -216,7 +216,7 @@ function createBlog() {
   const image = window.localStorage.getItem("tempImage")
   const content = quill.root.innerHTML
   //-----------Form Validation----------------
-  if (title === "" || content === "" || image === "") {
+  if (title == "" || content == "<p><br></p>" || image == null ) {
     popContact("Please Fill out All Fields", "red")
   } else {
     if (title.length > 500) {
@@ -272,7 +272,6 @@ function addComment(id) {
       image: image,
       date: Date.now()
     }
-    console.log(cname)
     Blogs[id].comments.push(tempComment);
     localStorage.setItem('Blogs', JSON.stringify(Blogs));
     popContact("Comment Added", "green")
@@ -280,8 +279,6 @@ function addComment(id) {
       window.location.reload()
     }, 500);
   } else {
-    //popContact("Please Create Account Before Commenting.")
-    // alert("Please Create Account Before Commenting.")
     popContact("Please Create Account Before Commenting.", "red")
   }
 

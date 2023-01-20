@@ -6,14 +6,20 @@ body {
     padding: 0;
 }
 .insertedImage {
-    width: 100px;
-    height: 100px;
-    position: absolute;
+    width: 80%;
+    height: 300px;
     align-self: center;
     top: 50px;
     right: 0;
     border: 2px solid #00d9e895;
     border-radius: 8px;
+}
+.imageholder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
 }
 ::-webkit-scrollbar {
     display: none;
@@ -45,6 +51,7 @@ nav {
     justify-content: space-between;
     padding: 5px;
     background: #000;
+    z-index: 6;
 }
 nav button {
     background: #d00;
@@ -344,8 +351,7 @@ nav span img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 90%;
-    margin-left: 20px;
+    width: 100%;
     height: 100%;
 }
 .new-box  .title {
@@ -818,6 +824,16 @@ tr img:hover {
         margin: 0;
         padding: 0;
         width: 30px;
+    }
+    form {
+        width: 100%;
+        margin-left: 0;
+    }
+    .content {
+        width: 100%;
+    }
+    .ql-toolbar {
+        width: 100%;
     }
 
 

@@ -45,6 +45,9 @@
                     <input type="text" name="title" id="title">
                     <label for="file">Add Photo</label>
                     <input type="file" name="image" id="image">
+                    <div class="imageholder" id="imageholder">
+
+                    </div>
                     <label for="content">Blog Content</label>
                     <div name="content" id="content" cols="30" rows="10"></div>
                     <button>ADD BLOG</button>
@@ -54,6 +57,7 @@
     </div>
     <script>
         fileEl = document.getElementById('image')
+        const h = document.getElementById("imageholder")
         fileEl.addEventListener('change', () => {
             const fr = new FileReader();
             fr.readAsDataURL(fileEl.files[0]);
@@ -64,7 +68,7 @@
                 imge.classList.add("insertedImage")
                 let m = document.querySelector("#imgreceiver")
                 window.localStorage.setItem("tempImage", url)
-                document.body.appendChild(imge)
+                h.appendChild(imge)
             })
         }) 
     </script>

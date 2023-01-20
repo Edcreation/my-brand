@@ -72,7 +72,7 @@
                         <input type="password" name="pass1" id="pass1"  placeholder="New Password" autocomplete="new-password">
                         
                     </div>
-                    <button>Save</button>
+                    <button id="save">Save</button>
                 </form>
             </div>
         </div>
@@ -93,13 +93,6 @@
         </div>
     </div>
     <script>
-        function popContact(x) {
-            document.querySelector('#popcontact').style.display = "block";
-            document.getElementById('popcontact').innerHTML = x
-            setTimeout(() => {
-              document.querySelector('#popcontact').style.display = "none";
-            }, 5000);
-          }
         window.onload = document.getElementById("imageReceiver").src = JSON.parse(localStorage.getItem("tempLog")).image
         window.onload = document.getElementById("username").innerHTML = JSON.parse(localStorage.getItem("tempLog")).name
         window.onload = document.getElementById("profilePic").src = JSON.parse(localStorage.getItem("tempLog")).image
@@ -117,12 +110,15 @@
                     window.localStorage.setItem('tempImage', url);
                   } catch(e) {
                     if (e.code == 22) {
-                      popContact("Image Too Big")
+                      popContact("Image Too Big", "red")
                     }
                   }
             })
         }) 
-        document.getElementById("loginbutton").style.display = "none" 
+        document.getElementById("loginbutton").style.display = "none"
+        if(document.getElementById("dashbutton").style.display != "none"){
+            location.onload = hideWhenAdmin()
+        } 
         function togglePasswordVisibility() {
             var x = document.getElementById("pass");
             if (x.type === "password") {
@@ -131,6 +127,19 @@
               x.type = "password";
             }
           }
+        function hideWhenAdmin() {
+            const fr = document.getElementById("pass")
+            const fr1 = document.getElementById("pass1")
+            const fr2 = document.getElementById("name")
+            const fr3 = document.getElementById("save")
+            const fr4 = document.getElementById("image")
+            fr.style.display = "none"
+            fr1.style.display = "none"
+            fr2.style.display = "none"
+            fr3.style.display = "none"
+            fr4.style.display = "none"
+        }
+        
 
     </script>
 </body>
