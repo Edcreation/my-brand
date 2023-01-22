@@ -20,6 +20,11 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 15px;
+    overflow-x: scroll;
+}
+.imageholder img:nth-child(2) {
+    border: 1px solid green;
+    margin-left: 20px;
 }
 ::-webkit-scrollbar {
     display: none;
@@ -259,7 +264,7 @@ nav span img {
 
 .item {
     width: 200px;
-    height: 220px;
+    height: 270px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -321,6 +326,9 @@ nav span img {
     border: none;
     outline: none;
     transition: .3s;
+}
+.date button img{
+    width: 20px;
 }
 .date button:hover {
     background: #d00000;

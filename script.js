@@ -240,6 +240,48 @@ function createBlog() {
     } 
   }
 }
+function toeditBlog(id) {
+  function navigate(n) {
+    let link = "./edit.html?id=" + n
+    window.location.href = link;
+  }
+  navigate(id)
+}
+function editBlog(id) {
+  let Bloge = JSON.parse(window.localStorage.getItem("Blogs"))
+  const title = document.getElementById('title').value
+  const image = window.localStorage.getItem("tempImage") || Bloge[id].image
+  const content = quill.root.innerHTML
+  //-----------Form Validation----------------
+  if (title === Bloge[id].title && content === Bloge[id].content && image === null ) {
+    popContact("Nothing To Edit", "red")
+  } else {
+    if (title.length > 500) {
+      popContact(" Title too Long ", "red")
+    } else {
+      const blogData = {
+        title: title,
+        image: image,
+        content: content,
+        likeCount: 0,
+        comments: [],
+        liked: [],
+        date: new Date().toLocaleDateString()
+      }
+      if (id > -1) { // only splice array when item is found
+        Bloge.splice(id, 1); // 2nd parameter means remove one item only
+        window.localStorage.setItem("Blogs", JSON.stringify(Bloge));
+      }
+      Bloge.push(blogData);
+      localStorage.setItem('Blogs', JSON.stringify(Bloge));
+      var element = document.getElementById("frm")
+      element.reset()
+      popContact("Blog Edited", "green")
+      window.localStorage.removeItem("tempImage")
+      location.href = "./dashboard.html"
+    } 
+  }
+}
 function deleteAllBlogs() {
   let Bloga = JSON.parse(localStorage.getItem("Blogs") || "[]");
   Bloga = []
@@ -498,7 +540,7 @@ function userDelete(id) {
   }
 }
 
-/**---------------------------Dashboard Count Users, Blogs, comments and Likes-------------*/
+/**---------------------------Dashboard Count Users, Blogs, Messages, Comments and Likes-------------*/
 function countLikes() {
   let blogLikes = JSON.parse(window.localStorage.getItem("Blogs"));
   let count = 0;
