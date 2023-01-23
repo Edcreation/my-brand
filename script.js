@@ -1,7 +1,7 @@
 /**---------------Usefull variables---------------------------------------------- */
 let open = false; 
 let wow = false;
-
+console.log(JSON.parse(localStorage.getItem("Blogs")))
 /**--------Check User onload-----------------------------------------------------*/
 window.onload = checkUser()
 /**----------------------Custom Pop up------------------------------------------ */
