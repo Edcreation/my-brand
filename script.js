@@ -237,6 +237,7 @@ function createBlog() {
       element.reset()
       popContact("Blog Created", "green")
       window.localStorage.removeItem("tempImage")
+      location.reload()
     } 
   }
 }
@@ -263,9 +264,9 @@ function editBlog(id) {
         title: title,
         image: image,
         content: content,
-        likeCount: 0,
-        comments: [],
-        liked: [],
+        likeCount: Bloge[id].likeCount,
+        comments: Bloge[id].comments,
+        liked: Bloge[id].liked,
         date: new Date().toLocaleDateString()
       }
       if (id > -1) { // only splice array when item is found

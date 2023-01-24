@@ -198,6 +198,7 @@ nav span img {
 }
 .box {
     box-shadow: 8px 8px 20px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
 }
 .centered {
     height: 100px;

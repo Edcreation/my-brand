@@ -6,6 +6,6 @@ var quill = new Quill('#content', {
         ['image', 'code-block']
       ]
     },
-    placeholder: 'Compose an epic...',
+    placeholder: 'Compose a topic...',
     theme: 'snow'  // or 'bubble'
   });
