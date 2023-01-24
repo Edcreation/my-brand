@@ -157,16 +157,9 @@ function createUser() {
 }
 function loginUser() {
   let users = JSON.parse(localStorage.getItem("Users") || "[]")
-  let arr = JSON.parse(localStorage.getItem("Users") || "[]")
   const image = "./images/dp.jpg"
   const email = document.getElementById('email').value
   const pass = document.getElementById('pass').value
-  var x = users.findIndex(obj => obj.email == email);
-  const lastIndexOfName = name => {
-    let index = [...users].reverse().findIndex(obj => obj.password == pass);
-    return index >= 0 ? arr.length - 1 - index : index;
-  }
-  var y = lastIndexOfName(pass);
   if (email === "admin@mail.com" && pass=== "pass") {
     window.location.href = "./dashboard/dashboard.html"
     const admin = {
