@@ -486,7 +486,17 @@ function changeUser() {
         element.reset()
         window.localStorage.removeItem("tempImage")
         popContact("Profile Changed.", "green")
-        setTimeout( logOut() , 1000);
+        function maintain() {
+          const data = {
+            email: myemail,
+            name: name,
+            image: image,
+            password: password1
+          }
+          localStorage.setItem("tempLog", JSON.stringify(data))
+          location.reload();
+        }
+        setTimeout( maintain() , 3000);
         
       }
 
