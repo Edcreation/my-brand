@@ -485,7 +485,6 @@ function changeUser() {
         var element = document.getElementById("frm")
         element.reset()
         window.localStorage.removeItem("tempImage")
-        popContact("Profile Changed.", "green")
         function maintain() {
           const data = {
             email: myemail,
@@ -496,7 +495,8 @@ function changeUser() {
           localStorage.setItem("tempLog", JSON.stringify(data))
           location.reload();
         }
-        setTimeout( maintain() , 3000);
+        popContact("Profile Changed.", "green")
+        setTimeout( maintain() , 5000);
         
       }
 
