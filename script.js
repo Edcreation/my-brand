@@ -1,7 +1,6 @@
 /**---------------Usefull variables---------------------------------------------- */
 let open = false; 
 let wow = false;
-console.log(JSON.parse(localStorage.getItem("Blogs")))
 /**--------Check User onload-----------------------------------------------------*/
 window.onload = checkUser()
 /**----------------------Custom Pop up------------------------------------------ */
@@ -50,7 +49,7 @@ function displayWow(){
   } else {
     w.style.display = "flex"
   }
-};
+}
 /**---------------------Messages Using Local Storage------------------------------*/
 function getMessage() {
   let Messages = JSON.parse(localStorage.getItem("Messages") || "[]");
@@ -66,7 +65,6 @@ function getMessage() {
       name:name,
       message:message
     }
-    console.log(details)
     Messages.push(details);
     window.localStorage.setItem("Messages", JSON.stringify(Messages));
     document.getElementById('frm').reset()
@@ -86,8 +84,6 @@ function deleteAllMessages() {
 }
 function deleteMessage(m) {
   let Messages = JSON.parse(localStorage.getItem("Messages"));
-
-  console.log(m)
   if (m > -1) { // only splice array when item is found
       Messages.splice(m, 1); // 2nd parameter means remove one item only
       window.localStorage.setItem("Messages", JSON.stringify(Messages));
@@ -286,7 +282,6 @@ function deleteAllBlogs() {
 function deleteBlog(m) {
   let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
   let Blogsa = JSON.parse(localStorage.getItem("Blogs"));
-  console.log(m)
   if (m > -1) { // only splice array when item is found
       Blogsa.splice(m, 1); // 2nd parameter means remove one item only
       window.localStorage.setItem("Blogs", JSON.stringify(Blogsa));
@@ -339,7 +334,6 @@ function displayComments(id) {
     + " <div class=\"com-content\"> " + Blogsd[id].comments[i-1].comment + "</div> " +
     "<div class=\"com-date\">" + m.toDateString() + "</div> </div>"
   }
-  //console.log(output)
   com.innerHTML = output;
   
 }
@@ -373,7 +367,6 @@ function getLikes(x) {
               likes--
               Blogsl[x].likeCount = likes
               const arr = removeItemAll(Blogsl[x].liked, id)
-              console.log(arr)
               localStorage.setItem('Blogs', JSON.stringify(Blogsl));
               location.reload()
             }
@@ -466,10 +459,10 @@ function changeUser() {
   }
   else {
     if (password != mypassword ) {
-      popContact("Old Password Is Wrong")
+      popContact("Old Password Is Wrong", "red")
     } else {
       if (password1.length < 5) {
-        popContact("New Password is Too Short")
+        popContact("New Password is Too Short", "red")
       } else {
         const userData = {
             email: myemail,

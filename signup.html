@@ -40,14 +40,6 @@
             </script>
         </div>
     </nav>
-    <script>
-        function hide() {
-            document.getElementById('donepop').style.display = "block"
-        }
-        function rehide() {
-            document.getElementById("donepop").style.display = "none"
-        }
-    </script>
     <div class="login-container">
         <div id="popcontact" onclick="rehide()">
                 
@@ -95,7 +87,6 @@
                 url = fr.result;
                 img = document.getElementById("imageReceiver")
                 img.src = url;
-                console.log(url)
                 try {
                     window.localStorage.setItem('tempImage', url);
                   } catch(e) {
