@@ -343,6 +343,7 @@ function getLikes(x) {
       let Blogsl = JSON.parse(localStorage.getItem("Blogs"));
       let id = JSON.parse(localStorage.getItem("tempLog")).email
       let likes = Blogsl[x].likeCount;
+      
         if (Blogsl[x].liked.length === 0) {
           likes++
           Blogsl[x].likeCount = likes
