@@ -181,6 +181,59 @@
     align-items: center;
     margin-left: 5px;
 }
+.tblog-card {
+    background: #000000;
+    color: #fff;
+    border: 1px solid #ffffff3e;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0px;
+    margin: 30px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    height: 400px;
+    width: 90%;
+    -webkit-box-shadow: 10px 10px 61px -17px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 61px -17px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 61px -17px rgba(0,0,0,0.75);
+    transition: .5s;
+    -webkit-animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+.timage {
+    overflow: hidden;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    height: 100%;
+    width: 100%;
+}
+.timage img {
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    transition: .8s;
+    opacity: 1;
+}
+.tover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    height: 20%;
+    background: rgba(0, 0, 0, 0.417);
+}
+.tover .ttext {
+    text-align: center;
+}
+.tico {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 10px;
+}
 /*----------------------Daily Quote-----------------------*/
 .quote {
     margin-top:  30px;

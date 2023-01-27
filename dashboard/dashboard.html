@@ -92,7 +92,7 @@
             <div class="words">
                 <div class="title">${title['title']}</div>
                 
-                <div class="date">${title['date']}<Button onclick="toeditBlog(${index})"> <img src="../images/edit.png" alt="trash"></Button><Button onclick="deleteBlog(${index})"> <img src="../images/trash.png" alt="trash"></Button> </div>
+                <div class="date">${title['date']}<Button onclick="toeditBlog(${title['_id']})"> <img src="../images/edit.png" alt="trash"></Button><Button onclick="deleteBlog(${title['_id']})"> <img src="../images/trash.png" alt="trash"></Button> </div>
             </div>
         </div>`).join("")}`
         }

@@ -70,7 +70,7 @@
         
         function blogView() {
             let Blogsd = JSON.parse(localStorage.getItem("Blogs"));
-            let id;
+            let x;
             var parts = window.location.search.substr(1).split("&");
             var m = {};
             for (var i = 0; i < parts.length; i++) {
@@ -79,7 +79,10 @@
                 m[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
                 
             }
-            id = m['id']
+            x = m['id']
+            var id = Blogsd.findIndex(function(item, i){
+                return item._id == x
+            });
             setTimeout(() => {
                 displayComments(id);
             } , 1000)

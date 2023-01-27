@@ -99,7 +99,8 @@ function createUser() {
   let Users = JSON.parse(localStorage.getItem("Users") || "[]");
   const email = document.getElementById('email').value;
   const name = document.getElementById('name').value;
-  let image = window.localStorage.getItem("tempImage")
+  let image = window.localStorage.getItem("tempImage");
+  let id = Math.floor(Math.random() * 1000000) + 100000000;
   if ( image == null ) {
     image = "./images/dpicon.png"
   }
@@ -129,6 +130,7 @@ function createUser() {
           popContact("Password is Too Short", "red")
         } else {
           const userData = {
+              id: id,
               email: email,
               name: name,
               image: image,
@@ -159,6 +161,7 @@ function loginUser() {
   if (email === "admin@mail.com" && pass=== "pass") {
     window.location.href = "./dashboard/dashboard.html"
     const admin = {
+      id: 00000000,
       email : "admin@mail.com",
       name: "Admin",
       password: "pass",
@@ -175,6 +178,7 @@ function loginUser() {
           window.localStorage.setItem("tempLog", JSON.stringify(users[i]))
           let link = "./index.html"
           window.location.href = link
+          console.log(users[i])
           break;
         }
       }
@@ -204,6 +208,7 @@ function createBlog() {
   const title = document.getElementById('title').value
   const image = window.localStorage.getItem("tempImage")
   const content = quill.root.innerHTML
+  const id = Math.floor(Math.random() * 999) + 9999;
   //-----------Form Validation----------------
   if (title == "" || content == "<p><br></p>" || image == null ) {
     popContact("Please Fill out All Fields", "red")
@@ -212,6 +217,7 @@ function createBlog() {
       popContact(" Title too Long ", "red")
     } else {
       const blogData = {
+        _id: id,
         title: title,
         image: image,
         content: content,
@@ -239,27 +245,31 @@ function toeditBlog(id) {
 }
 function editBlog(id) {
   let Bloge = JSON.parse(window.localStorage.getItem("Blogs"))
+  var idx = Bloge.findIndex(function(item, i){
+    return item._id == id
+  });
   const title = document.getElementById('title').value
-  const image = window.localStorage.getItem("tempImage") || Bloge[id].image
+  const image = window.localStorage.getItem("tempImage") || Bloge[idx].image
   const content = quill.root.innerHTML
   //-----------Form Validation----------------
-  if (title === Bloge[id].title && content === Bloge[id].content && image === null ) {
+  if (title === Bloge[idx].title && content === Bloge[idx].content && image === null ) {
     popContact("Nothing To Edit", "red")
   } else {
     if (title.length > 500) {
       popContact(" Title too Long ", "red")
     } else {
       const blogData = {
+        _id: id,
         title: title,
         image: image,
         content: content,
-        likeCount: Bloge[id].likeCount,
-        comments: Bloge[id].comments,
-        liked: Bloge[id].liked,
+        likeCount: Bloge[idx].likeCount,
+        comments: Bloge[idx].comments,
+        liked: Bloge[idx].liked,
         date: new Date().toLocaleDateString()
       }
-      if (id > -1) { // only splice array when item is found
-        Bloge.splice(id, 1); // 2nd parameter means remove one item only
+      if (idx > -1) { // only splice array when item is found
+        Bloge.splice(idx, 1); // 2nd parameter means remove one item only
         window.localStorage.setItem("Blogs", JSON.stringify(Bloge));
       }
       Bloge.push(blogData);
@@ -279,11 +289,14 @@ function deleteAllBlogs() {
   popContact("All Blogs Deleted", "yellow")
   location.reload();
 }
-function deleteBlog(m) {
-  let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
+function deleteBlog(id) {
   let Blogsa = JSON.parse(localStorage.getItem("Blogs"));
-  if (m > -1) { // only splice array when item is found
-      Blogsa.splice(m, 1); // 2nd parameter means remove one item only
+  var m = Blogsa.findIndex(function(item, i){
+    return item._id === id
+  });
+  console.log(m)
+  if (m > -1) { 
+      Blogsa.splice(m, 1); 
       window.localStorage.setItem("Blogs", JSON.stringify(Blogsa));
       popContact("Blog Deleted", "yellow")
       location.reload()
@@ -341,7 +354,7 @@ function getLikes(x) {
   if (wow === true) {
     if (x > -1) {
       let Blogsl = JSON.parse(localStorage.getItem("Blogs"));
-      let id = JSON.parse(localStorage.getItem("tempLog")).email
+      let id = JSON.parse(localStorage.getItem("tempLog")).id 
       let likes = Blogsl[x].likeCount;
       
         if (Blogsl[x].liked.length === 0) {
@@ -442,6 +455,7 @@ function changeUser() {
   const myname = JSON.parse(localStorage.getItem("tempLog")).name;
   const myimage = JSON.parse(window.localStorage.getItem("tempLog")).image
   const mypassword = JSON.parse(window.localStorage.getItem("tempLog")).password
+  const myid = JSON.parse(window.localStorage.getItem("tempLog")).id
   const image = window.localStorage.getItem("tempImage")
   var id = Users.findIndex(obj => obj.email == myemail);
   let name = document.getElementById('name').value;
@@ -466,6 +480,7 @@ function changeUser() {
         popContact("New Password is Too Short", "red")
       } else {
         const userData = {
+            id: myid,
             email: myemail,
             name: name,
             image: image,
@@ -481,6 +496,7 @@ function changeUser() {
         window.localStorage.removeItem("tempImage")
         function maintain() {
           const data = {
+            id: myid,
             email: myemail,
             name: name,
             image: image,
@@ -512,7 +528,7 @@ function userToTable() {
     const deleteButton = document.createElement("button")
     deleteButton.innerText = "Delete"
     deleteButton.setAttribute("id", "btn")
-    const x = "userDelete("+ "'"+ users[i].name+"'" + ")"
+    const x = "userDelete("+ "'"+ users[i].id+"'" + ")"
     deleteButton.setAttribute("onclick", x)
     tdimage.src = users[i].image;
     tr.appendChild(tdimage);
@@ -521,13 +537,13 @@ function userToTable() {
     tr.appendChild(deleteButton);
     table.appendChild(tr);
     tdname.innerText = users[i].name;
-    tdemail.innerText = users[i].email;
+    tdemail.innerText = users[i].id;
   }
 }
 function userDelete(id) {
   const users = JSON.parse(window.localStorage.getItem("Users"))
   for(var i = 0; i <= users.length - 1; i++){
-    if(users[i].name == id){
+    if(users[i].id == id){
         users.splice(i,1);
         localStorage.setItem('Users', JSON.stringify(users));
         popContact("User Deleted", "yellow")

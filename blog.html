@@ -69,6 +69,9 @@
                 <img src="./images/img2.png" alt="man">
             </div>
         </div>
+        <div class="tblog-cards" id="tbox">
+             
+        </div>
         <div class="sug">
             <div class="box">
                 <div id="popcontact">
@@ -104,12 +107,13 @@
     </div>
     <script>
         window.onload = blogList();
+        window.onload = blogList2();
         
         function blogList() {
         const List = document.querySelector('#box');
         let Blogs = JSON.parse(localStorage.getItem("Blogs"));
         List.innerHTML = `${Blogs.map((title, index)=>`<div class="blog-card">
-            <a class="image"><img src="${title['image']}" alt="image" onclick="navigate(${index})"></a>
+            <a class="image"><img src="${title['image']}" alt="image" onclick="navigate(${title['_id']})"></a>
             <div class="over">
                 <div class="text" >
                     ${title['title']}
@@ -121,6 +125,18 @@
             </div>
         </div>`).sort().join("")}`
         }
+        function blogList2() {
+            const List = document.querySelector('#tbox');
+            let Blogs = JSON.parse(localStorage.getItem("Blogs"));
+            List.innerHTML = `${Blogs.map((title, index)=>`<div class="tblog-card">
+                <a class="timage"><img src="${title['image']}" alt="image" onclick="navigate(${title['_id']})"></a>
+                <div class="tover">
+                    <div class="ttext" >
+                        ${title['title']}
+                    </div>
+                </div>
+            </div>`).sort().join("")}`
+            }
         
     </script>
     <script>
@@ -129,6 +145,21 @@
         profilePic.src = image;
         //profilePic.style.display = "none"
 
+    </script>
+    <script> 
+        let slideIndex = 0;
+        showSlides();
+        function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("tblog-card");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        slides[slideIndex-1].style.display = "flex";
+        setTimeout(showSlides, 10000); 
+        }
     </script>
 </body>
 </html>
