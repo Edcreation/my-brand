@@ -141,5 +141,10 @@
         
 
     </script>
+    <script>
+        window.onbeforeunload = function(){
+            localStorage.removeItem("tempImage")
+         }
+    </script>
 </body>
 </html>
