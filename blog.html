@@ -112,7 +112,7 @@
         function blogList() {
         const List = document.querySelector('#box');
         let Blogs = JSON.parse(localStorage.getItem("Blogs"));
-        List.innerHTML = `${Blogs.map((title, index)=>`<div class="blog-card">
+        /*List.innerHTML = `${Blogs.map((title, index)=>`<div class="blog-card">
             <a class="image"><img src="${title['image']}" alt="image" onclick="navigate(${title['_id']})"></a>
             <div class="over">
                 <div class="text" >
@@ -124,7 +124,22 @@
                 </div>
             </div>
         </div>`).sort().reverse().join("")}`
-        }
+        */
+        for(let i = Blogs.length - 1; i >= 0  ; i--){
+            List.innerHTML +=  `<div class="blog-card">
+                <a class="image"><img src="${Blogs[i].image}" alt="image" onclick="navigate(${Blogs[i]._id})"></a>
+                <div class="over">
+                    <div class="text" >
+                        ${Blogs[i].title}
+                    </div>
+                    <div class="ico">
+                        <div class="like"><div class="l1" onclick="getLikes(${i})" id="l"></div><p>${Blogs[i].likeCount}</p></div>
+                        <div class="like"><div class="com" id="l"></div><p>${Blogs[i].comments.length}</p></div>
+                    </div>
+                </div>
+            </div>`
+            } 
+    }
         function blogList2() {
             const List = document.querySelector('#tbox');
             let Blogs = JSON.parse(localStorage.getItem("Blogs"));
