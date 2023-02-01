@@ -1,7 +1,6 @@
 import express, { json } from 'express';
 const app = express()
 
-// mongo db and mockgoose for
 import mongoose, { connect, set } from 'mongoose';
 import { Mockgoose } from 'mockgoose';
 var mockgoose = new Mockgoose(mongoose);

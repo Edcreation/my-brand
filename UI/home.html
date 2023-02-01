@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/images/icon.png" > 
+    <title>Home</title>
+    <script src="./script.js"></script>
+
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="./index.html#portfolio-intro"><img  src="./images/ED.png" alt="logo"></a>
+            <div class="menu" onclick="toggleNav()" >
+                <img  src="./images/open.png" id="ig"  alt="image">
+            </div>
+        </div>
+        <div id="actions"  >
+            <div class="links">
+                <a href="./index.html#about-me">About Me</a>
+                <a href="./index.html#skills" >Skills</a>
+                <a href="./blog.html">Blog</a>
+                <a href="./contacts.html">Contacts</a>
+            </div>
+            <button id="dashbutton" onclick="toDashboard()">Dashboard</button>
+            <button id="loginbutton" onclick="tologin()">Login</button>
+            <img  src="./images/usrdp.png" class="propic" id="profilePic" onclick="displayWow()">
+            </img>
+            <div class="wow-menu" id="wowM">
+                <button onclick="toProfile()">Profile</button>
+                <button onclick="logOut()">Log Out</button>
+            </div>
+            
+            <script>
+                window.onload = showLoginButton();
+                window.onload = toDashButton();
+            </script>
+        </div>
+    </nav>
+    <div class="homepage">
+        <div class="homeblock">
+            <p class="big-title">EDCREATION</p>
+            <p class="intro">
+                EDCreation is a software company created by 
+                <span class="name">Mugisha J. Eddy</span> , with the aim to provide exclusive 
+                software solutions to those in need. 
+            </p>
+            <div class="btns">
+                <button>Learn More</button>
+                <a href="">Contact Us</a>
+            </div>
+        </div>
+        <div class="get-intouch">
+            <p>
+                We provide UI/UX design services, 
+                data management software and other 
+                software engineering solutions that 
+                may suit your business.  
+            </p>
+            <button>Get In touch</button>
+        </div>
+        <div class="companies">
+            <img src="./images/google.png" alt="google logo">
+            <img src="./images/facebook.png" alt="facebook logo">
+            <img src="./images/tesla.png" alt="tesla logo">
+            <img src="./images/apple.png" alt="apple logo">
+            <img src="./images/samsung.png" alt="samsung logo">
+        </div>
+        <div class="vision">
+            <div class="title">
+                Our Vision
+            </div>
+            <div class="small-title">
+                We aim at making your business website have 
+                the most flawless 
+                design and the best technology.
+            </div>
+            <div class="content">
+                Your ideas are meaningful. we provide 
+                the safest, solid and new technologies. 
+                Our staff includes the best engineers who 
+                will support you at every stage. Let’s work 
+                together to create
+                 the best Web Application.
+            </div>
+        </div>
+        <div class="timeline">
+            <div class="card">
+                <div class="icon1">
+                </div>
+                <div class="title">
+                    Idea Development
+                </div>
+                <div class="content">
+                    This is where we meet and develop your 
+                    idea. the expert settle to visualize 
+                    and assemble the requirements.
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon2">
+                </div>
+                <div class="title">
+                    Product Design
+                </div>
+                <div class="content">
+                    Our UI/Ux team works together to 
+                    implement your Idea into 
+                    a visual representation of your Web App.
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon3">
+                </div>
+                <div class="title">
+                    Software Develepment
+                </div>
+                <div class="content">
+                    The Software engineers work on creating 
+                    the Front End and Back End of your Web 
+                    Application. Making sure its stable and secure.
+                </div>
+            </div>
+        </div>
+        <div class="message">
+            <div class="box">
+                <div class="title">Message Us</div>
+                <form action="">
+                    <p>E-mail</p>
+                    <input type="email" name="email" id="email">
+                    <p>Message</p>
+                    <textarea name="message" id="msg" cols="60" rows="10"></textarea>
+                    <button>SEND</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-box">
+          <div class="social">
+            <a href='https://www.instagram.com/___e.d.d.y/' target="_blank"><img src="./images/instagram.png" alt='instagram' /></a>
+            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/linkedin.png" alt='linkedin' /></a>
+            
+            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/twitter.png" alt='twitter' /></a>
+            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/whatsapp.png" alt='whatsapp' /></a>
+            <a href='' target="_blank"><img src="./images/gmail.png" alt='gmail' /></a>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>All rights reserved by M.J.Eddy 2022 &copy;</p>
+        </div>
+    </div>
+    <script>
+        const image = JSON.parse(window.localStorage.getItem("tempLog")).image
+        var profilePic = document.getElementById("profilePic")
+        profilePic.src = image;
+        //profilePic.style.display = "none"
+
+    </script>
+</body>
+</html>

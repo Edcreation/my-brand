@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="../images/icon.png" >
+    <script src="../script.js"></script>
+    <script>
+        window.onload = che()
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+
+    <nav>
+        <span onclick="toggleDashNav()"><img src="../images/menu2.png" alt="menu"></span>
+        <div class="logo"><img src="../images/ED.png" alt=""></div>
+        <div class="links" id="wowM">
+            <a href="../index.html">Portfolio</a>
+            <a href="../contacts.html">Contacts</a>
+            <a href="../blog.html">Blogs</a>
+            <button onclick="logOut()">Log Out</button>
+        </div>
+        <div class="dp" onclick="displayWow()">
+            <img src="../images/dp.jpg" alt="dp" >
+        </div>
+    </nav>
+    </nav>
+    <div class="dash-container">
+        <div id="dash-nav">
+            <a href="./dashboard.html">Dashboard</a>
+            <a href="./new.html">New Blog</a>
+            <a href="./messages.html">Messages</a>
+            <a href="./settings.html">Settings</a>
+        </div>
+        <div id="popcontact">
+
+        </div>
+        <div class="dashboard">
+            <div class="dash-box">
+                <div class="dash-box-up">
+                    <div class="box">
+                        <div class="centered">
+                            <img src="../images/visits.png" alt="">
+                            <p id="visits"></p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="centered">
+                            <img src="../images/heart.png" alt="">
+                            <p id="likes"></p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="centered">
+                            <img src="../images/comment.png" alt="">
+                            <p id="comments"></p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="centered">
+                            <img src="../images/note.png" alt="">
+                            <p id="blogscount"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="dash-box-down">
+                    <div class="created">
+                        <div class="title1">Blogs Created <button onclick="deleteAllBlogs()">Delete All</button></div>
+                        <div class="items" id="box">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = blogList();
+        window.onload = countLikes();
+        window.onload = countBlogs();
+        window.onload = countUsers();
+        window.onload = countComments();
+        function blogList() {
+        const List = document.querySelector('#box');
+        let Blogs = JSON.parse(localStorage.getItem("Blogs"));
+        List.innerHTML = `${Blogs.map((title, index)=>`
+            <div class="item">
+            <div class="img"><img src="${title['image']}" alt="image"></div>
+            <div class="words">
+                <div class="title">${title['title']}</div>
+                
+                <div class="date">${title['date']}<Button onclick="toeditBlog(${title['_id']})"> <img src="../images/edit.png" alt="trash"></Button><Button onclick="deleteBlog(${title['_id']})"> <img src="../images/trash.png" alt="trash"></Button> </div>
+            </div>
+        </div>`).join("")}`
+        }
+    </script>
+</body>
+</html>

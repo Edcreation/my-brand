@@ -10,7 +10,6 @@ const { SECRET = "secret" } = process.env;
 dotenv.config();
 const createUser =  ( async (req,res) => {
     try {
-
         req.body.password = await hash(req.body.password, 10);
         const user = await User.create(req.body, (err, user) => {
             if (err) {
@@ -18,14 +17,12 @@ const createUser =  ( async (req,res) => {
                     res.status(409).json({
                         code: 409,
                         message: "User Already Exists",
-                        Error: err,
                     })
                 }
                 else {
                         res.status(400).json({
                         code: 400,
                         message: "User Validation Failed",
-                        Error: err,
                     })
                 }
             }
@@ -80,9 +77,9 @@ const loginUser = ((req,res) => {
 const users = ((req,res) => {
     User.find({}, (err, data) => {
         if (!err) {
-            if (data == []) {
-                res.status(204).json({
-                    code: 204,
+            if (data.length === 0 ) {
+                res.status(404).json({
+                    code: 404,
                     message: "No Users Found"
                 })
             }
@@ -106,7 +103,7 @@ const users = ((req,res) => {
 
 const getSingleUser = ((req,res) => {
     User.findById( req.params.id , (err, data) => {
-        if (!err) {
+        if (data) {
             res.status(200).json({
                 code: 200,
                 message: "User Fetched",

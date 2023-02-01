@@ -2,8 +2,8 @@ import Messages from '../models/messagesmodel.js'
 
 const getMessages = (( req, res ) => {
     Messages.find({}, (err, data) => {
-        if (!err) {
-            if (data == []) {
+        if (data) {
+            if (data.length === 0) {
                 res.status(204).json({
                     code: 204,
                     message: "No Messages Found"
@@ -19,8 +19,7 @@ const getMessages = (( req, res ) => {
         } else {
             res.status(500).json({
                 code: 500,
-                message: "Bad Request",
-                Error: err,
+                message: "Internal Error",
             })
         }
     })

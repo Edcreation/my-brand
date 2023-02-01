@@ -2,8 +2,8 @@ import Blogs from '../models/blogsmodel.js'
 
 const getBlogs = ((req,res) => {
     Blogs.find({}, (err, data) => {
-        if (!err) {
-            if (data == []) {
+        if (data) {
+            if (data.length === 0) {
                 res.status(204).json({
                     code: 204,
                     message: "No Blogs Found"
@@ -17,9 +17,9 @@ const getBlogs = ((req,res) => {
                 })
             }
         } else {
-            res.status(400).json({
-                code: 400,
-                message: "Bad Request",
+            res.status(500).json({
+                code: 500,
+                message: "Internal Error",
                 Error: err,
             })
         }
@@ -28,7 +28,7 @@ const getBlogs = ((req,res) => {
 
 const getSingleBlog = (( req,res ) => {
     Blogs.findById( req.params.id, (err, blog) => {
-        if (!err) {
+        if (blog) {
             res.status(200).json({
                 code: 200,
                 message: "Single Blog Fetched",

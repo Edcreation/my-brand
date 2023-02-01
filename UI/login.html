@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="/images/icon.png" >
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-login.css">
+    <script src="./script.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="./index.html#portfolio-intro"><img  src="./images/ED.png" alt="logo"></a>
+            <div class="menu" onclick="toggleNav()" >
+                <img  src="./images/open.png" id="ig"  alt="image">
+            </div>
+        </div>
+        <div id="actions"  >
+            <div class="links">
+                <a href="./index.html#about-me">About Me</a>
+                <a href="./index.html#skills" >Skills</a>
+                <a href="./blog.html">Blog</a>
+                <a href="./contacts.html">Contacts</a>
+            </div>
+            <a href="./login.html" ><button id="loginbutton"  >Login</button></a>
+            <img class="propic" id="profilePic" onclick="displayWow()">
+            </img>
+            <div class="wow-menu" id="wowM">
+                <button>Profile</button>
+                <button onclick="logOut()">Log Out</button>
+            </div>
+            <script>
+                window.onload = showLoginButton();
+            </script>
+        </div>
+    </nav>
+    <script>
+        function hide() {
+            document.getElementById('failpop').style.display = "block"
+        }
+        function rehide() {
+            document.getElementById("failpop").style.display = "none"
+        }
+    </script>
+    <div class="login-container">
+        <div id="popcontact" onclick="rehide()">
+            Log In Failed. Try Again.
+        </div>
+        <div class="container-box">
+            <div class="left">
+                <div class="lock">
+                    <img src="./images/Lock.png" alt="Lock">
+                </div>
+            </div>
+            <div class="right">
+                <form onsubmit="event.preventDefault(); loginUser()" autocomplete="off">
+                    <div class="title">LOG IN</div>
+                    <input type="email" name="email" id="email" placeholder="Email" >
+                    <div class="pass">
+                        <input type="password" name="pass" id="pass" placeholder="Password" autocomplete="new-password">
+                        <input type="checkbox" class="checkbox" onclick="togglePasswordVisibility()">
+                    </div>
+                    <button >Log In</button> <a href="./signup.html">Sign Up</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-box">
+          <div class="social">
+            <a href='https://www.instagram.com/___e.d.d.y/' target="_blank"><img src="./images/instagram.png" alt='instagram' /></a>
+            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/linkedin.png" alt='linkedin' /></a>
+            
+            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/twitter.png" alt='twitter' /></a>
+            <a href='https://www.linkedin.com/in/eddy-mugisha-4b4a5219a/' target="_blank"><img src="./images/whatsapp.png" alt='whatsapp' /></a>
+            <a href='' target="_blank"><img src="./images/gmail.png" alt='gmail' /></a>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>All rights reserved by M.J.Eddy 2022 &copy;</p>
+        </div>
+    </div>
+    <script>
+        document.getElementById("loginbutton").style.display = "none" 
+        function togglePasswordVisibility() {
+            var x = document.getElementById("pass");
+            if (x.type === "password") {
+              x.type = "text";
+            } else {
+              x.type = "password";
+            }
+          }
+    </script>
+</body>
+</html>
