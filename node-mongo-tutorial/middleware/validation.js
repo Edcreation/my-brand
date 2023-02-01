@@ -1,11 +1,12 @@
 export function validate(schema) { 
     
     return (req, res, next) => {
-        const { error } = schema.validate(req.body);
-        if (error) {
-            res.status(406).send({
+        const validate = schema.validate(req.body);
 
-                message: error.message
+        if (validate.error) {
+            
+            res.status(406).send({
+                Error: validate.error.message
             });
         } else {
             next();

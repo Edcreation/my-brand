@@ -1,19 +1,26 @@
 import Blogs from '../models/blogsmodel.js'
 
 const getBlogs = ((req,res) => {
-    Blogs.find({}, (err,blogs) => {
+    Blogs.find({}, (err, data) => {
         if (!err) {
-            res.status(200).json({
-                code: 200,
-                message: "Blogs Retrieved",
-                Blogs: blogs
-            })
-        }
-        else {
+            if (data == []) {
+                res.status(204).json({
+                    code: 204,
+                    message: "No Blogs Found"
+                })
+            }
+            else {
+                res.status(200).json({
+                    code: 200,
+                    message: "Blogs Retrieved",
+                    Blogs: data
+                })
+            }
+        } else {
             res.status(400).json({
                 code: 400,
-                message: "Blogs NOT Retrieved",
-                Error: err
+                message: "Bad Request",
+                Error: err,
             })
         }
     })
@@ -28,10 +35,9 @@ const getSingleBlog = (( req,res ) => {
                 BlogFetched: blog,
             })
         } else {
-            res.status(200).json({
-                code: 200,
+            res.status(404).json({
+                code: 404,
                 message: "Blog Not Found",
-                Error: err,
             })
         }
     })
@@ -85,10 +91,9 @@ const editBlog = ((req,res) => {
                 UpdatedBlog: blog,
             })
         } else {
-            res.status(400).json({
-                code: 400,
-                message: "Blog Not Updated",
-                Error: err,
+            res.status(404).json({
+                code: 404,
+                message: "Blog to Update not found",
             })
         }
     })
@@ -103,10 +108,9 @@ const deleteBlog = ((req,res) => {
                 BlogDeleted: blog,
              })
         } else {
-            res.status(400).json({
-                code: 400,
-                message: "Blog Not Deleted",
-                Error: err,
+            res.status(404).json({
+                code: 404,
+                message: "Blog to Delete Not Found",
             })
         }
     })

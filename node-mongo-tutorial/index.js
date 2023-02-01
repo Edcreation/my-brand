@@ -15,7 +15,7 @@ import dotenv from "dotenv";
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
-
+dotenv.config()
 //mongoose connection		
 connect(
     process.env.MONGO_KEY,
