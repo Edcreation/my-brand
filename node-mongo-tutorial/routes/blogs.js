@@ -7,6 +7,7 @@ import { validate } from '../middleware/validation.js'
 import upload from '../middleware/upload.js'
 
 
+
 const BlogsSchema = Joi.object().keys({
     title: Joi.string().required().messages(errorMessage('Title')),
     content: Joi.string().required().messages(errorMessage('Content')),

@@ -13,6 +13,7 @@ import messages_route from './routes/messages.js';
 import dotenv from "dotenv";
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import passport from 'passport';
 // import getLocalSignupStrategy from './passport/local-signup';
 // import getLocalLoginStrategy from './passport/local-login';
@@ -33,7 +34,7 @@ set('strictQuery', true);
 app.use(morgan("tiny"))
 app.use(json())
 app.use(bodyParser.json());
-
+app.use(cookieParser());
 app.use('/users', users_route)
 app.use('/blogs', blogs_route)
 app.use('/messages', messages_route)

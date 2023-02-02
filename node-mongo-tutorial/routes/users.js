@@ -4,7 +4,10 @@ import joi from 'joi';
 import { validate } from '../middleware/validation.js';
 import errorMessage from '../utils/errormessage.js';
 import upload from '../middleware/upload.js';
-
+import User from '../models/usersmodel.js'
+import bodyParser from 'body-parser';
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
 
 const router = Router()
 const SignUpSchema = joi.object().keys({
@@ -27,6 +30,7 @@ const LoginSchema = joi.object().keys({
     password: joi.string().pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0123456789])(?=.*[@$!%*?&])[A-Za-z0123456789@$!%*?&]{8,}$")), // password has both numbers and letters and is btn 6 and 30 
 })
 
+router.use(bodyParser.urlencoded({ extended: true }));
 
 
 

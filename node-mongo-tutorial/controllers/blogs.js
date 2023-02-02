@@ -1,31 +1,59 @@
 import Blogs from '../models/blogsmodel.js'
 import { deleteImage, uploadImage } from '../utils/cloudinary.js';
 
+import verifyToken from '../utils/verifytoken.js';
+
+import dotenv from 'dotenv';
+
+dotenv.config()
+
+const JWT_SECRET = process.env.JWT_SECRET
+
+// const verifyToken = (token)=>{
+//     try {
+//         var decoded = jwt.verify(token, JWT_SECRET);
+//         console.log(decoded)
+//         // if( verify ){return true;}
+//         // else{return false};
+//     } catch (error) {
+//         console.log(JSON.stringify(error),"error");
+//         return false;
+//     }
+// }
 
 const getBlogs = ((req,res) => {
-    Blogs.find({}, (err, data) => {
-        if (data) {
-            if (data.length === 0) {
-                res.status(204).json({
-                    code: 204,
-                    message: "No Blogs Found"
+    const {token}=req.cookies;
+    if(verifyToken(token)){
+        Blogs.find({}, (err, data) => {
+            if (data) {
+                if (data.length === 0) {
+                    res.status(204).json({
+                        code: 204,
+                        message: "No Blogs Found"
+                    })
+                }
+                else {
+                    res.status(200).json({
+                        code: 200,
+                        message: "Blogs Retrieved",
+                        Blogs: data
+                    })
+                }
+            } else {
+                res.status(500).json({
+                    code: 500,
+                    message: "Internal Error",
+                    Error: err,
                 })
             }
-            else {
-                res.status(200).json({
-                    code: 200,
-                    message: "Blogs Retrieved",
-                    Blogs: data
-                })
-            }
-        } else {
-            res.status(500).json({
-                code: 500,
-                message: "Internal Error",
-                Error: err,
-            })
-        }
-    })
+        })
+    }else{
+        res.status(403).json({
+            code: 403,
+            message: "Access Forbidden"
+        })
+    }
+
 })
 
 const getSingleBlog = (( req,res ) => {

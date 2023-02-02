@@ -7,9 +7,11 @@ import { Strategy as PassportLocalStrategy } from 'passport-local';
 
 const { hash, compare } = pkg;
 const { sign } = bcrypt;
-const { SECRET = "secret" } = process.env;
+
 
 dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 const createUser =  ( async (req,res) => {
     try {
         const check = User.find({ email: req.body.email }, async (err, data) => {
@@ -21,11 +23,11 @@ const createUser =  ( async (req,res) => {
                     })
                 }
                 else {
-                    req.body.password = await hash(req.body.password, 10);
+                    let password = await hash(req.body.password, 10);
                     const userdata = {
                         email: req.body.email,
                         username: req.body.username,
-                        password: req.body.password,
+                        password: password,
                         publicId: "",
                         imageUrl: ""
                     }
@@ -55,9 +57,10 @@ const loginUser = ((req,res) => {
             if (data) {
                 const passCheck = await compare( req.body.password, data.password )
                 if (passCheck) {
-                    const token = sign({ username: data.username }, SECRET)
+                    const token = sign({ username: data.username, email: data.email, imageUrl: data.imageUrl }, JWT_SECRET)
+                    res.cookie('token',token,{ maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
+                    // res.setHeader('Authorization', 'Bearer '+ token);
                     res.json({ token })
-                    console.log(data)
                 } else {
                     res.status(200).json({ error: "Password is Invalid" });
                 }
