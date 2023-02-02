@@ -2,6 +2,7 @@ import User from '../models/usersmodel.js';
 import bcrypt from 'jsonwebtoken';
 import pkg from 'bcryptjs';
 import dotenv from 'dotenv';
+import { deleteImage, uploadImage } from '../utils/cloudinary.js';
 
 const { hash, compare } = pkg;
 const { sign } = bcrypt;
@@ -10,45 +11,39 @@ const { SECRET = "secret" } = process.env;
 dotenv.config();
 const createUser =  ( async (req,res) => {
     try {
-        req.body.password = await hash(req.body.password, 10);
-        const user = await User.create(req.body, (err, user) => {
-            if (err) {
-                if (err.code == 11000) {
+        const check = User.find({ email: req.body.email }, async (err, data) => {
+            if (data) {
+                if (data.length != 0 ) {
                     res.status(409).json({
                         code: 409,
-                        message: "User Already Exists",
+                        message: "Email already Exists"
                     })
                 }
                 else {
-                        res.status(400).json({
-                        code: 400,
-                        message: "User Validation Failed",
+                    req.body.password = await hash(req.body.password, 10);
+                    const userdata = {
+                        email: req.body.email,
+                        username: req.body.username,
+                        password: req.body.password,
+                        publicId: "",
+                        imageUrl: ""
+                    }
+                    const user = User.create(userdata, (err, user) => {
+                        res.status(201).json({
+                            code: 201,
+                            message: "User created",
+                            createdUser: user,
+                        })
                     })
                 }
             }
-            else {
-            res.status(201).json({
-                code: 201,
-                message: "User created",
-                createdUser: user,
-            }) 
-        }
         })
     } catch (error) {
-        if (error.code == 11000) {
-            res.status(409).json({
-                code: 409,
-                message: "User Already Exists",
-                Error: error,
-            })
-        }
-        else {
-            res.status(500).json({
-                code: 500,
-                message: "User Not Created. Internal Error",
-                Error: error,
-            })
-        }
+        res.status(500).json({
+            code: 500,
+            message: "User Not Created. Internal Error",
+            Error: error,
+        })
     }
     
 })
@@ -119,12 +114,8 @@ const getSingleUser = ((req,res) => {
 
 })
 
-const editUser = ((req,res) => {
-    const userdata ={
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
-    }
+const editUserName = ( async (req,res) => {
+
     const user = User.findById( req.params.id );
     if (!user) {
         res.status(404).json({
@@ -133,11 +124,12 @@ const editUser = ((req,res) => {
         })
     }
     else {
-        User.findByIdAndUpdate( req.params.id,{ $set:userdata },{ new:true }, (err,data) => {
+        const username = req.body.username;
+        User.findOneAndUpdate( { _id: req.params.id },{ $set: { "username" : username } },{ new:true }, (err,data) => {
             if (!err) {
                 res.status(200).json({
                     code: 200,
-                    message: "User updated",
+                    message: "UserName updated",
                     UpdatedUser: data,
                 })
             } else {
@@ -150,8 +142,73 @@ const editUser = ((req,res) => {
     }
 })
 
+const editPassword = ( async (req,res) => {
+
+    const user = User.findById( req.params.id );
+    if (!user) {
+        res.status(404).json({
+            code: 404,
+            message: "User to Update Not found",
+        })
+    }
+    else {
+        const password = await hash(req.body.password, 10);
+        User.findOneAndUpdate( { _id: req.params.id } ,{ $set: { "password" : password } },{ new:true }, (err,data) => {
+            if (!err) {
+                res.status(200).json({
+                    code: 200,
+                    message: "Password Changed",
+                    UpdatedUser: data,
+                })
+            } else {
+                res.status(404).json({
+                    code: 404,
+                    message: "User Not Updated. No User Found",
+                    error : err
+                })
+            }
+        })
+    }
+})
+
+const editDp = ( async (req,res) => {
+    const user = User.findById( req.params.id );
+    if (!user) {
+        res.status(404).json({
+            code: 404,
+            message: "User to Update Not found",
+        })
+    }
+    else {
+        const data = await uploadImage(req.file.path, "profile_pictures")
+        const usertodeleteimage = await User.findOne({ _id: req.params.id })
+        if ( usertodeleteimage.publicId == "" ) {
+            
+        }
+        else {
+            const publicId = usertodeleteimage.publicId
+            await deleteImage(publicId)
+        }
+        User.findOneAndUpdate( { _id : req.params.id} ,{ $set: { "imageUrl" : data.url, "publicId": data.public_id } },{ new:true }, (err,data) => {
+            if (!err) {
+                res.status(200).json({
+                    code: 200,
+                    message: "Profile Picture Changed",
+                    UpdatedUser: data,
+                })
+            } else {
+                res.status(404).json({
+                    code: 404,
+                    message: "Profile Picture Not Updated. No User Found",
+                    error : err
+                })
+            }
+        })
+    }
+})
+
 const deleteUser = ((req,res) => {
-    User.findByIdAndRemove( req.params.id, (err, data) => {
+    User.deleteOne( { _id: req.params.id }, (err, data) => {
         if (!err) {
             res.status(200).json({
                 code: 200,
@@ -172,6 +229,8 @@ export  {
     createUser, 
     loginUser,
     deleteUser, 
-    getSingleUser, 
-    editUser 
+    getSingleUser,
+    editUserName,
+    editPassword,
+    editDp
 }

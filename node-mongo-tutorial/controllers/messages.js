@@ -43,7 +43,7 @@ const getSingleMessage = (( req, res ) => {
 })
 
 const deleteMessage = (( req, res ) => {
-    Messages.findByIdAndRemove( req.params.id, ( err, Msg) => {
+    Messages.deleteOne( { _id: req.params.id}, ( err, Msg) => {
         if (!err) {
             res.status(200).json({
                 code: 200,

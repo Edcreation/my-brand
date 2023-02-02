@@ -100,7 +100,7 @@ const editBlog = ((req,res) => {
 })
 
 const deleteBlog = ((req,res) => {
-    Blogs.findByIdAndRemove( req.params.id, (err, blog) => {
+    Blogs.deleteOne( { _id: req.params.id }, (err, blog) => {
         if (!err) {
             res.status(200).json({
                 code: 200,
