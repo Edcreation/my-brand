@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+
 // Creating mongoose  model
 const BlogSchema = new Schema({
     title: {
@@ -9,6 +10,7 @@ const BlogSchema = new Schema({
      type: String,
      required: true
     },
+    likeCount: 0,
     publicId: {
         type: String,
         required: false,
@@ -22,4 +24,5 @@ const BlogSchema = new Schema({
        default: Date.now
     }
  });
+ 
  export default model('blogs', BlogSchema);

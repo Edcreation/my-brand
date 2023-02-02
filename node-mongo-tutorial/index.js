@@ -6,10 +6,10 @@ import { Mockgoose } from 'mockgoose';
 var mockgoose = new Mockgoose(mongoose);
 
 // routes
-import users_route from './routes/users.js';
-import blogs_route from './routes/blogs.js';
+import users_route from './src/routes/users.js';
+import blogs_route from './src/routes/blogs.js';
 
-import messages_route from './routes/messages.js';
+import messages_route from './src/routes/messages.js';
 import dotenv from "dotenv";
 import morgan from 'morgan';
 import bodyParser from 'body-parser';

@@ -12,7 +12,6 @@ const verifyToken = (token)=>{
         if(verify){ return true;}
         else{return false};
     } catch (error) {
-        //console.log(error,"error");
         return false;
     }
 }
