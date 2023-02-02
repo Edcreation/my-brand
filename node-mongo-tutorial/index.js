@@ -13,6 +13,9 @@ import messages_route from './routes/messages.js';
 import dotenv from "dotenv";
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import passport from 'passport';
+// import getLocalSignupStrategy from './passport/local-signup';
+// import getLocalLoginStrategy from './passport/local-login';
 
 dotenv.config()
 //mongoose connection		

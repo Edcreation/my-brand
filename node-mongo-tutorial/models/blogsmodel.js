@@ -9,9 +9,13 @@ const BlogSchema = new Schema({
      type: String,
      required: true
     },
-    image: {
-     type: String,
-     required: true
+    publicId: {
+        type: String,
+        required: false,
+    },
+    imageUrl: {
+        type: String,  
+        required: false
     },
     date: {
        type: Date,

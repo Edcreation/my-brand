@@ -3,6 +3,7 @@ import bcrypt from 'jsonwebtoken';
 import pkg from 'bcryptjs';
 import dotenv from 'dotenv';
 import { deleteImage, uploadImage } from '../utils/cloudinary.js';
+import { Strategy as PassportLocalStrategy } from 'passport-local';
 
 const { hash, compare } = pkg;
 const { sign } = bcrypt;

@@ -1,4 +1,6 @@
 import Blogs from '../models/blogsmodel.js'
+import { deleteImage, uploadImage } from '../utils/cloudinary.js';
+
 
 const getBlogs = ((req,res) => {
     Blogs.find({}, (err, data) => {
@@ -27,7 +29,7 @@ const getBlogs = ((req,res) => {
 })
 
 const getSingleBlog = (( req,res ) => {
-    Blogs.findById( req.params.id, (err, blog) => {
+    Blogs.findOne( { _id: req.params.id}, (err, blog) => {
         if (blog) {
             res.status(200).json({
                 code: 200,
@@ -43,11 +45,14 @@ const getSingleBlog = (( req,res ) => {
     })
 })
 
-const createBlog = ((req,res) => {
+const createBlog = ( async (req,res) => {
+
+    const data = await uploadImage(req.file.path, "blog_images")
     const blogData = {
         title : req.body.title,
-        image : req.body.image,
         content : req.body.content,
+        publicId: data.public_id,
+        imageUrl: data.url,
         date : new Date()
     }
     try {
@@ -76,18 +81,24 @@ const createBlog = ((req,res) => {
     }
 })
 
-const editBlog = ((req,res) => {
+const editBlog = ( async (req,res) => {
+    const data = await uploadImage(req.file.path, "blog_images")
+    const blogToDeleteImage = await Blogs.findOne({ _id: req.params.id })
+    const publicId = blogToDeleteImage.publicId
+    await deleteImage(publicId)
     const blogData = {
         title : req.body.title,
         image : req.body.image,
         content : req.body.content,
+        publicId: data.public_id,
+        imageUrl: data.url,
         date : new Date()
     }
-    Blogs.findByIdAndUpdate( req.params.id,{ $set:blogData },{ new:true }, (err,blog) => {
+    Blogs.findOneAndUpdate( { _id:  req.params.id },{ $set:blogData },{ new:true }, (err,blog) => {
         if (!err) {
             res.status(200).json({
                 code: 200,
-                message: "Blog update",
+                message: "Blog updated",
                 UpdatedBlog: blog,
             })
         } else {
