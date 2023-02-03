@@ -57,7 +57,7 @@ const loginUser = ((req,res) => {
             if (data) {
                 const passCheck = await compare( req.body.password, data.password )
                 if (passCheck) {
-                    const token = sign({ username: data.username, email: data.email, imageUrl: data.imageUrl }, JWT_SECRET)
+                    const token = sign({ userId: data._id, username: data.username, email: data.email, imageUrl: data.imageUrl }, JWT_SECRET)
                     res.cookie('token',token,{ maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
                     // res.setHeader('Authorization', 'Bearer '+ token);
                     res.json({ token })
@@ -176,7 +176,7 @@ const editPassword = ( async (req,res) => {
 })
 
 const editDp = ( async (req,res) => {
-    const user = User.findById( req.params.id );
+    const user = User.findOne( { _id : req.params.id} );
     if (!user) {
         res.status(404).json({
             code: 404,

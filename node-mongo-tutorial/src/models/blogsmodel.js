@@ -10,7 +10,9 @@ const BlogSchema = new Schema({
      type: String,
      required: true
     },
-    likeCount: 0,
+    liked: [{
+        type:String
+    }],
     publicId: {
         type: String,
         required: false,

@@ -61,8 +61,12 @@ const getSingleBlog = (( req,res ) => {
 })
 
 const createBlog = ( async (req,res) => {
-
-    const data = await uploadImage(req.file.path, "blog_images")
+    const data = await uploadImage(req.file.path, "blog_images").catch((err) => { 
+        res.status(500).json({ 
+        Message: "Image Upload Error", 
+        Error: err 
+        }) 
+    })
     const blogData = {
         title : req.body.title,
         content : req.body.content,
@@ -109,6 +113,7 @@ const editBlog = ( async (req,res) => {
         imageUrl: data.url,
         date : new Date()
     }
+
     Blogs.findOneAndUpdate( { _id:  req.params.id },{ $set:blogData },{ new:true }, (err,blog) => {
         if (!err) {
             res.status(200).json({
@@ -125,7 +130,10 @@ const editBlog = ( async (req,res) => {
     })
 })
 
-const deleteBlog = ((req,res) => {
+const deleteBlog = ( async (req,res) => {
+    const blogToDeleteImage = await Blogs.findOne({ _id: req.params.id })
+    const publicId = blogToDeleteImage.publicId
+    await deleteImage(publicId)
     Blogs.deleteOne( { _id: req.params.id }, (err, blog) => {
         if (!err) {
             res.status(200).json({
@@ -142,10 +150,83 @@ const deleteBlog = ((req,res) => {
     })
 })
 
+const likeBlog = ( (req,res) => {
+    let useridf = req.body.userId
+    Blogs.find({ "_id": req.params.id, "liked" : req.body.userId }, (err, data) => {
+        // res.json( data.length )
+        if (data.length == 0 ) {
+            Blogs.updateOne(
+                { _id: req.params.id }, 
+                { $push: { "liked" : useridf } },
+                (err, tru) => {
+                    if (tru) {
+                        res.status(200).json({
+                            Message: "User is Not in Liked",
+                            data: tru
+                        })
+                    }
+                    if (err) {
+                        res.status(500).json({
+                            Message: "Not Liked",
+                            data: err
+                        })
+                    }
+                });
+        }
+        else {
+
+            Blogs.findOne({ _id: req.params.id, cars: { $in: req.body.userId }}, (err, wow) => {
+
+                if (!err) {
+                    res.status(200).json({
+                        Message: "User is in Liked",
+                        Error: wow
+                    })  
+                }
+                else{
+                    res.status(200).json({
+                        Message: "User is in Likedddddddddddddddd",
+                        Error: err
+                    }) 
+                }
+            })
+
+        }
+        if (err) {
+            res.status(500).json({
+                Message: "Error",
+                Error: err
+            }) 
+        }
+    });
+
+
+    // .findOne({ _id: req.params.id }, (err, data) => {
+    //     const user = req.userId
+    //     if (data) {
+    //         Blogs.updateOne(
+    //             { _id: req.params.id }, 
+    //             { $push: { liked: user } },
+    //         );
+    //         res.status(201).json({
+    //             Message: "Like added",
+    //             Error: err
+    //         })
+    //     }
+    //     if (err) {
+    //         res.status(500).json({
+    //             Message: "Internal Error",
+    //             Error: err
+    //         })
+    //     }
+    // })
+})
+
 export  {
     getBlogs,
     getSingleBlog,
     createBlog,
     editBlog,
     deleteBlog,
+    likeBlog,
 }

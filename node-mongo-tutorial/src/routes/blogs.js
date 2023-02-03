@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getBlogs, getSingleBlog, createBlog, editBlog, deleteBlog } from '../controllers/blogs.js'
+import { getBlogs, getSingleBlog, createBlog, editBlog, deleteBlog, likeBlog } from '../controllers/blogs.js'
 const router = Router()
 import Joi from 'joi'
 import errorMessage from '../utils/errormessage.js'
@@ -12,8 +12,8 @@ const BlogsSchema = Joi.object().keys({
     content: Joi.string().required().messages(errorMessage('Content')),
     publicId: Joi.string(),
     imageUrl: Joi.string(),
-    blog_image: Joi.string().messages(errorMessage('Title Image'))
-})
+}).unknown(true);
+
 const CommentSchema = Joi.object().keys({
     comment: Joi.string().required().messages(errorMessage('Comment'))
 }).unknown(true);
@@ -24,8 +24,10 @@ router.get('/blog/:id', getSingleBlog)
 
 router.post('/blog/c/:id',validate(CommentSchema, { abortEarly: false } ), postComment)
 
-router.post('/create', upload.single('blog_image') ,validate(BlogsSchema, { abortEarly: false } ), createBlog)
-router.put('/edit/:id',  upload.single('blog_image') , validate(BlogsSchema, { abortEarly: false } ), editBlog)
+router.put('/like/:id', likeBlog)
+
+router.post('/create', upload.single("blogImage") ,validate(BlogsSchema, { abortEarly: false } ), createBlog)
+router.put('/edit/:id',  upload.single('blogImage') , validate(BlogsSchema, { abortEarly: false } ), editBlog)
 router.delete('/delete/:id', deleteBlog)
 
 export default router
