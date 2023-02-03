@@ -7,19 +7,6 @@ import dotenv from 'dotenv';
 
 dotenv.config()
 
-const JWT_SECRET = process.env.JWT_SECRET
-
-// const verifyToken = (token)=>{
-//     try {
-//         var decoded = jwt.verify(token, JWT_SECRET);
-//         console.log(decoded)
-//         // if( verify ){return true;}
-//         // else{return false};
-//     } catch (error) {
-//         console.log(JSON.stringify(error),"error");
-//         return false;
-//     }
-// }
 
 const getBlogs = ((req,res) => {
     const {token}=req.cookies;

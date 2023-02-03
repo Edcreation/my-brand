@@ -2,9 +2,6 @@ import express, { json } from 'express';
 const app = express()
 
 import mongoose, { connect, set } from 'mongoose';
-import { Mockgoose } from 'mockgoose';
-var mockgoose = new Mockgoose(mongoose);
-
 // routes
 import users_route from './src/routes/users.js';
 import blogs_route from './src/routes/blogs.js';
