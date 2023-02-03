@@ -1,4 +1,5 @@
 import Blogs from '../models/blogsmodel.js'
+import Users from '../models/usersmodel.js'
 import { deleteImage, uploadImage } from '../utils/cloudinary.js';
 
 import verifyToken from '../utils/verifytoken.js';
@@ -152,74 +153,60 @@ const deleteBlog = ( async (req,res) => {
 
 const likeBlog = ( (req,res) => {
     let useridf = req.body.userId
-    Blogs.find({ "_id": req.params.id, "liked" : req.body.userId }, (err, data) => {
-        // res.json( data.length )
-        if (data.length == 0 ) {
-            Blogs.updateOne(
-                { _id: req.params.id }, 
-                { $push: { "liked" : useridf } },
-                (err, tru) => {
-                    if (tru) {
-                        res.status(200).json({
-                            Message: "User is Not in Liked",
-                            data: tru
+    Blogs.find({ "_id": req.params.id, "liked" : req.body.userId }, async (err, data) => {
+        if(data) {
+            if (data.length == 0 ) {
+                Blogs.updateOne(
+                    { _id: req.params.id }, 
+                    { $push: { "liked" : useridf } },
+                    (err, tru) => {
+                        if (tru) {
+                            res.status(200).json({
+                                Message: "Liked",
+                                //data: tru
+                            })
+                        }
+                        if (err) {
+                            res.status(500).json({
+                                Message: "Not Liked",
+                                data: err
+                            })
+                        }
+                    });
+            }
+            else {
+                Blogs.findOne({ _id: req.params.id, liked: { $in: req.body.userId }}, (err, wow) => {
+                    if (!err) {
+                        Blogs.updateOne({ _id: req.params.id } , { $pull: { liked : req.body.userId  } }, (error, wow1) => {
+                            if (!err) {
+                                res.status(200).json({
+                                    Message: "Unliked",
+                                    //Liked: wow1.liked
+                                })  
+                            }
+                            else{
+                                res.status(500).json({
+                                    Message: "Failed",
+                                    Error: error
+                                }) 
+                            }
                         })
                     }
-                    if (err) {
-                        res.status(500).json({
-                            Message: "Not Liked",
-                            data: err
-                        })
+                    else{
+                        res.status(400).json({
+                            Message: "User not added in liked",
+                            Error: err
+                        }) 
                     }
-                });
-        }
-        else {
-
-            Blogs.findOne({ _id: req.params.id, cars: { $in: req.body.userId }}, (err, wow) => {
-
-                if (!err) {
-                    res.status(200).json({
-                        Message: "User is in Liked",
-                        Error: wow
-                    })  
-                }
-                else{
-                    res.status(200).json({
-                        Message: "User is in Likedddddddddddddddd",
-                        Error: err
-                    }) 
-                }
-            })
-
+                })
+            }
         }
         if (err) {
-            res.status(500).json({
-                Message: "Error",
-                Error: err
-            }) 
+            res.status(400).json({
+                Message: "Blog is invalid",
+            })
         }
     });
-
-
-    // .findOne({ _id: req.params.id }, (err, data) => {
-    //     const user = req.userId
-    //     if (data) {
-    //         Blogs.updateOne(
-    //             { _id: req.params.id }, 
-    //             { $push: { liked: user } },
-    //         );
-    //         res.status(201).json({
-    //             Message: "Like added",
-    //             Error: err
-    //         })
-    //     }
-    //     if (err) {
-    //         res.status(500).json({
-    //             Message: "Internal Error",
-    //             Error: err
-    //         })
-    //     }
-    // })
 })
 
 export  {

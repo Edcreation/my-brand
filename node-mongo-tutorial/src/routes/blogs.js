@@ -20,9 +20,9 @@ const CommentSchema = Joi.object().keys({
 
 router.get('/', getBlogs)
 
-router.get('/blog/:id', getSingleBlog)
+router.get('/b/:id', getSingleBlog)
 
-router.post('/blog/c/:id',validate(CommentSchema, { abortEarly: false } ), postComment)
+router.post('/b/c/:id',validate(CommentSchema, { abortEarly: false } ), postComment)
 
 router.put('/like/:id', likeBlog)
 

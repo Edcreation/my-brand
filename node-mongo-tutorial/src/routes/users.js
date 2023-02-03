@@ -30,6 +30,10 @@ const LoginSchema = joi.object().keys({
     password: joi.string().pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0123456789])(?=.*[@$!%*?&])[A-Za-z0123456789@$!%*?&]{8,}$")), // password has both numbers and letters and is btn 6 and 30 
 })
 
+const PicSchema = joi.object({
+    profile_pic: joi.string().required()
+})
+
 router.use(bodyParser.urlencoded({ extended: true }));
 
 
@@ -38,7 +42,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get('/', users)
 
-router.get('/user/:id', getSingleUser)
+router.get('/u/:id', getSingleUser)
 
 // User profile changes
 router.put('/edit/profilepic/:id',upload.single("profile_pic"), editDp)
