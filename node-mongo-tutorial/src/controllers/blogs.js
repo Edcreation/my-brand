@@ -10,37 +10,30 @@ dotenv.config()
 
 
 const getBlogs = ((req,res) => {
-    const {token}=req.cookies;
-    if(verifyToken(token)){
-        Blogs.find({}, (err, data) => {
-            if (data) {
-                if (data.length === 0) {
-                    res.status(204).json({
-                        code: 204,
-                        message: "No Blogs Found"
-                    })
-                }
-                else {
-                    res.status(200).json({
-                        code: 200,
-                        message: "Blogs Retrieved",
-                        Blogs: data
-                    })
-                }
-            } else {
-                res.status(500).json({
-                    code: 500,
-                    message: "Internal Error",
-                    Error: err,
+    Blogs.find({}, (err, data) => {
+        if (data) {
+            if (data.length === 0) {
+                res.status(204).json({
+                    code: 204,
+                    message: "No Blogs Found"
                 })
             }
-        })
-    }else{
-        res.status(403).json({
-            code: 403,
-            message: "Access Forbidden"
-        })
-    }
+            else {
+                res.status(200).json({
+                    code: 200,
+                    message: "Blogs Retrieved",
+                    Blogs: data
+                })
+            }
+        } else {
+            res.status(500).json({
+                code: 500,
+                message: "Internal Error",
+                Error: err,
+            })
+        }
+    })
+
 
 })
 
@@ -153,60 +146,69 @@ const deleteBlog = ( async (req,res) => {
 
 const likeBlog = ( (req,res) => {
     let useridf = req.body.userId
-    Blogs.find({ "_id": req.params.id, "liked" : req.body.userId }, async (err, data) => {
-        if(data) {
-            if (data.length == 0 ) {
-                Blogs.updateOne(
-                    { _id: req.params.id }, 
-                    { $push: { "liked" : useridf } },
-                    (err, tru) => {
-                        if (tru) {
-                            res.status(200).json({
-                                Message: "Liked",
-                                //data: tru
-                            })
-                        }
-                        if (err) {
-                            res.status(500).json({
-                                Message: "Not Liked",
-                                data: err
-                            })
-                        }
-                    });
-            }
-            else {
-                Blogs.findOne({ _id: req.params.id, liked: { $in: req.body.userId }}, (err, wow) => {
-                    if (!err) {
-                        Blogs.updateOne({ _id: req.params.id } , { $pull: { liked : req.body.userId  } }, (error, wow1) => {
-                            if (!err) {
+    const {token}=req.cookies;
+    if(verifyToken(token)){
+        Blogs.find({ "_id": req.params.id, "liked" : req.body.userId }, async (err, data) => {
+            if(data) {
+                if (data.length == 0 ) {
+                    Blogs.updateOne(
+                        { _id: req.params.id }, 
+                        { $push: { "liked" : useridf } },
+                        (err, tru) => {
+                            if (tru) {
                                 res.status(200).json({
-                                    Message: "Unliked",
-                                    //Liked: wow1.liked
-                                })  
+                                    Message: "Liked",
+                                    //data: tru
+                                })
                             }
-                            else{
+                            if (err) {
                                 res.status(500).json({
-                                    Message: "Failed",
-                                    Error: error
-                                }) 
+                                    Message: "Not Liked",
+                                    data: err
+                                })
                             }
-                        })
-                    }
-                    else{
-                        res.status(400).json({
-                            Message: "User not added in liked",
-                            Error: err
-                        }) 
-                    }
+                        });
+                }
+                else {
+                    Blogs.findOne({ _id: req.params.id, liked: { $in: req.body.userId }}, (err, wow) => {
+                        if (!err) {
+                            Blogs.updateOne({ _id: req.params.id } , { $pull: { liked : req.body.userId  } }, (error, wow1) => {
+                                if (!err) {
+                                    res.status(200).json({
+                                        Message: "Unliked",
+                                        //Liked: wow1.liked
+                                    })  
+                                }
+                                else{
+                                    res.status(500).json({
+                                        Message: "Failed",
+                                        Error: error
+                                    }) 
+                                }
+                            })
+                        }
+                        else{
+                            res.status(400).json({
+                                Message: "User not added in liked",
+                                Error: err
+                            }) 
+                        }
+                    })
+                }
+            }
+            if (err) {
+                res.status(400).json({
+                    Message: "Blog is invalid",
                 })
             }
-        }
-        if (err) {
-            res.status(400).json({
-                Message: "Blog is invalid",
-            })
-        }
-    });
+        });
+    }else{
+        res.status(403).json({
+            code: 403,
+            message: "Access Forbidden, Cant Like"
+        })
+    }
+
 })
 
 export  {

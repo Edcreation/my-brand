@@ -27,7 +27,7 @@ connect(
       err ? console.log(err) : console.log(
         "Database Connected!!!!!")
 );
-set('strictQuery', true);
+
 app.use(morgan("tiny"))
 app.use(json())
 app.use(bodyParser.json());

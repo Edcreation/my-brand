@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha --recursive --exit --timeout 80000"
+    "test": "mocha src/test/test.js --recursive --exit --timeout 80000"
   },
   "author": "",
   "license": "ISC",

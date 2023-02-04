@@ -101,7 +101,7 @@ const users = ((req,res) => {
 })
 
 const getSingleUser = ((req,res) => {
-    User.findById( req.params.id , (err, data) => {
+    User.findOne( { _id: req.params.id } , (err, data) => {
         if (data) {
             res.status(200).json({
                 code: 200,
@@ -120,7 +120,7 @@ const getSingleUser = ((req,res) => {
 
 const editUserName = ( async (req,res) => {
 
-    const user = User.findById( req.params.id );
+    const user = User.findOne( { _id: req.params.id} );
     if (!user) {
         res.status(404).json({
             code: 404,
@@ -148,7 +148,7 @@ const editUserName = ( async (req,res) => {
 
 const editPassword = ( async (req,res) => {
 
-    const user = User.findById( req.params.id );
+    const user = User.findOne( { _id: req.params.id } );
     if (!user) {
         res.status(404).json({
             code: 404,

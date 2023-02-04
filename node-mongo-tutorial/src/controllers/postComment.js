@@ -1,9 +1,6 @@
-import { Router } from 'express'
-import Joi from 'joi'
-import errorMessage from '../utils/errormessage.js'
+
 import comments from '../models/commentsmodel.js'
 
-const router = Router()
 
 const postComment = ( (req,res) => {
     const commentData = {
@@ -29,6 +26,25 @@ const postComment = ( (req,res) => {
     })
 })
 
+const getComments = ((req,res) => {
+    comments.find({ _blogId: req.params.id }, (err, data) => {
+        if (data) {
+            res.status(200).json({
+                code: 200,
+                UserId: data._userId,
+                Comments: data
+            })
+        }
+        if (err) {
+            res.status(500).json({
+                code: 500,
+                Error: err
+            })
+        }
+    })
+})
+
 export {
     postComment,
+    getComments
 }

@@ -5,7 +5,7 @@ import Joi from 'joi'
 import errorMessage from '../utils/errormessage.js'
 import { validate } from '../middleware/validation.js'
 import upload from '../middleware/upload.js'
-import { postComment } from '../controllers/postComment.js'
+import { postComment, getComments } from '../controllers/postComment.js'
 
 const BlogsSchema = Joi.object().keys({
     title: Joi.string().required().messages(errorMessage('Title')),
@@ -23,6 +23,7 @@ router.get('/', getBlogs)
 router.get('/b/:id', getSingleBlog)
 
 router.post('/b/c/:id',validate(CommentSchema, { abortEarly: false } ), postComment)
+router.get('/b/c/:id', getComments)
 
 router.put('/like/:id', likeBlog)
 
