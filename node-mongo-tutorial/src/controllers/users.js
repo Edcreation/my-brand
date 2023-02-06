@@ -4,6 +4,7 @@ import pkg from 'bcryptjs';
 import dotenv from 'dotenv';
 import { deleteImage, uploadImage } from '../utils/cloudinary.js';
 import { Strategy as PassportLocalStrategy } from 'passport-local';
+import passport from 'passport';
 
 const { hash, compare } = pkg;
 const { sign } = bcrypt;
@@ -12,68 +13,47 @@ const { sign } = bcrypt;
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
-const createUser =  ( async (req,res) => {
-    try {
-        const check = User.find({ email: req.body.email }, async (err, data) => {
-            if (data) {
-                if (data.length != 0 ) {
-                    res.status(409).json({
-                        code: 409,
-                        message: "Email already Exists"
-                    })
-                }
-                else {
-                    let password = await hash(req.body.password, 10);
-                    const userdata = {
-                        email: req.body.email,
-                        username: req.body.username,
-                        password: password,
-                        publicId: "",
-                        imageUrl: ""
-                    }
-                    const user = User.create(userdata, (err, user) => {
-                        res.status(201).json({
-                            code: 201,
-                            message: "User created",
-                            createdUser: user,
-                        })
-                    })
-                }
-            }
-        })
-    } catch (error) {
-        res.status(500).json({
-            code: 500,
-            message: "User Not Created. Internal Error",
-            Error: error,
-        })
+
+const createUser =  ( async (req, res) => {
+    let password = await hash(req.body.password, 10);
+    const data = {
+        email: req.body.email, 
+        username: req.body.username, 
+        password: password,
+        publicId: "",
+        imageUrl: "",
+        admin: false
     }
-    
+    User.register(new User(data), 
+      req.body.password, (err, user) => {
+      if(err) {
+        res.status(400).json({
+            code: 400,
+            message: "User Account Not Created",
+            Error: err.message,
+        })
+      }
+      else {
+        passport.authenticate('local')(req, res, () => {
+            res.status(200).json({
+                code: 200,
+                message: "User Account Created",
+            })
+        });
+      }
+    });
 })
 
 const loginUser = ((req,res) => {
-    try {
-        User.findOne({ email : req.body.email }, async (err, data) => {
-            if (data) {
-                const passCheck = await compare( req.body.password, data.password )
-                if (passCheck) {
-                    const token = sign({ userId: data._id, username: data.username, email: data.email, imageUrl: data.imageUrl }, JWT_SECRET)
-                    res.cookie('token',token,{ maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
-                    // res.setHeader('Authorization', 'Bearer '+ token);
-                    res.json({ token })
-                } else {
-                    res.status(200).json({ error: "Password is Invalid" });
-                }
-            } else {
-                res.status(200).json({ error: "User doesn't exist" });
-            }
-        })
-    } catch(err) {
-        res.status(400).json({ err  })
-    }
+    res.status(200).json({
+        code: 200,
+        message: "Logged In",
+        LoggedInAs: req.user.username
+    })
 })
 
 const users = ((req,res) => {
+    const usr = req.user.username
     User.find({}, (err, data) => {
         if (!err) {
             if (data.length === 0 ) {
@@ -86,6 +66,7 @@ const users = ((req,res) => {
                 res.status(200).json({
                     code: 200,
                     message: "Users Found",
+                    Admin: usr,
                     Users: data
                 })
             }

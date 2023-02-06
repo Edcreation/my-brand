@@ -1,6 +1,4 @@
 import express, { json } from 'express';
-const app = express()
-
 import mongoose, { connect, set } from 'mongoose';
 // routes
 import users_route from './src/routes/users.js';
@@ -11,9 +9,23 @@ import dotenv from "dotenv";
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import passport from 'passport';
-// import getLocalSignupStrategy from './passport/local-signup';
-// import getLocalLoginStrategy from './passport/local-login';
+// import auth from './src/middleware/authenticate.js';
+// import LocalStrategy from 'passport-local'
+// import User from './src/models/usersmodel.js';
+// import passport from 'passport';
+import  session  from 'express-session';
+const app = express()
+
+
+
+app.use(cookieParser('SercetStringForCookies'));
+app.use(session({
+    secret: 'SecretStringForCookies',
+    cookie: { maxAge: 600000 },
+    resave: true,
+    saveUninitialized: true
+}))
+
 
 dotenv.config()
 //mongoose connection		
@@ -31,7 +43,6 @@ connect(
 app.use(morgan("tiny"))
 app.use(json())
 app.use(bodyParser.json());
-app.use(cookieParser());
 app.use('/users', users_route)
 app.use('/blogs', blogs_route)
 app.use('/messages', messages_route)

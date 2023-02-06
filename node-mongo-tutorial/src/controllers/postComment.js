@@ -5,7 +5,7 @@ import comments from '../models/commentsmodel.js'
 const postComment = ( (req,res) => {
     const commentData = {
         _blogId: req.params.id,
-        _userId: req.body.userId,
+        _userId: req.user._id,
         comment: req.body.comment
     }
     comments.create(commentData, (err,data) => {

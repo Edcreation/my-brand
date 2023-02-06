@@ -2,8 +2,6 @@ import Blogs from '../models/blogsmodel.js'
 import Users from '../models/usersmodel.js'
 import { deleteImage, uploadImage } from '../utils/cloudinary.js';
 
-import verifyToken from '../utils/verifytoken.js';
-
 import dotenv from 'dotenv';
 
 dotenv.config()
@@ -145,69 +143,62 @@ const deleteBlog = ( async (req,res) => {
 })
 
 const likeBlog = ( (req,res) => {
-    let useridf = req.body.userId
+    let useridf = req.user._id
     const {token}=req.cookies;
-    if(verifyToken(token)){
-        Blogs.find({ "_id": req.params.id, "liked" : req.body.userId }, async (err, data) => {
-            if(data) {
-                if (data.length == 0 ) {
-                    Blogs.updateOne(
-                        { _id: req.params.id }, 
-                        { $push: { "liked" : useridf } },
-                        (err, tru) => {
-                            if (tru) {
-                                res.status(200).json({
-                                    Message: "Liked",
-                                    //data: tru
-                                })
-                            }
-                            if (err) {
-                                res.status(500).json({
-                                    Message: "Not Liked",
-                                    data: err
-                                })
-                            }
-                        });
-                }
-                else {
-                    Blogs.findOne({ _id: req.params.id, liked: { $in: req.body.userId }}, (err, wow) => {
-                        if (!err) {
-                            Blogs.updateOne({ _id: req.params.id } , { $pull: { liked : req.body.userId  } }, (error, wow1) => {
-                                if (!err) {
-                                    res.status(200).json({
-                                        Message: "Unliked",
-                                        //Liked: wow1.liked
-                                    })  
-                                }
-                                else{
-                                    res.status(500).json({
-                                        Message: "Failed",
-                                        Error: error
-                                    }) 
-                                }
+    Blogs.find({ "_id": req.params.id, "liked" : useridf }, async (err, data) => {
+        if(data) {
+            if (data.length == 0 ) {
+                Blogs.updateOne(
+                    { _id: req.params.id }, 
+                    { $push: { "liked" : useridf } },
+                    (err, tru) => {
+                        if (tru) {
+                            res.status(200).json({
+                                Message: "Liked",
+                                //data: tru
                             })
                         }
-                        else{
-                            res.status(400).json({
-                                Message: "User not added in liked",
-                                Error: err
-                            }) 
+                        if (err) {
+                            res.status(500).json({
+                                Message: "Not Liked",
+                                data: err
+                            })
                         }
-                    })
-                }
+                    });
             }
-            if (err) {
-                res.status(400).json({
-                    Message: "Blog is invalid",
+            else {
+                Blogs.findOne({ _id: req.params.id, liked: { $in: useridf }}, (err, wow) => {
+                    if (!err) {
+                        Blogs.updateOne({ _id: req.params.id } , { $pull: { liked : useridf  } }, (error, wow1) => {
+                            if (!err) {
+                                res.status(200).json({
+                                    Message: "Unliked",
+                                    //Liked: wow1.liked
+                                })  
+                            }
+                            else{
+                                res.status(500).json({
+                                    Message: "Failed",
+                                    Error: error
+                                }) 
+                            }
+                        })
+                    }
+                    else{
+                        res.status(400).json({
+                            Message: "User not added in liked",
+                            Error: err
+                        }) 
+                    }
                 })
             }
-        });
-    }else{
-        res.status(403).json({
-            code: 403,
-            message: "Access Forbidden, Cant Like"
-        })
-    }
+        }
+        if (err) {
+            res.status(400).json({
+                Message: "Blog is invalid",
+            })
+        }
+    });
 
 })
 
