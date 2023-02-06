@@ -101,7 +101,7 @@ const getSingleUser = ((req,res) => {
 
 const editUserName = ( async (req,res) => {
 
-    const user = User.findOne( { _id: req.params.id} );
+    const user = User.findOne( { _id: req.user._id } );
     if (!user) {
         res.status(404).json({
             code: 404,
@@ -110,7 +110,7 @@ const editUserName = ( async (req,res) => {
     }
     else {
         const username = req.body.username;
-        User.findOneAndUpdate( { _id: req.params.id },{ $set: { "username" : username } },{ new:true }, (err,data) => {
+        User.findOneAndUpdate( { _id: req.user._id },{ $set: { "username" : username } },{ new:true }, (err,data) => {
             if (!err) {
                 res.status(200).json({
                     code: 200,
@@ -129,7 +129,7 @@ const editUserName = ( async (req,res) => {
 
 const editPassword = ( async (req,res) => {
 
-    const user = User.findOne( { _id: req.params.id } );
+    const user = User.findOne( { _id: req.user._id } );
     if (!user) {
         res.status(404).json({
             code: 404,
@@ -138,7 +138,7 @@ const editPassword = ( async (req,res) => {
     }
     else {
         const password = await hash(req.body.password, 10);
-        User.findOneAndUpdate( { _id: req.params.id } ,{ $set: { "password" : password } },{ new:true }, (err,data) => {
+        User.findOneAndUpdate( { _id: req.user._id } ,{ $set: { "password" : password } },{ new:true }, (err,data) => {
             if (!err) {
                 res.status(200).json({
                     code: 200,
@@ -157,7 +157,7 @@ const editPassword = ( async (req,res) => {
 })
 
 const editDp = ( async (req,res) => {
-    const user = User.findOne( { _id : req.params.id} );
+    const user = User.findOne( { _id : req.user._id }  );
     if (!user) {
         res.status(404).json({
             code: 404,
@@ -166,7 +166,7 @@ const editDp = ( async (req,res) => {
     }
     else {
         const data = await uploadImage(req.file.path, "profile_pictures")
-        const usertodeleteimage = await User.findOne({ _id: req.params.id })
+        const usertodeleteimage = await User.findOne({ _id: req.user._id })
         if ( usertodeleteimage.publicId == "" ) {
             
         }
@@ -174,7 +174,7 @@ const editDp = ( async (req,res) => {
             const publicId = usertodeleteimage.publicId
             await deleteImage(publicId)
         }
-        User.findOneAndUpdate( { _id : req.params.id} ,{ $set: { "imageUrl" : data.url, "publicId": data.public_id } },{ new:true }, (err,data) => {
+        User.findOneAndUpdate( { _id : req.user._id } ,{ $set: { "imageUrl" : data.url, "publicId": data.public_id } },{ new:true }, (err,data) => {
             if (!err) {
                 res.status(200).json({
                     code: 200,

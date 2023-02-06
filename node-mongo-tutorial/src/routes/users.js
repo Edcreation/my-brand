@@ -71,9 +71,9 @@ router.get('/',isLoggedIn, users)
 router.get('/u/:id', getSingleUser)
 
 // User profile changes
-router.put('/edit/profilepic/:id',upload.single("profile_pic"), editDp)
-router.put('/edit/username/:id',validate(NameSchema, { abortEarly: false }), editUserName)
-router.put('/edit/password/:id',validate(PasswordSchema, { abortEarly: false }), editPassword)
+router.put('/edit/profilepic/',isLoggedIn, upload.single("profile_pic"), editDp)
+router.put('/edit/username/',isLoggedIn, validate(NameSchema, { abortEarly: false }), editUserName)
+router.put('/edit/password/',isLoggedIn, validate(PasswordSchema, { abortEarly: false }), editPassword)
 
 // Delete user changes
 router.delete('/delete/:id',isLoggedInAsAdmin, deleteUser)
