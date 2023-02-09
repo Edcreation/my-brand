@@ -3,14 +3,39 @@ import mongoose, { connect, set } from 'mongoose';
 // routes
 import users_route from './src/routes/users.js';
 import blogs_route from './src/routes/blogs.js';
-
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
 import messages_route from './src/routes/messages.js';
 import dotenv from "dotenv";
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import  session  from 'express-session';
+
+
+const options = {
+  definition: {
+    openapi: "3.0.7",
+    info: {
+      title: "Blogs Api",
+      version: "1.0.0",
+      description: "Blogs, Messages and User api",
+      contact: {
+        name: "Mugisha Jedidiah Eddy", 
+        email: "eddymugisha65@gmail.com", 
+        url: "web.com",
+      },
+    },
+    servers : {
+      url: "http://127.0.0.1.5000"
+    }
+  },
+  apis: ["./src/routes/*.js"]
+}
+
+const specs = swaggerJSDoc(options)
 const app = express()
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
 
 
 
