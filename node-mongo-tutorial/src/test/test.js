@@ -13,19 +13,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 
-const should = chai.should(); 
+
 chai.should();
 chai.use(chaiHttp);
 chai.use(cookieParser)
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
 
 describe('Database Testing... Waiting for Connection', function() {
-    let cookie
-    let user
-    let userToDelete
-    let blogId;
     var testUserSignup = {
         username: "admin103",
         email: "admin103@mail.com",
@@ -455,7 +449,49 @@ describe('Database Testing... Waiting for Connection', function() {
           res.body.should.be.a('object');
           done();
         });
-      });    
+      });   
+      it('it should login and logout safely', (done) => {
+        chai.request(server)
+        .post('/users/login')
+        .set('content-type', 'application/json')
+        .send(testUserLogin)
+        .end((err, res) => {
+          res.should.have.status(200);
+          chai.request(server)
+          .get('/users/logout')
+          .end((err,res) => {
+            res.should.have.status(200);
+            done()
+          })
+        })
+      }) 
+      it('it should login With Errors', (done) => {
+        chai.request(server)
+        .post('/users/login')
+        .set('content-type', 'application/json')
+        .send({ email: "eddy@mail.com", password: "WrongP@12345" })
+        .end((err, res) => {
+          res.should.have.status(401);
+        })
+
+        chai.request(server)
+        .post('/users/login')
+        .set('content-type', 'application/json')
+        .send({ email: "admin105@mail.com", password: "WrongP@12345" })
+        .end((err, res) => {
+          res.should.have.status(401);
+          done()
+        })
+
+      }) 
+      it('it should try to get users but no admin privileges', (done) => {
+        chai.request(server)
+        .get('/users')
+        .end((err, res) => {
+          res.should.have.status(406);
+          done()
+        })
+      }) 
 
     })
 

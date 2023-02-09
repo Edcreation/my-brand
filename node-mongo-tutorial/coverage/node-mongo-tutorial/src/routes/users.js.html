@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.25% </span>
+                <span class="strong">98.03% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>89/102</span>
+                <span class='fraction'>100/102</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">81.81% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/6</span>
+                <span class='fraction'>9/11</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.25% </span>
+                <span class="strong">98.03% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>89/102</span>
+                <span class='fraction'>100/102</span>
             </div>
         
             
@@ -214,23 +214,23 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -258,13 +258,13 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -323,12 +323,12 @@ passport.use(new LocalStrategy({
                     const passCheck = await compare( password, data.password )
                     if (passCheck) {
                         return done(null, data)
-                    }<span class="branch-0 cbranch-no" title="branch not covered" > else {</span>
-<span class="cstat-no" title="statement not covered" >                        return done(null, false)</span>
-<span class="cstat-no" title="statement not covered" >                    }</span>
-                }<span class="branch-0 cbranch-no" title="branch not covered" > else {</span>
-<span class="cstat-no" title="statement not covered" >                    return done(null, false)</span>
-<span class="cstat-no" title="statement not covered" >                }</span>
+                    } else {
+                        return done(null, false)
+                    }
+                } else {
+                    return done(null, false)
+                }
             })
         } <span class="branch-0 cbranch-no" title="branch not covered" >catch(err) {</span>
 <span class="cstat-no" title="statement not covered" >            console.log(err)</span>
@@ -361,13 +361,13 @@ router.post("/login",validate(LoginSchema) , passport.authenticate("local", {
 }), loginUser);
 &nbsp;
 router.get('/logout', function(req, res, next) {
-<span class="cstat-no" title="statement not covered" >    req.logout(function(err) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) { return next(err); }</span>
-<span class="cstat-no" title="statement not covered" >      res.status(200).json({</span>
-<span class="cstat-no" title="statement not covered" >        code: 200,</span>
-<span class="cstat-no" title="statement not covered" >        message: "Logged Out",</span>
-<span class="cstat-no" title="statement not covered" >        })</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
+    req.logout(function(err) {
+      if (err) <span class="branch-0 cbranch-no" title="branch not covered" >{ return next(err); }</span>
+      res.status(200).json({
+        code: 200,
+        message: "Logged Out",
+        })
+    });
 });
 &nbsp;
 export default router
@@ -379,7 +379,7 @@ export default router
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-02-09T11:20:24.863Z
+                at 2023-02-09T14:28:40.165Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
