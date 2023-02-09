@@ -26,7 +26,7 @@ const getMessages = (( req, res ) => {
 })
 
 const getSingleMessage = (( req, res ) => {
-    Messages.findById( req.params.id , (err, Msg) => {
+    Messages.findOne( { _id:  req.params.id} , (err, Msg) => {
         if (!err) {
             res.status(200).json({
                 code: 200,
@@ -74,12 +74,6 @@ const sendMessage = ((req, res) => {
                     code: 201,
                     message: "Message Sent",
                     MessageSent: Msg,
-                 })
-            } else {
-                res.status(400).json({
-                    code: 400,
-                    message: "Message Not Sent",
-                    Error: err,
                  })
             }
         })

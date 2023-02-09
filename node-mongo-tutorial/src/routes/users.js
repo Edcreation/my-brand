@@ -1,13 +1,15 @@
 import { Router } from 'express'
-import { users, createUser, loginUser, getSingleUser, editDp, editUserName, editPassword, deleteUser } from '../controllers/users.js'
+import { users, createUser, createAdmin, loginUser, getSingleUser, editDp, editUserName, editPassword, deleteUser } from '../controllers/users.js'
 import joi from 'joi';
 import { validate } from '../middleware/validation.js';
 import errorMessage from '../utils/errormessage.js';
 import upload from '../middleware/upload.js';
 import User from '../models/usersmodel.js'
 import bodyParser from 'body-parser';
+
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
+
 import pkg from 'bcryptjs'
 import { isLoggedIn, isLoggedInAsAdmin } from '../middleware/isLoggedIn.js';
 const { hash, compare } = pkg;
@@ -62,7 +64,7 @@ passport.use(new LocalStrategy({
         }
     }
 ));
-// passport.use(new LocalStrategy(User.authenticate()))
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -71,17 +73,18 @@ router.get('/',isLoggedIn, users)
 router.get('/u/:id', getSingleUser)
 
 // User profile changes
-router.put('/edit/profilepic/',isLoggedIn, upload.single("profile_pic"), editDp)
-router.put('/edit/username/',isLoggedIn, validate(NameSchema, { abortEarly: false }), editUserName)
-router.put('/edit/password/',isLoggedIn, validate(PasswordSchema, { abortEarly: false }), editPassword)
+router.put('/edit/profilepic/', isLoggedIn, upload.single("profile_pic"), editDp)
+router.put('/edit/username/', isLoggedIn, validate(NameSchema, { abortEarly: false }), editUserName)
+router.put('/edit/password/', isLoggedIn, validate(PasswordSchema, { abortEarly: false }), editPassword)
 
 // Delete user changes
 router.delete('/delete/:id',isLoggedInAsAdmin, deleteUser)
 
 // User Login and Sing Up
 router.post('/signup',validate(SignUpSchema), createUser);
+router.post('/signup-admin',validate(SignUpSchema), createAdmin);
 
-router.post("/login", passport.authenticate("local", {
+router.post("/login",validate(LoginSchema) , passport.authenticate("local", {
     successMessage: "loggedIn",
     failureMessage: "Not LoggedIn"
 }), loginUser);
@@ -92,7 +95,7 @@ router.get('/logout', function(req, res, next) {
       res.status(200).json({
         code: 200,
         message: "Logged Out",
-    })
+        })
     });
 });
 

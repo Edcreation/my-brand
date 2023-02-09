@@ -26,29 +26,66 @@ const createUser =  ( async (req, res) => {
     }
     User.register(new User(data), 
       req.body.password, (err, user) => {
-      if(err) {
-        res.status(400).json({
-            code: 400,
-            message: "User Account Not Created",
-            Error: err.message,
-        })
-      }
-      else {
-        passport.authenticate('local')(req, res, () => {
-            res.status(200).json({
-                code: 200,
-                message: "User Account Created",
-            })
-        });
+      if(user) {
+          passport.authenticate('local')(req, res, () => {
+              res.status(201).json({
+                  code: 201,
+                  message: "User Created",
+                  UserCreated: user
+              })
+          });
+    }
+    else {
+          if (err.code == 11000) {
+              res.status(409).json({
+                  code: 409,
+                  message: "User Already Exists",
+              })
+          }
       }
     });
+})
+
+const createAdmin =  ( (req, res) => {
+    User.findOne({ email: req.body.email }, async (error, data) => {
+        if (data) {
+            res.status(409).json({
+                code: 409,
+                message: "User Already Exists",
+            })
+        }
+        else {
+            let password = await hash(req.body.password, 10);
+            const data = {
+                email: req.body.email, 
+                username: req.body.username, 
+                password: password,
+                publicId: "",
+                imageUrl: "",
+                admin: true
+            }
+            User.register(new User(data), 
+              req.body.password, (err, user) => {
+              if(user) {
+                  passport.authenticate('local')(req, res, () => {
+                      res.status(201).json({
+                          code: 201,
+                          message: "Admin User Created",
+                          UserCreated: user
+                      })
+                  });
+            }
+            });
+            
+        }
+    })
 })
 
 const loginUser = ((req,res) => {
     res.status(200).json({
         code: 200,
         message: "Logged In",
-        LoggedInAs: req.user.username
+        LoggedInAs: req.user.id
     })
 })
 
@@ -66,7 +103,7 @@ const users = ((req,res) => {
                 res.status(200).json({
                     code: 200,
                     message: "Users Found",
-                    Admin: usr,
+                    UserWhoFetched: usr,
                     Users: data
                 })
             }
@@ -101,59 +138,29 @@ const getSingleUser = ((req,res) => {
 
 const editUserName = ( async (req,res) => {
 
-    const user = User.findOne( { _id: req.user._id } );
-    if (!user) {
-        res.status(404).json({
-            code: 404,
-            message: "User to Update Not found",
-        })
-    }
-    else {
-        const username = req.body.username;
-        User.findOneAndUpdate( { _id: req.user._id },{ $set: { "username" : username } },{ new:true }, (err,data) => {
-            if (!err) {
-                res.status(200).json({
-                    code: 200,
-                    message: "UserName updated",
-                    UpdatedUser: data,
-                })
-            } else {
-                res.status(404).json({
-                    code: 404,
-                    message: "User Not Updated. No User Found",
-                })
-            }
-        })
-    }
+    const username = req.body.username;
+    User.findOneAndUpdate( { _id: req.user._id },{ $set: { "username" : username } },{ new:true }, (err,data) => {
+        if (!err) {
+            res.status(200).json({
+                code: 200,
+                message: "UserName updated",
+                UpdatedUser: data,
+            })
+        }
+    })
 })
 
 const editPassword = ( async (req,res) => {
-
-    const user = User.findOne( { _id: req.user._id } );
-    if (!user) {
-        res.status(404).json({
-            code: 404,
-            message: "User to Update Not found",
-        })
-    }
-    else {
-        const password = await hash(req.body.password, 10);
-        User.findOneAndUpdate( { _id: req.user._id } ,{ $set: { "password" : password } },{ new:true }, (err,data) => {
-            if (!err) {
-                res.status(200).json({
-                    code: 200,
-                    message: "Password Changed",
-                    UpdatedUser: data,
-                })
-            } else {
-                res.status(404).json({
-                    code: 404,
-                    message: "User Not Updated. No User Found",
-                    error : err
-                })
-            }
-        })
-    }
+    const password = await hash(req.body.password, 10);
+    User.findOneAndUpdate( { _id: req.user._id } ,{ $set: { "password" : password } },{ new:true }, (err,data) => {
+        if (!err) {
+            res.status(200).json({
+                code: 200,
+                message: "Password Changed",
+                UpdatedUser: data,
+            })
+        }
+    })
 })
 
 const editDp = ( async (req,res) => {
@@ -181,12 +188,6 @@ const editDp = ( async (req,res) => {
                     message: "Profile Picture Changed",
                     UpdatedUser: data,
                 })
-            } else {
-                res.status(404).json({
-                    code: 404,
-                    message: "Profile Picture Not Updated. No User Found",
-                    error : err
-                })
             }
         })
     }
@@ -212,6 +213,7 @@ const deleteUser = ((req,res) => {
 export  { 
     users, 
     createUser, 
+    createAdmin,
     loginUser,
     deleteUser, 
     getSingleUser,

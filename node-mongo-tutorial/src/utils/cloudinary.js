@@ -16,12 +16,12 @@ const uploadImage = async (path , folder) => {
         });
         return { url: data.url, public_id: data.public_id };
     } catch (error) {
-        console.log(result,error)
+        // console.log(result,error)
     }
 }
 const deleteImage = async (public_id) => {
     await cloudinary.v2.uploader.destroy(public_id, (error, result) => {
-        console.log(result,error)
+        // console.log(result,error)
     })
 }
 

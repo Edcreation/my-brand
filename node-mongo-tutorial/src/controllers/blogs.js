@@ -10,19 +10,11 @@ dotenv.config()
 const getBlogs = ((req,res) => {
     Blogs.find({}, (err, data) => {
         if (data) {
-            if (data.length === 0) {
-                res.status(204).json({
-                    code: 204,
-                    message: "No Blogs Found"
-                })
-            }
-            else {
-                res.status(200).json({
-                    code: 200,
-                    message: "Blogs Retrieved",
-                    Blogs: data
-                })
-            }
+            res.status(200).json({
+                code: 200,
+                message: "Blogs Retrieved",
+                Blogs: data
+            })
         } else {
             res.status(500).json({
                 code: 500,
@@ -74,14 +66,7 @@ const createBlog = ( async (req,res) => {
                     message: "Blog created",
                     BlogCreated: blog,
                 })
-            } else {
-                res.status(400).json({
-                    code: 400,
-                    message: "Blog NOT created",
-                    Error: err,
-                })
             }
-
         })
     } catch (error) {
         res.status(400).json({
@@ -92,34 +77,47 @@ const createBlog = ( async (req,res) => {
     }
 })
 
-const editBlog = ( async (req,res) => {
-    const data = await uploadImage(req.file.path, "blog_images")
-    const blogToDeleteImage = await Blogs.findOne({ _id: req.params.id })
-    const publicId = blogToDeleteImage.publicId
-    await deleteImage(publicId)
-    const blogData = {
-        title : req.body.title,
-        image : req.body.image,
-        content : req.body.content,
-        publicId: data.public_id,
-        imageUrl: data.url,
-        date : new Date()
+const editBlog = ( (req,res) => {
+    const id = req.params.id 
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        Blogs.findOne({ _id: req.params.id }, async (error, m) => {
+            if (m) {
+                const data = await uploadImage(req.file.path, "blog_images")
+                const blogToDeleteImage = await Blogs.findOne({ _id: req.params.id })
+                const publicId = blogToDeleteImage.publicId
+                await deleteImage(publicId)
+                const blogData = {
+                    title : req.body.title,
+                    image : req.body.image,
+                    content : req.body.content,
+                    publicId: data.public_id,
+                    imageUrl: data.url,
+                    date : new Date()
+                }
+                Blogs.findOneAndUpdate( { _id:  req.params.id },{ $set:blogData },{ new:true }, (err,blog) => {
+                    if (!err) {
+                        res.status(200).json({
+                            code: 200,
+                            message: "Blog updated",
+                            UpdatedBlog: blog,
+                        })
+                    }
+                })  
+            }
+            else {
+                res.status(404).json({
+                    code: 404,
+                    message: "Blog to Update not found",
+                })
+            }
+        })  
     }
-
-    Blogs.findOneAndUpdate( { _id:  req.params.id },{ $set:blogData },{ new:true }, (err,blog) => {
-        if (!err) {
-            res.status(200).json({
-                code: 200,
-                message: "Blog updated",
-                UpdatedBlog: blog,
-            })
-        } else {
-            res.status(404).json({
-                code: 404,
-                message: "Blog to Update not found",
-            })
-        }
-    })
+    else {
+        res.status(404).json({
+            code: 404,
+            message: "Page Not Found",
+        })
+    }
 })
 
 const deleteBlog = ( async (req,res) => {
@@ -155,13 +153,6 @@ const likeBlog = ( (req,res) => {
                         if (tru) {
                             res.status(200).json({
                                 Message: "Liked",
-                                //data: tru
-                            })
-                        }
-                        if (err) {
-                            res.status(500).json({
-                                Message: "Not Liked",
-                                data: err
                             })
                         }
                     });
@@ -173,22 +164,9 @@ const likeBlog = ( (req,res) => {
                             if (!err) {
                                 res.status(200).json({
                                     Message: "Unliked",
-                                    //Liked: wow1.liked
                                 })  
                             }
-                            else{
-                                res.status(500).json({
-                                    Message: "Failed",
-                                    Error: error
-                                }) 
-                            }
                         })
-                    }
-                    else{
-                        res.status(400).json({
-                            Message: "User not added in liked",
-                            Error: err
-                        }) 
                     }
                 })
             }

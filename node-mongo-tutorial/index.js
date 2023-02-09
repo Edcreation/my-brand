@@ -9,10 +9,6 @@ import dotenv from "dotenv";
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-// import auth from './src/middleware/authenticate.js';
-// import LocalStrategy from 'passport-local'
-// import User from './src/models/usersmodel.js';
-// import passport from 'passport';
 import  session  from 'express-session';
 const app = express()
 
@@ -29,6 +25,7 @@ app.use(session({
 
 dotenv.config()
 //mongoose connection		
+mongoose.set('strictQuery', false)
 connect(
     process.env.MONGO_KEY,
     {

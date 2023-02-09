@@ -5,7 +5,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha src/test/test.js --recursive --exit --timeout 80000"
+    "test": " c8 --all --reporter=text mocha src/test/test.js --recursive --exit --timeout 80000 ",
+    "coverage": "c8 --reporter=html npm run test"
+  },
+  "nyc": {
+    "include": "src"
   },
   "author": "",
   "license": "ISC",
@@ -28,10 +32,12 @@
     "passport-session": "^1.0.2"
   },
   "devDependencies": {
+    "@babel/register": "^7.18.9",
     "chai": "^4.3.7",
     "chai-http": "^4.3.0",
     "mocha": "^10.2.0",
     "mockgoose": "^8.0.4",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "nyc": "^15.1.0"
   }
 }

@@ -20,6 +20,7 @@ const BlogsSchema = Joi.object().keys({
     publicId: Joi.string(),
     imageUrl: Joi.string(),
 }).unknown(true);
+
 const CommentSchema = Joi.object().keys({
     comment: Joi.string().required().messages(errorMessage('Comment'))
 }).unknown(true);
@@ -27,10 +28,10 @@ const CommentSchema = Joi.object().keys({
 router.get('/', getBlogs)
 router.get('/b/:id', getSingleBlog)
 
-router.post('/b/c/:id',isLoggedIn, validate(CommentSchema, { abortEarly: false } ), postComment)
-router.get('/b/c/:id', getComments)
+router.post('/b/:id/c',isLoggedIn, validate(CommentSchema, { abortEarly: false } ), postComment)
+router.get('/b/:id/c', getComments)
 
-router.put('/like/:id',isLoggedIn, likeBlog)
+router.put('/b/:id/like',isLoggedIn, likeBlog)
 
 router.post('/create',isLoggedInAsAdmin, upload.single("blogImage") ,validate(BlogsSchema, { abortEarly: false } ), createBlog)
 router.put('/edit/:id',isLoggedInAsAdmin,  upload.single('blogImage') , validate(BlogsSchema, { abortEarly: false } ), editBlog)
