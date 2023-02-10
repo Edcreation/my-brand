@@ -171,11 +171,6 @@ const likeBlog = ( (req,res) => {
                 })
             }
         }
-        if (err) {
-            res.status(400).json({
-                Message: "Blog is invalid",
-            })
-        }
     });
 
 })

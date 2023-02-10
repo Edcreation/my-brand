@@ -1,3 +1,73 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     send:
+ *       type: object
+ *       required:
+ *         - name
+ *         - email
+ *         - message
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: The name of client
+ *         email:
+ *           type: string
+ *           description: The email of client
+ *         message:
+ *           type: string
+ *           description: imageUrl of blog
+ *       example:
+ *         name: Hello
+ *         email: hello@mail.com
+ *         message: Hi how are you?
+ *     sent:
+ *       type: object
+ *       required:
+ *         - code
+ *       properties:
+ *         code:
+ *           type: integer
+ *           description: The http code of response
+ *         message:
+ *           type: string
+ *           description: The message of response
+ *         MassageSent:
+ *           type: string
+ *           description: The message which was sent
+ *       example:
+ *         code: 201
+ *         message: Message Sent
+ *         MessageSent: {}
+ * 
+ */
+/**
+ * @swagger
+ * tags:
+ *   name: Messages
+ *   description: Messages  api
+ * /messages/send:
+ *   post:
+ *     summary: Send a message
+ *     tags: [Messages]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/send'
+ *     responses:
+ *       200:
+ *         description: Message Sent
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/sent'
+ * 
+ */
+
+
 import { Router } from 'express'
 const router = Router()
 import { validate } from '../middleware/validation.js';

@@ -1,3 +1,114 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     create:
+ *       type: object
+ *       required:
+ *         - title
+ *         - blogImage
+ *         - content
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the blog
+ *         title:
+ *           type: string
+ *           description: title of blog
+ *         imageUrl:
+ *           type: string
+ *           description: imageUrl of blog
+ *         content:
+ *           type: string
+ *           description: content of blog
+ *       example:
+ *         id: d5fE_asz
+ *         title: How to code in 2022
+ *         blogImage: www.image.com/image.jpg
+ *         content: Hello world
+ *     getblogs:
+ *       type: object
+ *       properties:
+ *         code:
+ *           type: integer
+ *           description: The http code of response
+ *         message:
+ *           type: string
+ *           description: Message of response
+ *       example:
+ *         code: 200
+ *         message: Blogs Fetched
+ *         Blogs: {}
+ *     getblog:
+ *       type: object
+ *       properties:
+ *         code:
+ *           type: integer
+ *           description: The http code of response
+ *         message:
+ *           type: string
+ *           description: Message of response
+ *       example:
+ *         code: 200
+ *         message: Single Blogs Fetched
+ *         BlogFetched: {}
+ *     blognotfound:
+ *       type: object
+ *       properties:
+ *         code:
+ *           type: integer
+ *           description: The http code of response
+ *         message:
+ *           type: string
+ *           description: Message of response
+ *       example:
+ *         code: 404
+ *         message: Blog Not found
+ */
+/**
+ * @swagger
+ * tags:
+ *   name: Blogs
+ *   description: Blogs  api
+ * /blogs:
+ *   get:
+ *     summary: Get all blogs
+ *     tags: [Blogs]
+ *     responses:
+ *       200:
+ *         description: Blog Retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/getblogs'
+ * /blogs/b/{id}:
+ *   get:
+ *     summary: Get single blog
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of user
+ *     tags: [Blogs]
+ *     responses:
+ *       200:
+ *         description: Single Blog Retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/getblog'
+ *       404:
+ *         description: Single Blog Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/blognotfound'
+ * 
+ */
+
+
 import { Router } from 'express'
 import { getBlogs, getSingleBlog, createBlog, editBlog, deleteBlog, likeBlog } from '../controllers/blogs.js'
 import Joi from 'joi'

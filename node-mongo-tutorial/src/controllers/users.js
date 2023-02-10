@@ -85,7 +85,7 @@ const loginUser = ((req,res) => {
     res.status(200).json({
         code: 200,
         message: "Logged In",
-        LoggedInAs: req.user.id
+        LoggedInAs: req.user
     })
 })
 

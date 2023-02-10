@@ -1,3 +1,287 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     signup:
+ *       type: object
+ *       required:
+ *         - username
+ *         - email
+ *         - password
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: Username of user
+ *         email:
+ *           type: string
+ *           description: Email of user
+ *         password:
+ *           type: string
+ *           description: Encrypted password of user
+ *       example:
+ *         username: mugishaeddy
+ *         email: eddy@mail.com
+ *         password: Qwerty@12345
+ *     login:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: Email of user
+ *         password:
+ *           type: string
+ *           description: Encrypted password of user
+ *       example:
+ *         email: admin105@mail.com
+ *         password: Qwert@12345
+ *     response:
+ *       type: object
+ *       required:
+ *          -code
+ *       properties:
+ *         code:
+ *           type: integer
+ *           description: The http response code
+ *         message:
+ *           type: string
+ *           description: message of the response
+ *         data:
+ *           type: string
+ *           description: data responded
+ *       example:
+ *         code: 200
+ *         message: Logged In
+ *         LoggedInAs: { _id: "wq323ee2e211r13r1e312e", username: "mugishaeddy", "email": "eddy@mail.com", publicId: "", imageUrl: "", admin: false}
+ *     errormessage:
+ *       type: object
+ *       required:
+ *          -code
+ *       properties: 
+ *         code:
+ *           type: integer
+ *           description: The http response code
+ *         message:
+ *           type: string
+ *           description: message of error response
+ *       example:
+ *         code: 409
+ *         message: User Already Exists
+ *     editusername:
+ *       type: object
+ *       required:
+ *          -code
+ *       properties: 
+ *         username:
+ *           type: string
+ *           description: The New Username
+ *       example:
+ *         username: eddymugishaupdated
+ *     editusernameresponse:
+ *       type: object
+ *       required:
+ *          -username
+ *       properties: 
+ *         code:
+ *           type: integer
+ *           description: The http response code
+ *         message:
+ *           type: string
+ *           description: message of the response
+ *         data:
+ *           type: string
+ *           description: data responded
+ *       example:
+ *         code: 200
+ *         message: Logged In
+ *         UpdatedUser: { _id: "wq323ee2e211r13r1e312e", username: "eddymugishaupdated", "email": "eddy@mail.com", publicId: "", imageUrl: "", admin: false}
+ *     editprofilepic:
+ *       type: object
+ *       required:
+ *          -profilepic
+ *       properties: 
+ *         profilepic:
+ *           type: string
+ *           description: The New profilepicture
+ *       example:
+ *         profilepic: uploaded pic
+ *     changepassword:
+ *       type: object
+ *       required:
+ *          -password
+ *       properties: 
+ *         password:
+ *           type: string
+ *           description: The New Password
+ *       example:
+ *         password: newpassword
+ * 
+ * 
+ */
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: Users  api
+ * /users/signup:
+ *   post:
+ *     summary: Create a new user(signUp)
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/signup'
+ *     responses:
+ *       201:
+ *         description: Account Created.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/response'
+ *       409:
+ *         description: User Already Exist
+ *         content: 
+ *           application/json:
+ *             schema:
+ *               $$ref: '#/components/schemas/errormessage'
+ * 
+ * /users/login:
+ *   post:
+ *     summary: Login as a normal user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/login'
+ *     responses:
+ *       200:
+ *         description: Logged In.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/response'
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/errormessage'
+ * 
+ * /users:
+ *   get:
+ *     summary: get all Users
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/login'
+ *     responses:
+ *       200:
+ *         description: Users Fetched
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/response'
+ * /users/edit/username:
+ *   put:
+ *     summary: Update Username
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/editusername'
+ *     responses:
+ *       200:
+ *         description: Username Updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/editusernameresponse'
+ *       406:
+ *         description: Username is invalid
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/response'
+ * /users/edit/profilepic:
+ *   put:
+ *     summary: Update profile picture
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/editprofilepic'
+ *     responses:
+ *       200:
+ *         description: Profile Picture Updated 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/editusernameresponse'
+ *       400:
+ *         description: profile pic is invalid
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/errormessage'
+ * /users/edit/password:
+ *   put:
+ *     summary: Change password
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/changepassword'
+ *     responses:
+ *       200:
+ *         description: Password Changed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/response'
+ *       406:
+ *         description: Invalid password
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/errormessage'
+ * /users/delete/{id}:
+ *   delete:
+ *     summary: Delete User
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: User deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/response'
+ *       404:
+ *         description: User to delete Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/errormessage'
+ *
+ */
+
+
+
+
 import { Router } from 'express'
 import { users, createUser, createAdmin, loginUser, getSingleUser, editDp, editUserName, editPassword, deleteUser } from '../controllers/users.js'
 import joi from 'joi';
@@ -36,6 +320,12 @@ const LoginSchema = joi.object().keys({
 const PicSchema = joi.object({
     profile_pic: joi.string().required()
 })
+
+
+
+
+
+
 
 router.use(bodyParser.json());
 router.use(passport.initialize());
@@ -80,7 +370,7 @@ router.put('/edit/password/', isLoggedIn, validate(PasswordSchema, { abortEarly:
 // Delete user changes
 router.delete('/delete/:id',isLoggedInAsAdmin, deleteUser)
 
-// User Login and Sing Up
+
 router.post('/signup',validate(SignUpSchema), createUser);
 router.post('/signup-admin',validate(SignUpSchema), createAdmin);
 
