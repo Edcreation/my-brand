@@ -66,9 +66,6 @@
  *         message:
  *           type: string
  *           description: message of error response
- *       example:
- *         code: 409
- *         message: User Already Exists
  *     editusername:
  *       type: object
  *       required:
@@ -98,15 +95,14 @@
  *         message: Logged In
  *         UpdatedUser: { _id: "wq323ee2e211r13r1e312e", username: "eddymugishaupdated", "email": "eddy@mail.com", publicId: "", imageUrl: "", admin: false}
  *     editprofilepic:
- *       type: object
+ *       type: file
  *       required:
- *          -profilepic
+ *          -profile_pic
  *       properties: 
- *         profilepic:
+ *         profile_pic:
  *           type: string
+ *           format: binary
  *           description: The New profilepicture
- *       example:
- *         profilepic: uploaded pic
  *     changepassword:
  *       type: object
  *       required:
@@ -118,13 +114,35 @@
  *       example:
  *         password: newpassword
  * 
- * 
  */
 /**
  * @swagger
  * tags:
  *   name: Users
  *   description: Users  api
+ * /users/signup-admin:
+ *   post:
+ *     summary: Create a new Admin (signUp)
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/signup'
+ *     responses:
+ *       201:
+ *         description: Account Created.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/response'
+ *       409:
+ *         description: User Already Exist
+ *         content: 
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/errormessage'
  * /users/signup:
  *   post:
  *     summary: Create a new user(signUp)
@@ -151,7 +169,7 @@
  * 
  * /users/login:
  *   post:
- *     summary: Login as a normal user
+ *     summary: Login
  *     tags: [Users]
  *     requestBody:
  *       required: true
@@ -166,6 +184,11 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/response'
+ *         headers:
+ *           Set-Cookie: 
+ *             Schema:
+ *               type: string
+ *               example: JSESSIONID=abcde12345; Path=/; HttpOnly
  *       401:
  *         description: Unauthorized
  *         content:
@@ -177,12 +200,8 @@
  *   get:
  *     summary: get all Users
  *     tags: [Users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/login'
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Users Fetched
@@ -194,6 +213,8 @@
  *   put:
  *     summary: Update Username
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -217,12 +238,18 @@
  *   put:
  *     summary: Update profile picture
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/editprofilepic'
+ *             type: object
+ *             properties:
+ *               profile_pic:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       200:
  *         description: Profile Picture Updated 
@@ -240,6 +267,8 @@
  *   put:
  *     summary: Change password
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -261,7 +290,7 @@
  *               $ref: '#/components/schemas/errormessage'
  * /users/delete/{id}:
  *   delete:
- *     summary: Delete User
+ *     summary: Delete User (admin)
  *     tags: [Users]
  *     responses:
  *       200:
@@ -290,9 +319,11 @@ import errorMessage from '../utils/errormessage.js';
 import upload from '../middleware/upload.js';
 import User from '../models/usersmodel.js'
 import bodyParser from 'body-parser';
-
+import  Jwt  from 'jsonwebtoken';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
+import { Strategy as JWTstrategy } from 'passport-jwt';
+import { ExtractJwt as ExtractJWT } from 'passport-jwt';
 
 import pkg from 'bcryptjs'
 import { isLoggedIn, isLoggedInAsAdmin } from '../middleware/isLoggedIn.js';
@@ -304,6 +335,8 @@ const SignUpSchema = joi.object().keys({
     password: joi.string().required().pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0123456789])(?=.*[@$!%*?&])[A-Za-z0123456789@$!%*?&]{8,}$")).messages(errorMessage('Password')), // password has both numbers and letters and is btn 6 and 30 
 })
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
 const NameSchema = joi.object().keys({
     username: joi.string().min(6).max(30).required().messages(errorMessage('Username')),
 })
@@ -314,7 +347,7 @@ const PasswordSchema = joi.object().keys({
 
 const LoginSchema = joi.object().keys({
     email: joi.string().email().required().messages(errorMessage('Email')),
-    password: joi.string().pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0123456789])(?=.*[@$!%*?&])[A-Za-z0123456789@$!%*?&]{8,}$")), // password has both numbers and letters and is btn 6 and 30 
+    password: joi.string().pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0123456789])(?=.*[@$!%*?&])[A-Za-z0123456789@$!%*?&]{8,}$")).messages(errorMessage('Password')), // password has both numbers and letters and is btn 6 and 30 
 })
 
 const PicSchema = joi.object({
@@ -331,7 +364,45 @@ router.use(bodyParser.json());
 router.use(passport.initialize());
 router.use(passport.session());
 
-passport.use(new LocalStrategy({
+passport.use('signup',
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true
+    },
+    (req, email, password, done) => {
+        User.findOne({ email: email },async (err, exist) => {
+            if (exist) {
+                done(null, false, { message : 'Email Already Exists' });
+            }
+            else {
+                try {
+                  password = await hash(req.body.password, 10);
+                  const data = {
+                      email: email, 
+                      username: req.body.username, 
+                      password: password,
+                      publicId: "",
+                      imageUrl: "",
+                      admin: false
+                  }
+                  const user = new User(data);
+                  user.save((err, data) => {
+                      if (data) {
+                          return done(null, user)
+                      }
+                  })
+                } catch (error) {
+                  done(error);
+                }
+            }
+
+        })
+    }
+  )
+);
+passport.use('login',new LocalStrategy({
     usernameField: "email",
     passwordField: "password",
     },
@@ -341,12 +412,13 @@ passport.use(new LocalStrategy({
                 if (data) {
                     const passCheck = await compare( password, data.password )
                     if (passCheck) {
-                        return done(null, data)
+                        
+                        return done(null, data, { message: "Logged In Successfully" })
                     } else {
-                        return done(null, false)
+                        return done(null, false, { message: "Password is incorrect" })
                     }
                 } else {
-                    return done(null, false)
+                    return done(null, false, { message: "User not Found. Try to SignUp" })
                 }
             })
         } catch(err) {
@@ -354,30 +426,71 @@ passport.use(new LocalStrategy({
         }
     }
 ));
+passport.use(new JWTstrategy(
+    {
+      secretOrKey: 'TOP_SECRET',
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken('secret_token')
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user);
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-router.get('/',isLoggedIn, users)
+router.get('/',passport.authenticate('jwt', { session: false }),isLoggedInAsAdmin, users)
 
 router.get('/u/:id', getSingleUser)
 
 // User profile changes
-router.put('/edit/profilepic/', isLoggedIn, upload.single("profile_pic"), editDp)
-router.put('/edit/username/', isLoggedIn, validate(NameSchema, { abortEarly: false }), editUserName)
-router.put('/edit/password/', isLoggedIn, validate(PasswordSchema, { abortEarly: false }), editPassword)
+router.put('/edit/profilepic/', passport.authenticate('jwt', { session: false }), upload.single("profile_pic"), editDp)
+router.put('/edit/username/', passport.authenticate('jwt', { session: false }), validate(NameSchema, { abortEarly: false }), editUserName)
+router.put('/edit/password/', passport.authenticate('jwt', { session: false }), validate(PasswordSchema, { abortEarly: false }), editPassword)
 
-// Delete user changes
-router.delete('/delete/:id',isLoggedInAsAdmin, deleteUser)
+// Delete user admin only
+router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), isLoggedInAsAdmin, deleteUser)
 
 
-router.post('/signup',validate(SignUpSchema), createUser);
+
+router.post('/signup',validate(SignUpSchema),passport.authenticate("signup", { session: false }), createUser);
+
+
 router.post('/signup-admin',validate(SignUpSchema), createAdmin);
 
-router.post("/login",validate(LoginSchema) , passport.authenticate("local", {
-    successMessage: "loggedIn",
-    failureMessage: "Not LoggedIn"
-}), loginUser);
+router.post('/login',validate(LoginSchema),
+    async (req, res, next) => {
+      passport.authenticate(
+        'login',
+        async (err, user, info) => {
+          try {
+            if (err || !user) {
+              const error = new Error('An error occurred.');
+              return res.status(406).json({ code: 406, message: info.message });
+            }
+            req.login(
+              user,
+              { session: false },
+              async (error) => {
+                if (error) return next(error);
+                const body = { _id: user._id,username: user.username, email: user.email, profilepic: user.imageUrl, admin: user.admin };
+                const token = Jwt.sign({ user: body }, 'TOP_SECRET');
+                return res.status(200).json({ token });
+              }
+            );
+          } catch (error) {
+            return next(error);
+          }
+        }
+      )(req, res, next);
+    }
+  );
+  
 
 router.get('/logout', function(req, res, next) {
     req.logout(function(err) {

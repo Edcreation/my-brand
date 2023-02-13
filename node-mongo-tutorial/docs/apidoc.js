@@ -19,6 +19,15 @@ const options = {
           description: 'Local Server',
         }
       ],
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT",
+          },
+        },
+      },
     },
     apis: ['src/routes/users.js', 'src/routes/blogs.js', 'src/routes/messages.js'],
   }

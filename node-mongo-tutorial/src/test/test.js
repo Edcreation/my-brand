@@ -47,8 +47,7 @@ describe('Database Testing... Waiting for Connection', function() {
         chai.request(server)
         .get('/users')
         .end((err, res) => {
-            res.should.have.status(406);
-            res.body.should.be.a('object');
+            res.should.have.status(401);
             done();
           });
       });
@@ -125,9 +124,7 @@ describe('Database Testing... Waiting for Connection', function() {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Logged In');
-          res.body.should.have.property('LoggedInAs');
-          const cookie = res.header['set-cookie']
+          const token = res.body.token
           const message = {
                 name: "message test",
                 email: "message@mail.com",
@@ -143,21 +140,21 @@ describe('Database Testing... Waiting for Connection', function() {
             const msg = res.body.MessageSent._id
 
             chai.request(server)
-            .get('/messages/msg/63d7d81e2db5ec234d9485a8').set('Cookie', cookie)
+            .get('/messages/msg/63d7d81e2db5ec234d9485a8').set({ "Authorization": `Bearer ${token}` })
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
               });
 
             chai.request(server)
-            .get('/messages').set('Cookie', cookie)
+            .get('/messages').set({ "Authorization": `Bearer ${token}` })
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
               });
 
             chai.request(server)
-            .delete(`/messages/delete/${msg}`).set('Cookie', cookie)
+            .delete(`/messages/delete/${msg}`).set({ "Authorization": `Bearer ${token}` })
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
@@ -177,14 +174,13 @@ describe('Database Testing... Waiting for Connection', function() {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('Logged In');
-        res.body.should.have.property('LoggedInAs');
-        const cookie = res.header['set-cookie']
+        res.body.should.have.property('token')
+        const token = res.body.token
 
          chai.request(server)
         .post('/blogs/create')
         .set('content-type', 'application/json')
-        .set('Cookie', cookie)
+        .set({ "Authorization": `Bearer ${token}` })
         .field('title', 'Admin can Post Blog')
         .field('content', 'Blog Post')
         .attach('blogImage',
@@ -211,14 +207,14 @@ describe('Database Testing... Waiting for Connection', function() {
 
           chai.request(server)
           .put(`/blogs/b/${blog}/like`)
-          .set('Cookie', cookie)
+          .set({ "Authorization": `Bearer ${token}` })
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
 
             chai.request(server)
             .put(`/blogs/b/${blog}/like`)
-            .set('Cookie', cookie)
+            .set({ "Authorization": `Bearer ${token}` })
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
@@ -227,7 +223,7 @@ describe('Database Testing... Waiting for Connection', function() {
 
           chai.request(server)
           .post(`/blogs/b/${blog}/c`)
-          .set('Cookie', cookie)
+          .set({ "Authorization": `Bearer ${token}` })
           .send({ comment: "My First Comment" })
           .end((err, res) => {
             res.should.have.status(201);
@@ -245,7 +241,7 @@ describe('Database Testing... Waiting for Connection', function() {
           chai.request(server)
           .put(`/blogs/edit/${blog}`)
           .set('content-type', 'application/json')
-          .set('Cookie', cookie)
+          .set({ "Authorization": `Bearer ${token}` })
           .field('title', 'Admin can Post Blog Updated')
           .field('content', 'Blog Post Updated')
           .attach('blogImage',
@@ -258,7 +254,7 @@ describe('Database Testing... Waiting for Connection', function() {
             
             chai.request(server)
             .delete(`/blogs/delete/${blog}`)
-            .set('Cookie', cookie)
+            .set({ "Authorization": `Bearer ${token}` })
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
@@ -272,117 +268,118 @@ describe('Database Testing... Waiting for Connection', function() {
       });
 
       })
-      it('it should **CREATE** **UPDATE** USERNAME **READ** **DELETE** a user ', (done) => {
 
-      chai.request(server)
-        .post('/users/login')
-        .set('content-type', 'application/json')
-        .send(testUserLogin)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Logged In');
-          res.body.should.have.property('LoggedInAs');
-          const cookie = res.header['set-cookie']
-          
+      it('it should **UPDATE** USERNAME **READ** **DELETE** a user ', (done) => {
 
-          chai.request(server).post('/users/signup')
+        chai.request(server)
+          .post('/users/login')
           .set('content-type', 'application/json')
-          .send(testUserSignup)
+          .send(testUserLogin)
           .end((err, res) => {
-
-            const user = res.body.UserCreated._id
-            const cookie2 = res.header['set-cookie']
-            res.should.have.status(201);
+            res.should.have.status(200);
             res.body.should.be.a('object');
-
-            chai.request(server)
-            .get(`/users/u/${user}`)
-            .end(( err, res ) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object');
-            })
-
-            chai.request(server)
-            .get('/users')
-            .set('Cookie', cookie)
-            .end(( err, res ) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object');
-            })
-
-            chai.request(server)
-            .put('/users/edit/username')
-            .send({ username: "admin105 updated" })
-            .set('Cookie', cookie2)
+            res.body.should.have.property('token')
+            const token = res.body.token
+            
+            chai.request(server).post('/users/signup')
+            .set('content-type', 'application/json')
+            .send(testUserSignup)
             .end((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.be.a('object');
-            });
-
-            chai.request(server)
-            .delete('/users/delete/' + user)
-            .set('Cookie', cookie)
-            .end((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.be.a('object');
-                  res.body.should.have.property('message').eql("User Deleted");
-              done();
-            });
-          })
-
-        });
-
+  
+              const user = res.body.UserCreated._id
+              res.should.have.status(201);
+              res.body.should.be.a('object');
+              const newuser = {
+                email: res.body.UserCreated.email,
+                password: "Qwert@12345"
+              }
+              chai.request(server)
+              .post('/users/login')
+              .set('content-type', 'application/json')
+              .send(newuser)
+              .end( async(err, res) => {
+                const token2 = res.body.token
+                await chai.request(server)
+                .put('/users/edit/username')
+                .send({ username: "usernameupdated" })
+                .set({ "Authorization": `Bearer ${token2}` })
+                .then((res) => {
+                      res.should.have.status(200);
+                      res.body.should.be.a('object');
+                });
+              })
+  
+              chai.request(server)
+              .delete('/users/delete/' + user)
+              .set({ "Authorization": `Bearer ${token}` })
+              .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql("User Deleted");
+                done();
+              });
+            })
+  
+          });
+  
       })
-      it('it should  **UPDATE** PROFILE PICTURE **READ** **DELETE** a user ', (done) => {
+      it('it should **UPDATE** PROFILE PIC **READ** **DELETE** a user ', (done) => {
 
-      chai.request(server)
-        .post('/users/login')
-        .set('content-type', 'application/json')
-        .send(testUserLogin)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Logged In');
-          res.body.should.have.property('LoggedInAs');
-          const cookie = res.header['set-cookie']
-          
-
-          chai.request(server).post('/users/signup-admin')
-          .set('content-type', 'application/json')
-          .send(testUserSignup)
-          .end(async (err, res) => {
-
-            const user = res.body.UserCreated._id
-            const cookie2 = res.header['set-cookie']
-            res.should.have.status(201);
-            res.body.should.be.a('object');
-
-            await chai.request(server).put('/users/edit/profilepic')
-            .set('Cookie', cookie2)
-            .attach('profile_pic',
-            fs.readFileSync(path.join(__dirname, '../assets/test_image.jpg')),
-            'test_image.jpg')
-            .then((res) => {
+          chai.request(server)
+            .post('/users/login')
+            .set('content-type', 'application/json')
+            .send(testUserLogin)
+            .end( async (err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
-              done()
-            })
+              res.body.should.have.property('token')
+              const token = res.body.token
+              
+              await chai.request(server).post('/users/signup')
+              .set('content-type', 'application/json')
+              .send(testUserSignup)
+              .then(async (res) => {
+    
+                const user = res.body.UserCreated._id
+                res.should.have.status(201);
+                res.body.should.be.a('object');
+                const newuser = {
+                  email: res.body.UserCreated.email,
+                  password: "Qwert@12345"
+                }
+                chai.request(server)
+                .post('/users/login')
+                .set('content-type', 'application/json')
+                .send(newuser)
+                .then( async(res) => {
+                  const token2 = res.body.token
+                  await chai.request(server)
+                  .put('/users/edit/profilepic')
+                  .attach('profile_pic',
+                  fs.readFileSync(path.join(__dirname, '../assets/test_image.jpg')),
+                  'test_image.jpg')
+                  .set({ "Authorization": `Bearer ${token2}` })
+                  .then((res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+                  });
+                })
 
-            chai.request(server)
-            .delete('/users/delete/' + user)
-            .set('Cookie', cookie)
-            .then((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.be.a('object');
-                  res.body.should.have.property('message').eql("User Deleted");
-              done();
+                await chai.request(server)
+                .delete('/users/delete/' + user)
+                .set({ "Authorization": `Bearer ${token}` })
+                .then((res) => {
+                      res.should.have.status(200);
+                      res.body.should.be.a('object');
+                      res.body.should.have.property('message').eql("User Deleted");
+                  done();
+                });
+              })
+    
             });
-          })
-
-        });
-
+    
       })
+
       it('it should **UPDATE** PASSWORD **READ** **DELETE** a user ', (done) => {
 
       chai.request(server)
@@ -392,34 +389,40 @@ describe('Database Testing... Waiting for Connection', function() {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Logged In');
-          res.body.should.have.property('LoggedInAs');
-          const cookie = res.header['set-cookie']
+          res.body.should.have.property('token')
+          const token = res.body.token
           
-
           chai.request(server).post('/users/signup')
           .set('content-type', 'application/json')
           .send(testUserSignup)
           .end((err, res) => {
 
             const user = res.body.UserCreated._id
-            const cookie2 = res.header['set-cookie']
             res.should.have.status(201);
             res.body.should.be.a('object');
-          
-
+            const newuser = {
+              email: res.body.UserCreated.email,
+              password: "Qwert@12345"
+            }
             chai.request(server)
-            .put('/users/edit/password')
-            .send({ password: "Qwerty@12345" })
-            .set('Cookie', cookie2)
-            .end((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.be.a('object');
-            });
+            .post('/users/login')
+            .set('content-type', 'application/json')
+            .send(newuser)
+            .end( async(err, res) => {
+              const token2 = res.body.token
+              await chai.request(server)
+              .put('/users/edit/password')
+              .send({ password: "Qwerty@12345" })
+              .set({ "Authorization": `Bearer ${token2}` })
+              .then((res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+              });
+            })
 
             chai.request(server)
             .delete('/users/delete/' + user)
-            .set('Cookie', cookie)
+            .set({ "Authorization": `Bearer ${token}` })
             .end((err, res) => {
                   res.should.have.status(200);
                   res.body.should.be.a('object');
@@ -431,6 +434,7 @@ describe('Database Testing... Waiting for Connection', function() {
         });
 
       })
+
       it('it should **NOT** get **Comments**', (done) => {
         chai.request(server)
         .get('/blogs/b/29102338400/c')
@@ -471,7 +475,7 @@ describe('Database Testing... Waiting for Connection', function() {
         .set('content-type', 'application/json')
         .send({ email: "eddy@mail.com", password: "WrongP@12345" })
         .end((err, res) => {
-          res.should.have.status(401);
+          res.should.have.status(406);
         })
 
         chai.request(server)
@@ -479,19 +483,11 @@ describe('Database Testing... Waiting for Connection', function() {
         .set('content-type', 'application/json')
         .send({ email: "admin105@mail.com", password: "WrongP@12345" })
         .end((err, res) => {
-          res.should.have.status(401);
-          done()
-        })
-
-      }) 
-      it('it should try to get users but no admin privileges', (done) => {
-        chai.request(server)
-        .get('/users')
-        .end((err, res) => {
           res.should.have.status(406);
           done()
         })
-      }) 
+
+      })
 
     })
 

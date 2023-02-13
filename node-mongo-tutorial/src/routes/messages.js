@@ -64,7 +64,41 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/sent'
- * 
+ * /messages:
+ *   get:
+ *     summary: Get all messages (admin)
+ *     tags: [Messages]
+ *     responses:
+ *       200:
+ *         description: Messages Retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/getblogs'
+ * /messages/msg/{id}:
+ *   get:
+ *     summary: Get single message (admin)
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of message
+ *     tags: [Messages]
+ *     responses:
+ *       200:
+ *         description: Single Message Retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/getblog'
+ *       404:
+ *         description: Single message Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/blognotfound'
  */
 
 

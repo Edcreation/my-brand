@@ -15,35 +15,11 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const createUser =  ( async (req, res) => {
-    let password = await hash(req.body.password, 10);
-    const data = {
-        email: req.body.email, 
-        username: req.body.username, 
-        password: password,
-        publicId: "",
-        imageUrl: "",
-        admin: false
-    }
-    User.register(new User(data), 
-      req.body.password, (err, user) => {
-      if(user) {
-          passport.authenticate('local')(req, res, () => {
-              res.status(201).json({
-                  code: 201,
-                  message: "User Created",
-                  UserCreated: user
-              })
-          });
-    }
-    else {
-          if (err.code == 11000) {
-              res.status(409).json({
-                  code: 409,
-                  message: "User Already Exists",
-              })
-          }
-      }
-    });
+    res.status(201).json({
+        code: 201,
+        message: "User Created",
+        UserCreated: req.user
+    })
 })
 
 const createAdmin =  ( (req, res) => {
@@ -64,30 +40,24 @@ const createAdmin =  ( (req, res) => {
                 imageUrl: "",
                 admin: true
             }
-            User.register(new User(data), 
-              req.body.password, (err, user) => {
-              if(user) {
-                  passport.authenticate('local')(req, res, () => {
-                      res.status(201).json({
-                          code: 201,
-                          message: "Admin User Created",
-                          UserCreated: user
-                      })
-                  });
-            }
+            const userAlpha = new User(data)
+            userAlpha.save((err, data) => {
+                if(data) {
+                    passport.authenticate('local')(req, res, () => {
+                        res.status(201).json({
+                            code: 201,
+                            message: "Admin User Created",
+                            AdminUserCreated: data
+                        })
+                    });
+              }
             });
             
         }
     })
 })
 
-const loginUser = ((req,res) => {
-    res.status(200).json({
-        code: 200,
-        message: "Logged In",
-        LoggedInAs: req.user
-    })
-})
+const loginUser = {}
 
 const users = ((req,res) => {
     const usr = req.user.username
@@ -103,7 +73,7 @@ const users = ((req,res) => {
                 res.status(200).json({
                     code: 200,
                     message: "Users Found",
-                    UserWhoFetched: usr,
+                    UserWhoFetched: req.user,
                     Users: data
                 })
             }

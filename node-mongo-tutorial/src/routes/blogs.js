@@ -90,7 +90,7 @@
  *         schema:
  *           type: string
  *         required: true
- *         description : object id of user
+ *         description : object id of blog
  *     tags: [Blogs]
  *     responses:
  *       200:
@@ -105,7 +105,125 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/blognotfound'
- * 
+ * /blogs/create:
+ *   post:
+ *     summary: Create a blog (admin)
+ *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               blogImage:
+ *                 type: string
+ *                 format: binary
+ *               content:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Blog Created 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 -code
+ *               properties:
+ *                 code:
+ *                   type: integer
+ *                   description: The http response
+ *                 message:
+ *                   type: string
+ *                   description: Message of response
+ *                 BlogCreated:
+ *                   type: object
+ *       406:
+ *         description: A field is Empty
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/errormessage'
+ * /blogs/edit/{id}:
+ *   put:
+ *     summary: Edit a blog (admin)
+ *     tags: [Blogs]
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of blog
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               blogImage:
+ *                 type: string
+ *                 format: binary
+ *               content:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Blog Created 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 -code
+ *               properties:
+ *                 code:
+ *                   type: integer
+ *                   description: The http response
+ *                 message:
+ *                   type: string
+ *                   description: Message of response
+ *                 BlogCreated:
+ *                   type: object
+ *       406:
+ *         description: A field is Empty
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/errormessage'
+ * /blogs/delete/{id}:
+ *   delete:
+ *     summary: delete blog (admin)
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of blog
+ *     tags: [Blogs]
+ *     responses:
+ *       200:
+ *         description: Blog deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/getblog'
+ *       404:
+ *         description: Blog Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/blognotfound'
  */
 
 
@@ -139,13 +257,14 @@ const CommentSchema = Joi.object().keys({
 router.get('/', getBlogs)
 router.get('/b/:id', getSingleBlog)
 
-router.post('/b/:id/c',isLoggedIn, validate(CommentSchema, { abortEarly: false } ), postComment)
+router.post('/b/:id/c',passport.authenticate('jwt', { session: false }), validate(CommentSchema, { abortEarly: false } ), postComment)
 router.get('/b/:id/c', getComments)
 
-router.put('/b/:id/like',isLoggedIn, likeBlog)
 
-router.post('/create',isLoggedInAsAdmin, upload.single("blogImage") ,validate(BlogsSchema, { abortEarly: false } ), createBlog)
-router.put('/edit/:id',isLoggedInAsAdmin,  upload.single('blogImage') , validate(BlogsSchema, { abortEarly: false } ), editBlog)
-router.delete('/delete/:id', isLoggedInAsAdmin, deleteBlog)
+router.put('/b/:id/like',passport.authenticate('jwt', { session: false }), likeBlog)
+
+router.post('/create',passport.authenticate('jwt', { session: false }),isLoggedInAsAdmin, upload.single("blogImage") ,validate(BlogsSchema, { abortEarly: false } ), createBlog)
+router.put('/edit/:id',passport.authenticate('jwt', { session: false }),isLoggedInAsAdmin,  upload.single('blogImage') , validate(BlogsSchema, { abortEarly: false } ), editBlog)
+router.delete('/delete/:id',passport.authenticate('jwt', { session: false }), isLoggedInAsAdmin, deleteBlog)
 
 export default router
