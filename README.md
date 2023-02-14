@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Edcreation/my-brand/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/Edcreation/my-brand/tree/main)
+
 # my-brand
 ## My Brand Capstone project
 
