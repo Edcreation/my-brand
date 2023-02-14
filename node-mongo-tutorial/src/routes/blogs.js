@@ -224,6 +224,89 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/blognotfound'
+ * /blogs/b/{id}/c:
+ *   post:
+ *     summary: add a blog comment 
+ *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               comment:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: comment Created 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 -code
+ *               properties:
+ *                 code:
+ *                   type: integer
+ *                   description: The http response
+ *                 message:
+ *                   type: string
+ *                   description: Message of response
+ *                 CommentCreated:
+ *                   type: object
+ *       406:
+ *         description: A field is Empty
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/errormessage'
+ * /blogs/create:
+ *   get:
+ *     summary: Create a blog (admin)
+ *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               blogImage:
+ *                 type: string
+ *                 format: binary
+ *               content:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Blog Created 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 -code
+ *               properties:
+ *                 code:
+ *                   type: integer
+ *                   description: The http response
+ *                 message:
+ *                   type: string
+ *                   description: Message of response
+ *                 BlogCreated:
+ *                   type: object
+ *       406:
+ *         description: A field is Empty
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/errormessage'
  */
 
 
