@@ -14,7 +14,6 @@ jobs:
       - run:
           name: Run Unit Tests
           command: cd node-mongo-tutorial && npm test
-    working_directory: ~/node-mongo-tutorial
 workflows:
   build_tests:
     jobs:
