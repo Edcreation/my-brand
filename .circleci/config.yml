@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           name: Install npm dependencies
-          command: cd node-mongo-tutorial && npm install 
+          command: npm install 
       - run:
           name: Install npm dev dependencies
           command: npm install mocha c8 chai-http chai
