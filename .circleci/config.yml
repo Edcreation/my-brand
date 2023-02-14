@@ -13,7 +13,7 @@ jobs:
           command: cd node-mongo-tutorial && npm install mocha c8 chai-http chai
       - run:
           name: Run Unit Tests
-          command: cd node-mongo-tutorial && npm testn
+          command: cd node-mongo-tutorial && npm test
 workflows:
   build_tests:
     jobs:
