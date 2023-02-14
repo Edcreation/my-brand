@@ -18,7 +18,7 @@ jobs:
           command: cd node-mongo-tutorial && npm test
       - run:
           name: Upload coverage to Coveralls
-          command: npx coveralls < node-mongo-tutorial/coverage/lcov.info
+          command: cd node-mongo-tutorial && npx coveralls < coverage/lcov.info
 workflows:
   build_tests:
     jobs:
