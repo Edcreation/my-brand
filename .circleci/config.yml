@@ -2,7 +2,7 @@ version: 2.1
 jobs: 
   run_tests:
     docker: 
-      - image: circleci/node:16
+      - image: circleci/node:16.13.2
     steps:
       - checkout
       - run:
