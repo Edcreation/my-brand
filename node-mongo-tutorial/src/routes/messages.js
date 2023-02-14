@@ -121,8 +121,8 @@ router.use(passport.session());
 
 router.post('/send',validate(MessageSchema, { abortEarly: false }), sendMessage)
 
-router.get('/',isLoggedInAsAdmin, getMessages)
-router.get('/msg/:id',isLoggedInAsAdmin, getSingleMessage)
-router.delete('/delete/:id',isLoggedInAsAdmin, deleteMessage)
+router.get('/',passport.authenticate('jwt', { session: false }),isLoggedInAsAdmin, getMessages)
+router.get('/msg/:id',passport.authenticate('jwt', { session: false }),isLoggedInAsAdmin, getSingleMessage)
+router.delete('/delete/:id',passport.authenticate('jwt', { session: false }),isLoggedInAsAdmin, deleteMessage)
 
 export default router

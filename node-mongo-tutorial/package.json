@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "c8 mocha src/test/test.js --recursive --forceExit --timeout 80000 ",
+    "test": "c8 mocha src/test/test.js --recursive --exit --forceExit --timeout 80000 ",
     "coverage": "c8 --reporter=html npm run test"
   },
   "nyc": {

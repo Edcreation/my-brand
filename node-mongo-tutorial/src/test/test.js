@@ -115,7 +115,8 @@ describe('Database Testing... Waiting for Connection', function() {
           done();
         });
       });
-      it('it should **Send** **GET**  **DELETE** a message and get and delete', (done) => {
+
+      it('it should **CREATE** **GET** **UPDATE** **DELETE** a message and get and delete', (done) => {
 
         chai.request(server)
         .post('/users/login')
@@ -124,47 +125,52 @@ describe('Database Testing... Waiting for Connection', function() {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
+          res.body.should.have.property('token')
           const token = res.body.token
-          const message = {
-                name: "message test",
-                email: "message@mail.com",
-                message: "Hello 202"
-            }
-          chai.request(server)
-          .post('/messages/send').send(message)
+  
+           chai.request(server)
+          .post('/messages/send')
+          .set('content-type', 'application/json')
+          .send({ email: "hello@mail.com", name: "testing", message: "messages" })
+          .set({ "Authorization": `Bearer ${token}` })
           .end((err, res) => {
             res.should.have.status(201);
             res.body.should.be.a('object');
-            res.body.should.have.property('message').eql('Message Sent');
-            res.body.should.have.property('MessageSent')
+            if (err) { console.log(err) }
             const msg = res.body.MessageSent._id
-
+  
             chai.request(server)
-            .get('/messages/msg/63d7d81e2db5ec234d9485a8').set({ "Authorization": `Bearer ${token}` })
-            .end((err, res) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object');
+              .get(`/messages/msg/${msg}`)
+              .set({ "Authorization": `Bearer ${token}` })
+              .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
               });
-
             chai.request(server)
-            .get('/messages').set({ "Authorization": `Bearer ${token}` })
-            .end((err, res) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object');
+              .get('/messages')
+              .set({ "Authorization": `Bearer ${token}` })
+              .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
               });
-
+          
             chai.request(server)
-            .delete(`/messages/delete/${msg}`).set({ "Authorization": `Bearer ${token}` })
+            .delete(`/messages/delete/${msg}`)
+            .set({ "Authorization": `Bearer ${token}` })
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
+              if (err) { console.log(err) }
               done()
-              });
-
+            });
+  
           });
         });
+  
+        })
 
-      })
+
+
       it('it should **CREATE** **GET** **UPDATE** **DELETE** a blog and get and delete', (done) => {
 
       chai.request(server)

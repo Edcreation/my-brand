@@ -46,7 +46,7 @@ const getSingleBlog = (( req,res ) => {
 
 const createBlog = ( async (req,res) => {
     const data = await uploadImage(req.file.path, "blog_images").catch((err) => { 
-        res.status(500).json({ 
+        res.status(400).json({ 
         Message: "Image Upload Error", 
         Error: err 
         }) 
