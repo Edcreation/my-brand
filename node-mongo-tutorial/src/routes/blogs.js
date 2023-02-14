@@ -227,7 +227,14 @@
  * /blogs/b/{id}/c:
  *   post:
  *     summary: add a blog comment 
- *     tags: [Blogs]
+ *     tags: [Comments]
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of blog
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -239,6 +246,8 @@
  *             properties:
  *               comment:
  *                 type: string
+ *             example:
+ *               comment: "My first comment"
  *     responses:
  *       201:
  *         description: comment Created 
@@ -263,29 +272,19 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/errormessage'
- * /blogs/create:
  *   get:
- *     summary: Create a blog (admin)
- *     tags: [Blogs]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             properties:
- *               title:
- *                 type: string
- *               blogImage:
- *                 type: string
- *                 format: binary
- *               content:
- *                 type: string
+ *     summary: get comments
+ *     tags: [Comments]
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of blog
  *     responses:
- *       201:
- *         description: Blog Created 
+ *       200:
+ *         description: Comments Fetched 
  *         content:
  *           application/json:
  *             schema:
@@ -296,17 +295,39 @@
  *                 code:
  *                   type: integer
  *                   description: The http response
- *                 message:
- *                   type: string
- *                   description: Message of response
- *                 BlogCreated:
+ *                 comments:
  *                   type: object
+ *                   description: comments of response
  *       406:
  *         description: A field is Empty
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/errormessage'
+ * /blogs/b/{id}/like:
+ *   put:
+ *     summary: Like or Unlike a blog 
+ *     tags: [Like]
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of blog
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Liked/Unliked 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Message of response
  */
 
 

@@ -30,6 +30,6 @@ const options = {
       },
     },
     apis: ['src/routes/users.js', 'src/routes/blogs.js', 'src/routes/messages.js'],
-  }
+}
 
 export default options

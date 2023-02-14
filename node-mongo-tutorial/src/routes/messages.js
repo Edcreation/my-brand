@@ -68,6 +68,8 @@
  *   get:
  *     summary: Get all messages (admin)
  *     tags: [Messages]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Messages Retrieved
@@ -86,6 +88,8 @@
  *         required: true
  *         description : object id of message
  *     tags: [Messages]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Single Message Retrieved
