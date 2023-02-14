@@ -292,6 +292,8 @@
  *   delete:
  *     summary: Delete User (admin)
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters :
  *       - in: path
  *         name: id
