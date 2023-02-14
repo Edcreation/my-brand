@@ -292,6 +292,13 @@
  *   delete:
  *     summary: Delete User (admin)
  *     tags: [Users]
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of user
  *     responses:
  *       200:
  *         description: User deleted
