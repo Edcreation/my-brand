@@ -335,7 +335,7 @@ import { Strategy as JWTstrategy } from 'passport-jwt';
 import { ExtractJwt as ExtractJWT } from 'passport-jwt';
 
 import pkg from 'bcryptjs'
-import { isLoggedIn, isLoggedInAsAdmin } from '../middleware/isLoggedIn.js';
+import { isLoggedInAsAdmin } from '../middleware/isLoggedIn.js';
 const { hash, compare } = pkg;
 const router = Router()
 const SignUpSchema = joi.object().keys({
@@ -444,7 +444,7 @@ passport.use(new JWTstrategy(
       try {
         return done(null, token.user);
       } catch (error) {
-        done(error);
+        done(error, { message: "Login First" });
       }
     }
   )
@@ -498,7 +498,7 @@ router.post('/login',validate(LoginSchema),
         }
       )(req, res, next);
     }
-  );
+);
   
 
 router.get('/logout', function(req, res, next) {

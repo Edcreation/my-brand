@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>353/353</span>
+                <span class='fraction'>374/374</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>353/353</span>
+                <span class='fraction'>374/374</span>
             </div>
         
             
@@ -415,7 +415,49 @@
 <a name='L350'></a><a href='#L350'>350</a>
 <a name='L351'></a><a href='#L351'>351</a>
 <a name='L352'></a><a href='#L352'>352</a>
-<a name='L353'></a><a href='#L353'>353</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L353'></a><a href='#L353'>353</a>
+<a name='L354'></a><a href='#L354'>354</a>
+<a name='L355'></a><a href='#L355'>355</a>
+<a name='L356'></a><a href='#L356'>356</a>
+<a name='L357'></a><a href='#L357'>357</a>
+<a name='L358'></a><a href='#L358'>358</a>
+<a name='L359'></a><a href='#L359'>359</a>
+<a name='L360'></a><a href='#L360'>360</a>
+<a name='L361'></a><a href='#L361'>361</a>
+<a name='L362'></a><a href='#L362'>362</a>
+<a name='L363'></a><a href='#L363'>363</a>
+<a name='L364'></a><a href='#L364'>364</a>
+<a name='L365'></a><a href='#L365'>365</a>
+<a name='L366'></a><a href='#L366'>366</a>
+<a name='L367'></a><a href='#L367'>367</a>
+<a name='L368'></a><a href='#L368'>368</a>
+<a name='L369'></a><a href='#L369'>369</a>
+<a name='L370'></a><a href='#L370'>370</a>
+<a name='L371'></a><a href='#L371'>371</a>
+<a name='L372'></a><a href='#L372'>372</a>
+<a name='L373'></a><a href='#L373'>373</a>
+<a name='L374'></a><a href='#L374'>374</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -996,7 +1038,14 @@
  * /blogs/b/{id}/c:
  *   post:
  *     summary: add a blog comment 
- *     tags: [Blogs]
+ *     tags: [Comments]
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of blog
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -1008,6 +1057,8 @@
  *             properties:
  *               comment:
  *                 type: string
+ *             example:
+ *               comment: "My first comment"
  *     responses:
  *       201:
  *         description: comment Created 
@@ -1032,29 +1083,19 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/errormessage'
- * /blogs/create:
  *   get:
- *     summary: Create a blog (admin)
- *     tags: [Blogs]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             properties:
- *               title:
- *                 type: string
- *               blogImage:
- *                 type: string
- *                 format: binary
- *               content:
- *                 type: string
+ *     summary: get comments
+ *     tags: [Comments]
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of blog
  *     responses:
- *       201:
- *         description: Blog Created 
+ *       200:
+ *         description: Comments Fetched 
  *         content:
  *           application/json:
  *             schema:
@@ -1065,17 +1106,39 @@
  *                 code:
  *                   type: integer
  *                   description: The http response
- *                 message:
- *                   type: string
- *                   description: Message of response
- *                 BlogCreated:
+ *                 comments:
  *                   type: object
+ *                   description: comments of response
  *       406:
  *         description: A field is Empty
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/errormessage'
+ * /blogs/b/{id}/like:
+ *   put:
+ *     summary: Like or Unlike a blog 
+ *     tags: [Like]
+ *     parameters :
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description : object id of blog
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Liked/Unliked 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Message of response
  */
 &nbsp;
 &nbsp;
@@ -1088,7 +1151,7 @@ import upload from '../middleware/upload.js'
 import { postComment, getComments } from '../controllers/postComment.js'
 import passport from 'passport'
 import bodyParser from 'body-parser'
-import { isLoggedIn, isLoggedInAsAdmin } from '../middleware/isLoggedIn.js';
+import { isLoggedInAsAdmin } from '../middleware/isLoggedIn.js';
 &nbsp;
 const router = Router()
 router.use(bodyParser.json());
@@ -1126,7 +1189,7 @@ export default router</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-02-14T10:41:31.617Z
+                at 2023-02-15T14:25:52.398Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

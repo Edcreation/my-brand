@@ -167,7 +167,7 @@ describe('Database Testing... Waiting for Connection', function() {
           });
         });
   
-        })
+      })
 
 
 
@@ -182,7 +182,6 @@ describe('Database Testing... Waiting for Connection', function() {
         res.body.should.be.a('object');
         res.body.should.have.property('token')
         const token = res.body.token
-
          chai.request(server)
         .post('/blogs/create')
         .set('content-type', 'application/json')
@@ -197,7 +196,6 @@ describe('Database Testing... Waiting for Connection', function() {
           res.body.should.be.a('object');
           if (err) { console.log(err) }
           const blog = res.body.BlogCreated._id
-
           chai.request(server)
             .get(`/blogs/b/${blog}`)
             .end((err, res) => {
@@ -209,15 +207,13 @@ describe('Database Testing... Waiting for Connection', function() {
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
-            });
-
+            })
           chai.request(server)
           .put(`/blogs/b/${blog}/like`)
           .set({ "Authorization": `Bearer ${token}` })
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
-
             chai.request(server)
             .put(`/blogs/b/${blog}/like`)
             .set({ "Authorization": `Bearer ${token}` })
@@ -226,7 +222,6 @@ describe('Database Testing... Waiting for Connection', function() {
               res.body.should.be.a('object');
             });
           });
-
           chai.request(server)
           .post(`/blogs/b/${blog}/c`)
           .set({ "Authorization": `Bearer ${token}` })
@@ -235,7 +230,6 @@ describe('Database Testing... Waiting for Connection', function() {
             res.should.have.status(201);
             res.body.should.be.a('object');
           })
-
           chai.request(server)
           .get(`/blogs/b/${blog}/c`)
           .end((err, res) => {
@@ -313,8 +307,16 @@ describe('Database Testing... Waiting for Connection', function() {
                       res.should.have.status(200);
                       res.body.should.be.a('object');
                 });
+
+                chai.request(server)
+                .get('/users')
+                .set({ "Authorization": `Bearer ${token2}` })
+                .end((err, res) => {
+                    res.should.have.status(401);
+                    res.body.should.be.a('object');
+                });
               })
-  
+              
               chai.request(server)
               .delete('/users/delete/' + user)
               .set({ "Authorization": `Bearer ${token}` })
@@ -433,6 +435,14 @@ describe('Database Testing... Waiting for Connection', function() {
                   res.should.have.status(200);
                   res.body.should.be.a('object');
                   res.body.should.have.property('message').eql("User Deleted");
+            });
+
+            chai.request(server)
+            .delete('/users/delete/3294324')
+            .set({ "Authorization": `Bearer ${token}` })
+            .end((err, res) => {
+                  res.should.have.status(404);
+                  res.body.should.be.a('object');
               done();
             });
           })
@@ -494,6 +504,162 @@ describe('Database Testing... Waiting for Connection', function() {
         })
 
       })
+      it('it should **Test** for errors', (done) => {
+
+        chai.request(server)
+        .post('/users/login')
+        .set('content-type', 'application/json')
+        .send(testUserLogin)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('token')
+          const token = res.body.token
+  
+           chai.request(server)
+          .post('/messages/send')
+          .set('content-type', 'application/json')
+          .send({ email: "hello@mail.com", name: "testing", message: "messages" })
+          .set({ "Authorization": `Bearer ${token}` })
+          .end((err, res) => {
+            res.should.have.status(201);
+            res.body.should.be.a('object');
+            if (err) { console.log(err) }
+            const msg = res.body.MessageSent._id
+  
+            chai.request(server)
+              .get(`/messages/msg/313456`)
+              .set({ "Authorization": `Bearer ${token}` })
+              .end((err, res) => {
+                res.should.have.status(404);
+                res.body.should.be.a('object');
+              });
+            chai.request(server)
+              .get('/messages')
+              .set({ "Authorization": `Bearer ${token}` })
+              .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+              });
+          
+            chai.request(server)
+            .delete(`/messages/delete/3245`)
+            .set({ "Authorization": `Bearer ${token}` })
+            .end((err, res) => {
+              res.should.have.status(400);
+              res.body.should.be.a('object');
+              if (err) { console.log(err) }
+              done()
+            });
+  
+          });
+        });
+  
+      })
+
+      it('it should create ADMIN user ', (done) => {
+
+        chai.request(server)
+          .post('/users/login')
+          .set('content-type', 'application/json')
+          .send(testUserLogin)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('token')
+            const token = res.body.token
+            
+            chai.request(server).post('/users/signup-admin')
+            .set('content-type', 'application/json')
+            .send(testUserSignup)
+            .end((err, res) => {
+              chai.request(server)
+              .delete('/users/delete/' + res.body.AdminUserCreated._id )
+              .set({ "Authorization": `Bearer ${token}` })
+              .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql("User Deleted");
+                done();
+              });
+            })
+  
+          });
+  
+      })
+
+      it('it should **CREATE** **GET** **UPDATE** **DELETE** a blog and get and delete', (done) => {
+
+        chai.request(server)
+        .post('/users/login')
+        .set('content-type', 'application/json')
+        .send(testUserLogin)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('token')
+          const token = res.body.token
+          chai.request(server)
+
+          chai.request(server)
+            .get(`/blogs/b/23457`)
+            .end((err, res) => {
+              res.should.have.status(404);
+              res.body.should.be.a('object');
+            });
+
+          chai.request(server)
+            .get('/blogs')
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+            })
+
+
+          chai.request(server)
+          .put(`/blogs/edit/423456`)
+          .set('content-type', 'application/json')
+          .set({ "Authorization": `Bearer ${token}` })
+          .field('title', 'Admin can Post Blog Updated')
+          .field('content', 'Blog Post Updated')
+          .attach('blogImage',
+          fs.readFileSync(path.join(__dirname, '../assets/test_image.jpg')),
+          'test_image.jpg')
+          .end((err, res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            if (err) { console.log(err) }
+          });
+
+          chai.request(server)
+          .put(`/blogs/edit/63eb9dbbc28c96f9ac0e9e71`)
+          .set('content-type', 'application/json')
+          .set({ "Authorization": `Bearer ${token}` })
+          .field('title', 'Admin can Post Blog Updated')
+          .field('content', 'Blog Post Updated')
+          .attach('blogImage',
+          fs.readFileSync(path.join(__dirname, '../assets/test_image.jpg')),
+          'test_image.jpg')
+          .end((err, res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            if (err) { console.log(err) }
+            done()
+          });
+
+          chai.request(server)
+          .delete(`/blogs/delete/63eb9dbbc28c96f9ac0e9e71`)
+          .set({ "Authorization": `Bearer ${token}` })
+          .end((err, res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            if (err) { console.log(err) }
+            done()
+          });
+        });
+  
+        })
+      
 
     })
 

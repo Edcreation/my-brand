@@ -340,7 +340,7 @@ import upload from '../middleware/upload.js'
 import { postComment, getComments } from '../controllers/postComment.js'
 import passport from 'passport'
 import bodyParser from 'body-parser'
-import { isLoggedIn, isLoggedInAsAdmin } from '../middleware/isLoggedIn.js';
+import { isLoggedInAsAdmin } from '../middleware/isLoggedIn.js';
 
 const router = Router()
 router.use(bodyParser.json());

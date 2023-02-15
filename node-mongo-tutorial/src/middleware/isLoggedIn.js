@@ -1,12 +1,6 @@
 import passport from "passport";
 
-function isLoggedIn(req, res, next) {
-    if (req.user) return next();
-    res.status(406).json({
-        code: 406,
-        message: "Log In First",
-    })
-}
+
 function isLoggedInAsAdmin(req, res, next) {
     const role = req.user.admin
     if (role) {
@@ -19,6 +13,5 @@ function isLoggedInAsAdmin(req, res, next) {
 }
 
 export {
-    isLoggedIn,
     isLoggedInAsAdmin
 }
