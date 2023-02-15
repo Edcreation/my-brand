@@ -54,7 +54,9 @@
         <div class="blogs-block">
             <div class="title">Top</div>
             <div class="blog-cards" id="box">
-             
+                <div id="loading">
+                    <img src="./images/loading.gif" alt="">
+                </div> 
             </div>
         </div>
         <div class="quote">
@@ -70,7 +72,7 @@
             </div>
         </div>
         <div class="tblog-cards" id="tbox">
-             
+
         </div>
         <div class="sug">
             <div class="box">
@@ -109,50 +111,48 @@
         window.onload = blogList();
         window.onload = blogList2();
         
-        function blogList() {
+        async function blogList() {
         const List = document.querySelector('#box');
-        let Blogs = JSON.parse(localStorage.getItem("Blogs"));
-        /*List.innerHTML = `${Blogs.map((title, index)=>`<div class="blog-card">
-            <a class="image"><img src="${title['image']}" alt="image" onclick="navigate(${title['_id']})"></a>
-            <div class="over">
-                <div class="text" >
-                    ${title['title']}
-                </div>
-                <div class="ico">
-                    <div class="like"><div class="l1" onclick="getLikes(${index})" id="l"></div><p>${title['likeCount']}</p></div>
-                    <div class="like"><div class="com" id="l"></div><p>${title['comments'].length}</p></div>
-                </div>
-            </div>
-        </div>`).sort().reverse().join("")}`
-        */
-        for(let i = Blogs.length - 1; i >= 0  ; i--){
+        const url = "https://my-brand-production.up.railway.app/blogs"
+
+        const data= await fetch(url);
+        var blogs = await data.json();
+
+        const Blogs = blogs.Blogs
+        if(Blogs){
+            document.getElementById("loading").style.display = "none"
+        }
+        for(let i = 0; i < 5; i++){
             List.innerHTML +=  `<div class="blog-card">
-                <a class="image"><img src="${Blogs[i].image}" alt="image" onclick="navigate(${Blogs[i]._id})"></a>
+                <a href="./blog-detail.html?${Blogs[i]._id}" class="image"><img src="${Blogs[i].imageUrl}" alt="image" ></a>
                 <div class="over">
                     <div class="text" >
                         ${Blogs[i].title}
                     </div>
                     <div class="ico">
-                        <div class="like"><div class="l1" onclick="getLikes(${i})" id="l"></div><p>${Blogs[i].likeCount}</p></div>
-                        <div class="like"><div class="com" id="l"></div><p>${Blogs[i].comments.length}</p></div>
+                        <div class="like"><div class="l1" onclick="getLikes(${i})" id="l"></div><p>${Blogs[i].liked.length}</p></div>
+                        <div class="like"><div class="com" id="l"></div><p></p></div>
+                    </div>
+                </div>
+            </div>`
+        }
+        const List2 = document.querySelector('#tbox');
+        for(let i = Blogs.length - 1; i >= 0  ; i--){
+            List2.innerHTML += `<div class="tblog-card">
+                <a class="timage"><img src="${Blogs[i].imageUrl}" alt="image" onclick="navigate(${Blogs[i]._id})"></a>
+                <div class="tover">
+                    <div class="ttext" >
+                        ${Blogs[i].title}
                     </div>
                 </div>
             </div>`
             } 
-    }
-        function blogList2() {
-            const List = document.querySelector('#tbox');
-            let Blogs = JSON.parse(localStorage.getItem("Blogs"));
-            List.innerHTML = `${Blogs.map((title, index)=>`<div class="tblog-card">
-                <a class="timage"><img src="${title['image']}" alt="image" onclick="navigate(${title['_id']})"></a>
-                <div class="tover">
-                    <div class="ttext" >
-                        ${title['title']}
-                    </div>
-                </div>
-            </div>`).sort().join("")}`
-            }
         
+
+            
+            
+        }
+
     </script>
     <script>
         const image = JSON.parse(window.localStorage.getItem("tempLog")).image
@@ -173,7 +173,7 @@
         slideIndex++;
         if (slideIndex > slides.length) {slideIndex = 1}
         slides[slideIndex-1].style.display = "flex";
-        setTimeout(showSlides, 10000); 
+        setTimeout(showSlides, 1000); 
         }
     </script>
 </body>

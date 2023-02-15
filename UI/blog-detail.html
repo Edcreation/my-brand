@@ -45,7 +45,9 @@
 
 
     <div class="blog-article" id="view">
-        
+        <div id="loading">
+            <img src="./images/loading.gif" alt="">
+        </div>
     </div>
     <div class="footer">
         <div class="footer-box">
@@ -68,60 +70,52 @@
     <script>
         window.onload = blogView();
         
-        function blogView() {
-            let Blogsd = JSON.parse(localStorage.getItem("Blogs"));
+        async function blogView() {
             let x;
-            var parts = window.location.search.substr(1).split("&");
-            var m = {};
-            for (var i = 0; i < parts.length; i++) {
-                var temp = parts[i].split("=");
-                
-                m[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
-                
-            }
-            x = m['id']
-            var id = Blogsd.findIndex(function(item, i){
-                return item._id == x
-            });
-            setTimeout(() => {
-                displayComments(id);
-            } , 1000)
-        
-        const List = document.querySelector('#view');
-        List.innerHTML = `
-        <div class="bimage">
-            <img src="${Blogsd[id].image}" alt="image">
-        </div>
+            var parts = window.location.search.substr(1).split("?");
+            const m = parts[0]
+            
+            const url = `https://my-brand-production.up.railway.app/blogs/b/${m}`
 
-        <div class="blog-title">
-            ${Blogsd[id].title}
-        </div>
-        <div class="date">
-            ${Blogsd[id].date} 
-        </div>
-        <div class="blog-content">
-            ${Blogsd[id].content}
-        </div>
-        <u>Comments</u>
-        <div id="rwow"><button onclick="toSignUp()">Sign Up</button> or <button onclick="tologin()">Log In</button> to comment.</div>
-        <div class="comments-container">
-            <div class="comments" id="com">
+            const data= await fetch(url);
+            var blog = await data.json();
+    
+            const Blogsd = blog.BlogFetched
+            const date = Blogsd.date
+            const List = document.querySelector('#view');
+            List.innerHTML = `
+                <div class="bimage" style="background: url(${Blogsd.imageUrl}) no-repeat; background-size: 100% 100%; background-attachment: fixed;">
+                </div>
+
+                <div class="blog-title">
+                    ${Blogsd.title}
+                </div>
+                <div class="date">
+                    ${Blogsd.date} 
+                </div>
+                <div class="blog-content">
+                    ${Blogsd.content}
+                </div>
+                <u>Comments</u>
+                <div id="rwow"><button onclick="toSignUp()">Sign Up</button> or <button onclick="tologin()">Log In</button> to comment.</div>
+                <div class="comments-container">
+                    <div class="comments" id="com">
                 
-            </div>  
-        </div>
+                    </div>  
+                </div>
         
-        <div class="com-form" id="cwow">
-            <div class= "popcontact" id="popcontact" >
-            </div>
-            <form onsubmit="event.preventDefault(); addComment(${id})">
-                <div class="com-form-title">Leave a Comment</div>
-                <p>Comment:</p>
-                <textarea name="com-content" id="ccontent" cols="30" rows="10" required></textarea>
-                <button>Comment</button>
-            </form>
-        </div>`
-    }
-</script>
+                <div class="com-form" id="cwow">
+                    <div class= "popcontact" id="popcontact" >
+                    </div>
+                    <form onsubmit="event.preventDefault(); addComment(${Blogsd.id})">
+                        <div class="com-form-title">Leave a Comment</div>
+                        <p>Comment:</p>
+                        <textarea name="com-content" id="ccontent" cols="30" rows="10" required></textarea>
+                        <button>Comment</button>
+                    </form>
+                </div>`
+        }
+    </script>
     <script>
         const image = JSON.parse(window.localStorage.getItem("tempLog")).image
         var profilePic = document.getElementById("profilePic")

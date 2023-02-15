@@ -190,6 +190,7 @@ function loginUser() {
   }
 }
 function checkUser() {
+  
   if (localStorage.getItem("tempLog")) {
     wow = true
   }
