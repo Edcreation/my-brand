@@ -489,7 +489,7 @@ router.post('/login',validate(LoginSchema),
                 if (error) return next(error);
                 const body = { _id: user._id,username: user.username, email: user.email, profilepic: user.imageUrl, admin: user.admin };
                 const token = Jwt.sign({ user: body }, 'TOP_SECRET');
-                return res.status(200).json({ token });
+                return res.status(200).json({ token: token, userId: user._id });
               }
             );
           } catch (error) {

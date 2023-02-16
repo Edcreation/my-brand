@@ -79,12 +79,12 @@
 
             const data= await fetch(url);
             var blog = await data.json();
-    
+            
             const Blogsd = blog.BlogFetched
             const date = Blogsd.date
             const List = document.querySelector('#view');
             List.innerHTML = `
-                <div class="bimage" style="background: url(${Blogsd.imageUrl}) no-repeat; background-size: 100% 100%; background-attachment: fixed;">
+                <div class="bimage" style="background: url(${Blogsd.imageUrl}) no-repeat; background-size: 100% 376px; background-attachment: fixed;">
                 </div>
 
                 <div class="blog-title">
@@ -114,6 +114,7 @@
                         <button>Comment</button>
                     </form>
                 </div>`
+                window.onload =  displayComments(m);
         }
     </script>
     <script>
@@ -138,5 +139,6 @@
     </script>
     <script>
         window.onload = checkUser()
+        
     </script>
 </body>

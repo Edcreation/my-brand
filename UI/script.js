@@ -51,24 +51,35 @@ function displayWow(){
   }
 }
 /**---------------------Messages Using Local Storage------------------------------*/
-function getMessage() {
-  let Messages = JSON.parse(localStorage.getItem("Messages") || "[]");
+async function getMessage() {
+
+  const email = document.getElementById("email").value;
   const name = document.getElementById("name").value;
   const message = document.getElementById("msg").value;
-  let id = Math.floor(Math.random() * 999);
+
   if (email === "" || name === "" || message === "") {
     popContact("Please Fill Out All Fields", "red")
   } else {
     details = {
-      id:id,
       email: email,
-      name:name,
-      message:message
+      name: name,
+      message: message
     }
-    Messages.push(details);
-    window.localStorage.setItem("Messages", JSON.stringify(Messages));
+    const rawResponse = await fetch('https://my-brand-production.up.railway.app/messages/send', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  });
+  const content = await rawResponse.json();
+  if (content.Error) {
+    popContact(content.Error,"red")
+  } else {
+    popContact(content.message,"green")
     document.getElementById('frm').reset()
-    popContact("Message Sent","green")
+    }
     
   }
   
@@ -153,45 +164,42 @@ function createUser() {
   
 
 }
-function loginUser() {
-  let users = JSON.parse(localStorage.getItem("Users") || "[]")
-  const image = "./images/dp.jpg"
+async function loginUser() {
+
   const email = document.getElementById('email').value
   const pass = document.getElementById('pass').value
-  if (email === "admin@mail.com" && pass=== "pass") {
-    window.location.href = "./dashboard/dashboard.html"
-    const admin = {
-      id: 00000000,
-      email : "admin@mail.com",
-      name: "Admin",
-      password: "pass",
-      image : image
-    }
-    window.localStorage.setItem("tempLog", JSON.stringify(admin))
-  } else {
-    if (email === "" || pass === "") {
-      popContact("Please Fill out All Fields", "red");
+  const details = {
+    email: email,
+    password: pass
+  }
+  if (email === "" || pass === "") {
+    popContact("Please Fill out All Fields", "red");
+  }
+  else {
+    const rawResponse = await fetch('https://my-brand-production.up.railway.app/users/login', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+    });
+    const content = await rawResponse.json();
+
+    if (content.Error) {
+      popContact(content.Error,"red")
+    } else if(content.message) {
+      popContact(content.message ,"red")
+      document.getElementById('frm').reset()
     }
     else {
-      for (let i = 0; i < users.length; i++) {
-        if (users[i].email == email && users[i].password == pass) {
-          window.localStorage.setItem("tempLog", JSON.stringify(users[i]))
-          let link = "./index.html"
-          window.location.href = link
-          console.log(users[i])
-          break;
-        }
-      }
-      setTimeout(() => {
-        popContact("Invalid Credintials", "red")
-        
-      }, 1000);
+      localStorage.setItem("cooltoken", content.token)
     }
   }
 }
 function checkUser() {
   
-  if (localStorage.getItem("tempLog")) {
+  if (localStorage.getItem("cooltoken")) {
     wow = true
   }
   else{
@@ -199,7 +207,7 @@ function checkUser() {
   }
 }
 function logOut() {
-  window.localStorage.removeItem("tempLog")
+  window.localStorage.removeItem("cooltoken")
   wow = false
   location.reload()
 }
@@ -330,23 +338,30 @@ function addComment(id) {
 
 
 }
-function displayComments(id) {
+async function displayComments(id) {
   com = document.getElementById("com")
-  let Blogsd = JSON.parse(localStorage.getItem("Blogs")).sort((a, b) => (a > b ? -1 : 1));
+  
+  const url = `https://my-brand-production.up.railway.app/blogs/b/${id}/c`
+  const data= await fetch(url);
+  var comment = await data.json(); 
+  var comments =comment.Comments
   let output = " <div class=\"comment\">"  + " <div class=\"com-name\"> " + "</div> "
           + " <div class=\"com-content\"> " + "</div> " +
           "<div class=\"com-date\">09/01/2023</div>" + " </div>"
-  if (Blogsd[id].comments.length < 1) {
+  if (comments.length < 1) {
     output = "No Comments"
   } else {
     
   }
-  for(let i = Blogsd[id].comments.length; i > 0; i--)
+  for(let i = 0; i < comments.length; i++)
   {
-    let m = new Date(Blogsd[id].comments[i-1].date)
-    output += " <div class=\"comment\">"  + " <div class=\"com-name\"> "+ "<img src="+ Blogsd[id].comments[i-1].image + " alt=\"image \">" + Blogsd[id].comments[i-1].name +  "</div> "
-    + " <div class=\"com-content\"> " + Blogsd[id].comments[i-1].comment + "</div> " +
-    "<div class=\"com-date\">" + m.toDateString() + "</div> </div>"
+    const userUrl = `https://my-brand-production.up.railway.app/users/u/${comments[i]._userId}`
+    const userdata= await fetch(userUrl);
+    var userdetails = await userdata.json();
+    var user = userdetails.data
+    output += " <div class=\"comment\">"  + " <div class=\"com-name\"> "+ "<img src="+ user.imageUrl + " alt=\"image \">" + user.username +  "</div> "
+    + " <div class=\"com-content\"> " + comments[i].comment + "</div> " +
+    "<div class=\"com-date\">" + "" + "</div> </div>"
   }
   com.innerHTML = output;
   
@@ -431,8 +446,8 @@ function showLoginButton() {
 /**---------------------------Checking Admin Authority ------------------------------------ */
 function che() {
   const ano = JSON.parse(window.localStorage.getItem("tempLog"))
-  if (wow === true && ano.email === "admin@mail.com" && ano.password === "pass") {
-
+  if (wow === true && ano.admin === true) {
+    
   }
   else {
     const link = "../index.html"
