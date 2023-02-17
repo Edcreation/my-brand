@@ -306,9 +306,9 @@ function deleteAllBlogs() {
   location.reload();
 }
 async function deleteBlog(id) {
+  const token = localStorage.getItem("cooltoken")
   const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/delete/${id}`, {
     method: 'DELETE',
-    body: data,
     headers: {
     'Authorization' : `Bearer ${token}`
   }
@@ -318,14 +318,14 @@ async function deleteBlog(id) {
   if (content.Error) {
     popContact(content.Error,"red")
   } else if(content.message) {
-    popContact(content.message ,"green")
+    location.reload()
   }
 }
 async function addComment(id) {
   const comment = document.getElementById("ccontent").value
   const token = localStorage.getItem("cooltoken")
   if (comment == "") {
-    popContact("Please Create Account Before Commenting.", "red")
+    popContact("Please Fillout", "red")
   } else {
     const tempComment = {
       comment : comment,

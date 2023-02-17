@@ -70,7 +70,9 @@
                     <div class="created">
                         <div class="title1">Blogs Created <button onclick="deleteAllBlogs()">Delete All</button></div>
                         <div class="items" id="box">
-                            
+                            <div id="loading">
+                                <img src="../images/loading.gif" alt="">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,6 +92,7 @@
         var blogs = await data.json();
         const Blogs = blogs.Blogs
         console.log(Blogs)
+        const List = document.querySelector("#box")
         if(Blogs){
             document.getElementById("loading").style.display = "none"
         }
@@ -100,7 +103,7 @@
                 <div class="words">
                     <div class="title">${Blogs[i].title}</div>
                     
-                    <div class="date">${Blogs[i].date}<Button onclick="toeditBlog(${Blogs[i]._id})"> <img src="../images/edit.png" alt="trash"></Button><Button onclick="deleteBlog(${title['_id']})"> <img src="../images/trash.png" alt="trash"></Button> </div>
+                    <div class="date">${Blogs[i].date}<Button onclick="toeditBlog(${Blogs[i]._id})"> <img src="../images/edit.png" alt="trash"></Button><Button onclick="deleteBlog('`+ Blogs[i]._id +`')"> <img src="../images/trash.png" alt="trash"></Button> </div>
                 </div>
             </div>`
         }

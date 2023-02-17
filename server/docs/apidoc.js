@@ -15,10 +15,6 @@ const options = {
       },
       servers: [
         {
-          url: 'http://localhost:5000/',
-          description: 'Local Server',
-        },
-        {
           url: 'https://my-brand-production.up.railway.app/',
           description: 'Api Link',
         }
