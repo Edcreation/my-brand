@@ -5,20 +5,21 @@ jobs:
       - image: circleci/node:16
     environment:
       repo_token: b3X2uxgM7Xzlmc1tRBlMX1LWspnPWehBV
+    working_directory: ~/Server
     steps:
       - checkout
       - run:
           name: Install npm dependencies
-          command: cd Server && npm install 
+          command:  npm install 
       - run:
           name: Install npm dev dependencies
-          command: cd Server && npm install mocha c8 chai-http chai
+          command:  npm install mocha c8 chai-http chai
       - run:
           name: Run Unit Tests
-          command: cd Server && npm test
+          command:  npm test
       - run:
           name: Upload coverage to Coveralls
-          command: cd Server && npx coveralls < coverage/lcov.info
+          command:  npx coveralls < coverage/lcov.info
 workflows:
   build_tests:
     jobs:
