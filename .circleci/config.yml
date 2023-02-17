@@ -9,16 +9,16 @@ jobs:
       - checkout
       - run:
           name: Install npm dependencies
-          command: cd server && npm install 
+          command: cd Server && npm install 
       - run:
           name: Install npm dev dependencies
-          command: cd server && npm install mocha c8 chai-http chai
+          command: cd Server && npm install mocha c8 chai-http chai
       - run:
           name: Run Unit Tests
-          command: cd server && npm test
+          command: cd Server && npm test
       - run:
           name: Upload coverage to Coveralls
-          command: cd server && npx coveralls < coverage/lcov.info
+          command: cd Server && npx coveralls < coverage/lcov.info
 workflows:
   build_tests:
     jobs:
