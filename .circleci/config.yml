@@ -3,8 +3,6 @@ jobs:
   run_tests:
     docker: 
       - image: circleci/node:16
-    environment:
-      repo_token: b3X2uxgM7Xzlmc1tRBlMX1LWspnPWehBV
     working_directory: ~/Server
     steps:
       - checkout
@@ -17,9 +15,6 @@ jobs:
       - run:
           name: Run Unit Tests
           command:  npm test
-      - run:
-          name: Upload coverage to Coveralls
-          command:  npx coveralls < coverage/lcov.info
 workflows:
   build_tests:
     jobs:
