@@ -412,6 +412,7 @@ nav span img {
     border: none;
     background: #cecece;
     color: #000;
+    overflow-y: scroll;
 }
 .ql-toolbar {
     width: 90%;

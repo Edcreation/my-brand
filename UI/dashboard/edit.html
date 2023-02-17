@@ -40,7 +40,7 @@
         <div class="new">
             <div class="new-box" id="imgreceiver">
                 <div class="title">Edit Blog </div>
-                <form onsubmit="event.preventDefault(); editBlog(x)" id="frm">
+                <form onsubmit="event.preventDefault(); editBlog(m)" id="frm">
                     <label for="title">Title</label>
                     <input type="text" name="title" id="title">
                     <label for="file">Add Photo</label>
@@ -55,27 +55,23 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="./quill.js"></script>
     <script>
-        let Bloge = JSON.parse(window.localStorage.getItem("Blogs"))
-        let x;
-        var parts = window.location.search.substr(1).split("&");
-        var m = {};
-        for (var i = 0; i < parts.length; i++) {
-            var temp = parts[i].split("=");
-            
-            m[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
-            
-        }
-        x = m['id']
-        var idx = Bloge.findIndex(function(item, i){
-            return item._id == x
-        });
-        function showEdit(){
-            let Bloge = JSON.parse(window.localStorage.getItem("Blogs"))
-            document.getElementById("title").value = Bloge[idx].title
-            document.getElementById("content").innerHTML = Bloge[idx].content
+        
+        var parts = window.location.search.substr(1).split("=");
+        const m = parts[1]
+        
+        async function showEdit(){
+            const url = `https://my-brand-production.up.railway.app/blogs/b/${m}`
+            const data= await fetch(url);
+            var blog = await data.json();
+                
+            const Bloge = blog.BlogFetched
+            document.getElementById("title").value = Bloge.title
+            quil.root.innerHTML = Bloge.content
             const img = new Image()
-            img.src = Bloge[idx].image
+            img.src = Bloge.imageUrl
             img.classList.add("insertedImage")
             document.getElementById("imageholder").appendChild(img)
         }
@@ -99,8 +95,6 @@
         }) 
     </script>
     
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script src="./quill.js"></script>
     <script src="../script.js" ></script>
     <script>
         window.onload = che()

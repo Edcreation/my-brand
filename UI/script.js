@@ -259,43 +259,42 @@ function toeditBlog(id) {
   }
   navigate(id)
 }
-function editBlog(id) {
-  let Bloge = JSON.parse(window.localStorage.getItem("Blogs"))
-  var idx = Bloge.findIndex(function(item, i){
-    return item._id == id
-  });
+async function editBlog(id) {
+
   const title = document.getElementById('title').value
-  const image = window.localStorage.getItem("tempImage") || Bloge[idx].image
-  const content = quill.root.innerHTML
-  //-----------Form Validation----------------
-  if (title === Bloge[idx].title && content === Bloge[idx].content && image === null ) {
-    popContact("Nothing To Edit", "red")
-  } else {
-    if (title.length > 500) {
+  const image = document.getElementById('image')
+  const contentx = quill.root.innerHTML
+  const token = localStorage.getItem("cooltoken")
+  if (title.length > 500 || image.value == "") {
+    if (image.value == "") {
+      popContact(" Please provide Image ", "red")
+    }
+    else {
       popContact(" Title too Long ", "red")
-    } else {
-      const blogData = {
-        _id: id,
-        title: title,
-        image: image,
-        content: content,
-        likeCount: Bloge[idx].likeCount,
-        comments: Bloge[idx].comments,
-        liked: Bloge[idx].liked,
-        date: new Date().toLocaleDateString()
+    }
+  } else {
+    var data = new FormData()
+    data.append('blogImage', image.files[0])
+    data.append('content', contentx)
+    data.append('title', title)
+    const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/edit/${id}`, {
+      method: 'PUT',
+      body: data,
+      headers: {
+      'Authorization' : `Bearer ${token}`
       }
-      if (idx > -1) { // only splice array when item is found
-        Bloge.splice(idx, 1); // 2nd parameter means remove one item only
-        window.localStorage.setItem("Blogs", JSON.stringify(Bloge));
-      }
-      Bloge.push(blogData);
-      localStorage.setItem('Blogs', JSON.stringify(Bloge));
+    });
+    const content = await rawResponse.json();
+    
+    if (content.Error) {
+      popContact(content.Error,"red")
+    } else if(content.message) {
+      popContact(content.message ,"green")
       var element = document.getElementById("frm")
       element.reset()
-      popContact("Blog Edited", "green")
-      window.localStorage.removeItem("tempImage")
-      location.href = "./dashboard.html"
-    } 
+      localStorage.removeItem("tempImage")
+      quill.root.innerHTML = ""
+    }
   }
 }
 function deleteAllBlogs() {
@@ -318,6 +317,7 @@ async function deleteBlog(id) {
   if (content.Error) {
     popContact(content.Error,"red")
   } else if(content.message) {
+    popContact(content.message ,"green")
     location.reload()
   }
 }
@@ -378,12 +378,13 @@ async function displayComments(id) {
 }
 async function getLikes(x) {
   if (wow === true) {
-    const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/b/${id}/like`, {
+    const token = localStorage.getItem("cooltoken")
+    const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/b/${x}/like`, {
       method: 'PUT',
       headers: {
       'Authorization' : `Bearer ${token}`
     }
-    });
+    }).then(res => location.reload() );
     const content = await rawResponse.json();
     
     if (content.Error) {
