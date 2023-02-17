@@ -322,29 +322,33 @@ async function deleteBlog(id) {
   }
 }
 async function addComment(id) {
-  const comment = document.getElementById("ccontent").value
-  const token = localStorage.getItem("cooltoken")
-  if (comment == "") {
-    popContact("Please Fillout", "red")
-  } else {
-    const tempComment = {
-      comment : comment,
-    }
-    const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/b/${id}/c`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body:  JSON.stringify(tempComment)
-      })
-      const response = await rawResponse.json();
-      if (response.Error) {
-        popContact(response.Error,"red")
-      } else if(response.message) {
-        popContact(response.message ,"red")
+  if (wow) {
+    const comment = document.getElementById("ccontent").value
+    const token = localStorage.getItem("cooltoken")
+    if (comment == "") {
+      popContact("Please Fillout", "red")
+    } else {
+      const tempComment = {
+        comment : comment,
       }
+      const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/b/${id}/c`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body:  JSON.stringify(tempComment)
+        })
+        const response = await rawResponse.json();
+        if (response.Error) {
+          popContact(response.Error,"red")
+        } else if(response.message) {
+          location.reload()
+        }
+    }
+  } else {
+    location.href = "./login.html"
   }
 
 }

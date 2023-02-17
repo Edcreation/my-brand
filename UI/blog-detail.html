@@ -108,7 +108,7 @@
                 <div class="com-form" id="cwow">
                     <div class= "popcontact" id="popcontact" >
                     </div>
-                    <form method="post" onsubmit="event.preventDefault(); addComment(${Blogsd._id});">
+                    <form method="post" onsubmit="event.preventDefault(); addComment('${Blogsd._id}');" id="frm">
                         <div class="com-form-title">Leave a Comment</div>
                         <p>Comment:</p>
                         <textarea name="com-content" id="ccontent" cols="30" rows="10" required></textarea>
@@ -123,6 +123,12 @@
             const image = JSON.parse(window.localStorage.getItem("tempLog")).imageUrl
             var profilePic = document.getElementById("profilePic")
             profilePic.style.backgroundImage = `url("${image}")`;
+        }
+        if(wow) {
+            document.getElementById("frm").display = "flex"
+        }
+        else {
+            document.getElementById("frm").display = "none"
         }
     </script>
 
