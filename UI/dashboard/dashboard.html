@@ -83,19 +83,28 @@
         window.onload = countBlogs();
         window.onload = countUsers();
         window.onload = countComments();
-        function blogList() {
-        const List = document.querySelector('#box');
-        let Blogs = JSON.parse(localStorage.getItem("Blogs"));
-        List.innerHTML = `${Blogs.map((title, index)=>`
-            <div class="item">
-            <div class="img"><img src="${title['image']}" alt="image"></div>
-            <div class="words">
-                <div class="title">${title['title']}</div>
-                
-                <div class="date">${title['date']}<Button onclick="toeditBlog(${title['_id']})"> <img src="../images/edit.png" alt="trash"></Button><Button onclick="deleteBlog(${title['_id']})"> <img src="../images/trash.png" alt="trash"></Button> </div>
-            </div>
-        </div>`).join("")}`
+        async function blogList() {
+        const list = document.querySelector('#box');
+        const url = "https://my-brand-production.up.railway.app/blogs"
+        const data= await fetch(url);
+        var blogs = await data.json();
+        const Blogs = blogs.Blogs
+        console.log(Blogs)
+        if(Blogs){
+            document.getElementById("loading").style.display = "none"
         }
+        for(let i = 0; i < 100; i++){
+            List.innerHTML += `
+            <div class="item">
+                <div class="img"><img src="${Blogs[i].imageUrl}" alt="image"></div>
+                <div class="words">
+                    <div class="title">${Blogs[i].title}</div>
+                    
+                    <div class="date">${Blogs[i].date}<Button onclick="toeditBlog(${Blogs[i]._id})"> <img src="../images/edit.png" alt="trash"></Button><Button onclick="deleteBlog(${title['_id']})"> <img src="../images/trash.png" alt="trash"></Button> </div>
+                </div>
+            </div>`
+        }
+    }
     </script>
 </body>
 </html>

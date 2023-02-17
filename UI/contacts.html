@@ -28,8 +28,8 @@
             </div>
             <button id="dashbutton" onclick="toDashboard()">Dashboard</button>
             <button id="loginbutton" onclick="tologin()">Login</button>
-            <img  src="./images/usrdp.png" class="propic" id="profilePic" onclick="displayWow()">
-            </img>
+            <div   style="background: url('./images/dpicon.png'); background-size: cover;" class="propic" id="profilePic" onclick="displayWow()">
+            </div>
             <div class="wow-menu" id="wowM">
                 <button onclick="toProfile()">Profile</button>
                 <button onclick="logOut()">Log Out</button>
@@ -76,11 +76,11 @@
         </div>
     </div>
     <script>
-        const image = JSON.parse(window.localStorage.getItem("tempLog")).image
-        var profilePic = document.getElementById("profilePic")
-        profilePic.src = image;
-        //profilePic.style.display = "none"
-
+        if(window.localStorage.getItem("tempLog")){
+            const image = JSON.parse(window.localStorage.getItem("tempLog")).imageUrl
+            var profilePic = document.getElementById("profilePic")
+            profilePic.style.backgroundImage = `url("${image}")`;
+        }
     </script>
 </body>
 </html>

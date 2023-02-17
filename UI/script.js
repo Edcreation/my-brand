@@ -106,16 +106,21 @@ function deleteMessage(m) {
   }
 }
 /** ------------------- Authentication-----------*/
-function createUser() {
+async function createUser() {
   let Users = JSON.parse(localStorage.getItem("Users") || "[]");
   const email = document.getElementById('email').value;
   const name = document.getElementById('name').value;
+  const password = document.getElementById('pass').value;
+  const details = {
+    username: name,
+    email: email,
+    password: password,
+  }
   let image = window.localStorage.getItem("tempImage");
   let id = Math.floor(Math.random() * 1000000) + 100000000;
   if ( image == null ) {
     image = "./images/dpicon.png"
   }
-  const password = document.getElementById('pass').value;
   function ValidateEmail(inputText)
   {
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -133,33 +138,24 @@ function createUser() {
   }
   else {
     if ( ValidateEmail(email) ) {
-      if ( Users.some(item => item.email === email)) {
-        popContact("Email Already Exists.", "red");
+      const rawResponse = await fetch('https://my-brand-production.up.railway.app/users/signup', {
+        method: 'POST',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(details)
+      });
+      const content = await rawResponse.json();
+      console.log(details)
+      if (content.Error) {
+        popContact(content.Error,"red")
+      } else if(content.message) {
+        popContact(content.message ,"green")
       }
-      else {
-        if (password.length < 5) {
-          popContact("Password is Too Short", "red")
-        } else {
-          const userData = {
-              id: id,
-              email: email,
-              name: name,
-              image: image,
-              password: password,
-          };
-          Users.push(userData);
-          localStorage.setItem('Users', JSON.stringify(Users));
-          var element = document.getElementById("frm")
-          element.reset()
-          window.localStorage.removeItem("tempImage")
-          popContact("Account Created.", "green")
-          
-        }
+      } else {
+        popContact("Invalid Email","red")
       }
-    } else {
-      popContact("Invalid Email","red")
-    }
-
   }
   
 
@@ -185,7 +181,10 @@ async function loginUser() {
     body: JSON.stringify(details)
     });
     const content = await rawResponse.json();
-
+    const userId = content.userId
+    const userAlpha = await fetch(`https://my-brand-production.up.railway.app/users/u/${userId}`)
+    const user = await userAlpha.json();
+    console.log(content)
     if (content.Error) {
       popContact(content.Error,"red")
     } else if(content.message) {
@@ -193,7 +192,10 @@ async function loginUser() {
       document.getElementById('frm').reset()
     }
     else {
+      localStorage.setItem("tempLog", JSON.stringify(user.data))
+      console.log(user.data)
       localStorage.setItem("cooltoken", content.token)
+      location.href = "./dashboard/dashboard.html"
     }
   }
 }
@@ -208,40 +210,45 @@ function checkUser() {
 }
 function logOut() {
   window.localStorage.removeItem("cooltoken")
+  window.localStorage.removeItem("tempLog")
   wow = false
   location.reload()
 }
 /**--------------------------Blogs Using Local Storage------------------------------------ */
-function createBlog() {
-  let Blogs = JSON.parse(localStorage.getItem("Blogs") || "[]");
+async function createBlog() {
   const title = document.getElementById('title').value
-  const image = window.localStorage.getItem("tempImage")
-  const content = quill.root.innerHTML
-  const id = Math.floor(Math.random() * 999) + 9999;
+  const image = document.getElementById('image')
+  const contentx = quill.root.innerHTML
+  const token = localStorage.getItem("cooltoken")
   //-----------Form Validation----------------
-  if (title == "" || content == "<p><br></p>" || image == null ) {
+  if (title == "" || content == "<p><br></p>" || image.value == "" ) {
     popContact("Please Fill out All Fields", "red")
   } else {
     if (title.length > 500) {
       popContact(" Title too Long ", "red")
     } else {
-      const blogData = {
-        _id: id,
-        title: title,
-        image: image,
-        content: content,
-        likeCount: 0,
-        comments: [],
-        liked: [],
-        date: new Date().toLocaleDateString()
+      var data = new FormData()
+      data.append('blogImage', image.files[0])
+      data.append('content', contentx)
+      data.append('title', title)
+      const rawResponse = await fetch('https://my-brand-production.up.railway.app/blogs/create', {
+        method: 'POST',
+        body: data,
+        headers: {
+        'Authorization' : `Bearer ${token}`
+        }
+      });
+      const content = await rawResponse.json();
+      
+      if (content.Error) {
+        popContact(content.Error,"red")
+      } else if(content.message) {
+        popContact(content.message ,"green")
+        var element = document.getElementById("frm")
+        element.reset()
+        localStorage.removeItem("tempImage")
+        quill.root.innerHTML = ""
       }
-      Blogs.push(blogData);
-      localStorage.setItem('Blogs', JSON.stringify(Blogs));
-      var element = document.getElementById("frm")
-      element.reset()
-      popContact("Blog Created", "green")
-      window.localStorage.removeItem("tempImage")
-      location.reload()
     } 
   }
 }
@@ -298,44 +305,47 @@ function deleteAllBlogs() {
   popContact("All Blogs Deleted", "yellow")
   location.reload();
 }
-function deleteBlog(id) {
-  let Blogsa = JSON.parse(localStorage.getItem("Blogs"));
-  var m = Blogsa.findIndex(function(item, i){
-    return item._id === id
+async function deleteBlog(id) {
+  const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/delete/${id}`, {
+    method: 'DELETE',
+    body: data,
+    headers: {
+    'Authorization' : `Bearer ${token}`
+  }
   });
-  console.log(m)
-  if (m > -1) { 
-      Blogsa.splice(m, 1); 
-      window.localStorage.setItem("Blogs", JSON.stringify(Blogsa));
-      popContact("Blog Deleted", "yellow")
-      location.reload()
+  const content = await rawResponse.json();
+  
+  if (content.Error) {
+    popContact(content.Error,"red")
+  } else if(content.message) {
+    popContact(content.message ,"green")
   }
 }
-function addComment(id) {
-  let Blogs = JSON.parse(localStorage.getItem("Blogs"));
-  let users = JSON.parse(localStorage.getItem("Users"));
-  let comment = document.getElementById("ccontent").value
-  let cname = JSON.parse(localStorage.getItem("tempLog")).name
-  let image = JSON.parse(localStorage.getItem("tempLog")).image
-  if (users.some(item => item.name === cname) || cname == "Admin") {
-    const tempComment = {
-      id : id,
-      name : cname,
-      comment : comment,
-      image: image,
-      date: Date.now()
-    }
-    Blogs[id].comments.push(tempComment);
-    localStorage.setItem('Blogs', JSON.stringify(Blogs));
-    popContact("Comment Added", "green")
-    setTimeout(() => {
-      window.location.reload()
-    }, 500);
-  } else {
+async function addComment(id) {
+  const comment = document.getElementById("ccontent").value
+  const token = localStorage.getItem("cooltoken")
+  if (comment == "") {
     popContact("Please Create Account Before Commenting.", "red")
+  } else {
+    const tempComment = {
+      comment : comment,
+    }
+    const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/b/${id}/c`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body:  JSON.stringify(tempComment)
+      })
+      const response = await rawResponse.json();
+      if (response.Error) {
+        popContact(response.Error,"red")
+      } else if(response.message) {
+        popContact(response.message ,"red")
+      }
   }
-
-
 
 }
 async function displayComments(id) {
@@ -366,49 +376,21 @@ async function displayComments(id) {
   com.innerHTML = output;
   
 }
-function getLikes(x) {
+async function getLikes(x) {
   if (wow === true) {
-    if (x > -1) {
-      let Blogsl = JSON.parse(localStorage.getItem("Blogs"));
-      let id = JSON.parse(localStorage.getItem("tempLog")).id 
-      let likes = Blogsl[x].likeCount;
-      
-        if (Blogsl[x].liked.length === 0) {
-          likes++
-          Blogsl[x].likeCount = likes
-          Blogsl[x].liked.push(id)
-          localStorage.setItem('Blogs', JSON.stringify(Blogsl));
-          location.reload()
-        }
-        else {
-
-            if ( Blogsl[x].liked.some(item => item == id) ) {
-              function removeItemAll(arr, value) {
-                var i = 0;
-                while (i < arr.length) {
-                  if (arr[i] === value) {
-                    arr.splice(i, 1);
-                  } else {
-                    ++i;
-                  }
-                }
-                return arr;
-              }
-              likes--
-              Blogsl[x].likeCount = likes
-              const arr = removeItemAll(Blogsl[x].liked, id)
-              localStorage.setItem('Blogs', JSON.stringify(Blogsl));
-              location.reload()
-            }
-            else if ( Blogsl[x].liked.some(item => item != id)  ) {
-              likes = likes + 1
-              Blogsl[x].likeCount = likes
-              Blogsl[x].liked.push(id)
-              localStorage.setItem('Blogs', JSON.stringify(Blogsl));
-              location.reload()
-            }
-        }
+    const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/b/${id}/like`, {
+      method: 'PUT',
+      headers: {
+      'Authorization' : `Bearer ${token}`
     }
+    });
+    const content = await rawResponse.json();
+    
+    if (content.Error) {
+      popContact(content.Error,"red")
+    } else if(content.message) {
+      popContact(content.message ,"green")
+    }  
   }
 }
 /**------------------------ Navigation Done by Buttons------------------------------------- */
@@ -447,17 +429,17 @@ function showLoginButton() {
 function che() {
   const ano = JSON.parse(window.localStorage.getItem("tempLog"))
   if (wow === true && ano.admin === true) {
-    
+
   }
   else {
-    const link = "../index.html"
+    const link = "../login.html"
     window.location.href = link
   }
 }
 function toDashButton() {
   const dashbutton = document.getElementById("dashbutton")
   const ano = JSON.parse(window.localStorage.getItem("tempLog"))
-  if (wow === true && ano.email === "admin@mail.com" && ano.password === "pass") {
+  if (wow === true && ano.admin == true) {
     dashbutton.style.display = "block"
   }
   else {

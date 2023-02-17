@@ -39,17 +39,31 @@
                 <div class="msg-container" id="box" onload="list()" >
                     <script >
                         window.onload = list();
-                        function list() {
-                            let Messages = JSON.parse(localStorage.getItem("Messages"));
+                        async function list() {
+                            
                             const list = document.querySelector('#box');
-                            let arr = window.localStorage.getItem("Messages")
-                            list.innerHTML = `${Messages.map((id, index)=>`<div class="msg" onclick="list()"><div class="msg-icon"><img src="../images/msg.png" alt="msg"></div>
-                            <div class="name">${id['name']}</div>
-                            <div class="content">${id['message']}</div>
-                            <div class="ops">
-                                <BUTton><img src="../images/reply.png" alt="reply"></BUTton>
-                                <BUTton onclick="deleteMessage(${index})"> <img src="../images/trash.png" alt="trash"></BUTton>
-                            </div></div>`).join("")}`
+                            const token = localStorage.getItem("cooltoken")
+                            
+                            const rawResponse = await fetch('https://my-brand-production.up.railway.app/messages', {
+                                method: 'GET',
+                                headers: {
+                                  'Accept': 'application/json',
+                                  'Content-Type': 'application/json',
+                                  'Authorization' : `Bearer ${token}`
+                                }
+                              });
+                            const messages = await rawResponse.json();
+                            const Messages = messages.Messages
+                            console.log(Messages)
+                            for(let i = 0; i < 100; i++){
+                                list.innerHTML += `<div class="msg" onclick="list()"><div class="msg-icon"><img src="../images/msg.png" alt="msg"></div>
+                                <div class="name"></div>
+                                <div class="content">${Messages[i].message}</div>
+                                <div class="ops">
+                                    <button><img src="../images/reply.png" alt="reply"></button>
+                                    <button onclick="deleteMessage(${Messages[i]._id})"> <img src="../images/trash.png" alt="trash"></button>
+                                </div></div>`
+                            }
                           }
                     </script>
                 </div>
