@@ -30,7 +30,7 @@
             </div>
             <button id="dashbutton" onclick="toDashboard()">Dashboard</button>
             <button id="loginbutton" onclick="tologin()">Login</button>
-            <img  src="./images/usrdp.png" class="propic" id="profilePic" onclick="displayWow()">
+            <img  src="./images/dpicon.png" class="propic" id="profilePic" onclick="displayWow()">
             </img>
             <div class="wow-menu" id="wowM">
                 <button onclick="toProfile()">Profile</button>
@@ -57,23 +57,41 @@
         </div>
         <div class="container-box">
             <div class="right" >
-                <form onsubmit="event.preventDefault(); changeUser()" id="frm" autocomplete="off">
-                    <div class="title" id="username">Hi</div>
+                <div class="username-box">
+                    <div class="username"><div id="username"></div><button onclick="event.preventDefault(); showform('uform','chngtext')">Change</button></div>
+                    <form onsubmit="event.preventDefault(); changeusername()" id="uform" style="display: none;">
+                        <input type="text" name="username"><button>Save</button>
+                    </form>
+                </div>
+                <div class="ppform">
                     <div class="lock">
                         <img src="./images/addimage.png" alt="" id="imageReceiver">
-                        <input type="file" name="image" id="image">
+                        <form onsubmit="event.preventDefault(); changeprofilepic()">
+                            <input type="file" name="image" style="display: none;" id="image">
+                            <button id="dpbtn" style="display: none; margin-bottom: 10px;">Save</button>
+                        </form>
+                        <button onclick="document.getElementById('image').click(); showform('dpbtn','chngtext')">Change Profile Pic</button>
                     </div>
-                    <input type="text" name="name" id="name" placeholder="Change User Name" autocomplete="off">
-                    <div class="pass">
-                        <input type="password" name="pass" id="pass"  placeholder="Old Password" autocomplete="new-password">
-                       
-                    </div>
-                    <div class="pass">
-                        <input type="password" name="pass1" id="pass1"  placeholder="New Password" autocomplete="new-password">
+                </div>
+                <div class="password-box">
+                    <button id="chngtext" onclick="event.preventDefault(); showform('pform','chngtext')">Change Password</button>
+                    <form onsubmit="event.preventDefault(); changepassword()" id="pform" style="display: none;">
+                        <input type="password" name="password" id=""><button>Save</button>
+                    </form>
+                </div>
+                <script>
+                    function showform(x,y) {
+                        const elem = document.getElementById(x)
+                        const pelem = document.getElementById(y)
+                        if(elem.style.display == "none") {
+                            elem.style.display = "flex"
+                        }else {
+                            elem.style.display = "none"
+                        }
+                        //pelem.display = "none"
                         
-                    </div>
-                    <button id="save">Save</button>
-                </form>
+                    }
+                </script>
             </div>
         </div>
     </div>
@@ -93,10 +111,13 @@
         </div>
     </div>
     <script>
-        window.onload = document.getElementById("imageReceiver").src = JSON.parse(localStorage.getItem("tempLog")).imageUrl
         window.onload = document.getElementById("username").innerHTML = JSON.parse(localStorage.getItem("tempLog")).username
-        window.onload = document.getElementById("profilePic").src = JSON.parse(localStorage.getItem("tempLog")).imageUrl
-        window.onload = window.localStorage.setItem("tempImage", JSON.parse(localStorage.getItem("tempLog")).imageUrl)
+        window.onload = displayPP()
+        function displayPP() {
+        if(JSON.parse(localStorage.getItem("tempLog")).imageUrl != "")
+            document.getElementById("profilePic").src = JSON.parse(localStorage.getItem("tempLog")).imageUrl
+            document.getElementById("imageReceiver").src = JSON.parse(localStorage.getItem("tempLog")).imageUrl
+        }
         fileEl = document.getElementById('image')
         fileEl.addEventListener('change', () => {
             const fr = new FileReader();

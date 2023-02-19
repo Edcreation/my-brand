@@ -30,8 +30,8 @@
             </div>
             <button id="dashbutton" onclick="toDashboard()">Dashboard</button>
             <button id="loginbutton" onclick="tologin()">Login</button>
-            <div   style="background: url('./images/dpicon.png'); background-size: cover;" class="propic" id="profilePic" onclick="displayWow()">
-            </div>
+            <img  src="./images/dpicon.png" class="propic" id="profilePic" onclick="displayWow()">
+            </img>
             <div class="wow-menu" id="wowM">
                 <button onclick="toProfile()">Profile</button>
                 <button onclick="logOut()">Log Out</button>
@@ -116,22 +116,31 @@
                     </form>
                 </div>`
                 window.onload =  displayComments(m);
+                window.onload = showcommentform();
         }
     </script>
     <script>
-        if(window.localStorage.getItem("tempLog")){
-            const image = JSON.parse(window.localStorage.getItem("tempLog")).imageUrl
-            var profilePic = document.getElementById("profilePic")
-            profilePic.style.backgroundImage = `url("${image}")`;
+        window.onload = displayPP()
+        function displayPP() {
+        if(JSON.parse(localStorage.getItem("tempLog")).imageUrl != "")
+            document.getElementById("profilePic").src = JSON.parse(localStorage.getItem("tempLog")).imageUrl
         }
-        if(wow) {
-            document.getElementById("frm").display = "flex"
-        }
-        else {
-            document.getElementById("frm").display = "none"
+
+    </script>
+    <script>
+        function showcommentform() {
+            const x = document.getElementById("cwow")
+            const y = document.getElementById("rwow")
+            if (wow == false) {
+                x.style.display = "none"
+                y.style.display = "flex"
+            }
+            else {
+                x.style.display = "flex"
+                y.style.display = "none"
+            }
         }
     </script>
-
     <script>
         window.onload = showLoginButton();
     </script>

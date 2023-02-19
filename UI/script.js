@@ -10,7 +10,7 @@ function popContact(x,y) {
   document.getElementById('popcontact').innerHTML = x
   setTimeout(() => {
     document.querySelector('#popcontact').style.display = "none";
-  }, 2000);
+  }, 5000);
 }
 /**---------------------Toggle Menus-------------------------------------------- */
 function toggleNav(){
@@ -195,7 +195,7 @@ async function loginUser() {
       localStorage.setItem("tempLog", JSON.stringify(user.data))
       console.log(user.data)
       localStorage.setItem("cooltoken", content.token)
-      location.href = "./dashboard/dashboard.html"
+      location.href = "./index.html"
     }
   }
 }
@@ -218,7 +218,7 @@ function logOut() {
 async function createBlog() {
   const title = document.getElementById('title').value
   const image = document.getElementById('image')
-  const contentx = quill.root.innerHTML
+  const blogcontent = tinymce.activeEditor.getContent();
   const token = localStorage.getItem("cooltoken")
   //-----------Form Validation----------------
   if (title == "" || content == "<p><br></p>" || image.value == "" ) {
@@ -229,7 +229,7 @@ async function createBlog() {
     } else {
       var data = new FormData()
       data.append('blogImage', image.files[0])
-      data.append('content', contentx)
+      data.append('content', blogcontent)
       data.append('title', title)
       const rawResponse = await fetch('https://my-brand-production.up.railway.app/blogs/create', {
         method: 'POST',
@@ -263,7 +263,7 @@ async function editBlog(id) {
 
   const title = document.getElementById('title').value
   const image = document.getElementById('image')
-  const contentx = quill.root.innerHTML
+  const blogcontent = tinymce.activeEditor.getContent();
   const token = localStorage.getItem("cooltoken")
   if (title.length > 500 || image.value == "") {
     if (image.value == "") {
@@ -275,7 +275,7 @@ async function editBlog(id) {
   } else {
     var data = new FormData()
     data.append('blogImage', image.files[0])
-    data.append('content', contentx)
+    data.append('content', blogcontent)
     data.append('title', title)
     const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/edit/${id}`, {
       method: 'PUT',
@@ -452,71 +452,71 @@ function toDashButton() {
   }
 }
 /**---------------------------Changing The user profile ----------------------------------- */
-function changeUser() {
-  let Users = JSON.parse(localStorage.getItem("Users") || "[]")
-  const myemail = JSON.parse(window.localStorage.getItem("tempLog")).email;
-  const myname = JSON.parse(localStorage.getItem("tempLog")).name;
-  const myimage = JSON.parse(window.localStorage.getItem("tempLog")).image
-  const mypassword = JSON.parse(window.localStorage.getItem("tempLog")).password
-  const myid = JSON.parse(window.localStorage.getItem("tempLog")).id
-  const image = window.localStorage.getItem("tempImage")
-  var id = Users.findIndex(obj => obj.email == myemail);
-  let name = document.getElementById('name').value;
-  let password = document.getElementById('pass').value;
-  let password1 = document.getElementById('pass1').value;
-  if ( name === "" ) {
-    name = myname
+async function changeusername() {
+  const token = localStorage.getItem("cooltoken")
+  const username = {
+    username: document.getElementsByName("username")[0].value
   }
-  if ( password === "" ) {
-    password = mypassword
-    password1 = mypassword
-  }
-
-  if ( name === myname && password == mypassword && image == myimage && password1 == mypassword ) {
-    popContact("Nothing to save.", "red")
-  }
-  else {
-    if (password != mypassword ) {
-      popContact("Old Password Is Wrong", "red")
-    } else {
-      if (password1.length < 5) {
-        popContact("New Password is Too Short", "red")
-      } else {
-        const userData = {
-            id: myid,
-            email: myemail,
-            name: name,
-            image: image,
-            password: password1,
-        };
-        if (id > -1) { 
-          Users.splice(id, 1);
-        }
-        Users.push(userData);
-        localStorage.setItem('Users', JSON.stringify(Users));
-        var element = document.getElementById("frm")
-        element.reset()
-        window.localStorage.removeItem("tempImage")
-        function maintain() {
-          const data = {
-            id: myid,
-            email: myemail,
-            name: name,
-            image: image,
-            password: password1
-          }
-          localStorage.setItem("tempLog", JSON.stringify(data))
-          location.reload();
-        }
-        popContact("Profile Changed.", "green")
-        setTimeout( maintain() , 5000);
-        
-      }
-
+  const rawResponse = await fetch(`https://my-brand-production.up.railway.app/users/edit/username`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body:  JSON.stringify(username)
+    })
+    const response = await rawResponse.json();
+  console.log(username)
+    if (response.Error) {
+      popContact(response.Error,"red")
+    } else if(response.message) {
+      const word = ", changes will be applicable on next login.👍"
+      popContact(`${response.message} ${word}`,"green")
     }
+}
+async function changepassword() {
+  const token = localStorage.getItem("cooltoken")
+  const password = {
+    password: document.getElementsByName("password")[0].value
+  }
+  const rawResponse = await fetch(`https://my-brand-production.up.railway.app/users/edit/password`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body:  JSON.stringify(password)
+    })
+    const response = await rawResponse.json();
+    if (response.Error) {
+      popContact(response.Error,"red")
+    } else if(response.message) {
+      const word = ", changes will be applicable on next login.👍"
+      popContact(`${response.message} ${word}`,"green")
     }
-
-
+}
+async function changeprofilepic() {
+  const token = localStorage.getItem("cooltoken")
+  const image = document.getElementById("image")
+  var data = new FormData()
+    data.append('profile_pic', image.files[0])
+  const rawResponse = await fetch(`https://my-brand-production.up.railway.app/users/edit/profilepic`, {
+    method: 'PUT',
+    body:  data,
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+    })
+    const response = await rawResponse.json();
+    console.log(image)
+    if (response.Error) {
+      popContact(response.Error,"red")
+    } else if(response.message) {
+      const word = ", changes will be applicable on next login.👍"
+      popContact(`${response.message} ${word}`,"green")
+    }
 }
 
 /** ---------------------------Admin Manage User ------------------------------------------ */

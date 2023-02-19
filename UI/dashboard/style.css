@@ -16,8 +16,7 @@ body {
 }
 #loading {
     width: 100%;
-    height: 300px;
-    background: #27282f56;
+    height: 300px;  
     display: flex;
     align-items: center;
     justify-content: center;
@@ -270,16 +269,15 @@ nav span img {
     width: 95%;
     height: 100%;
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
     overflow-y: scroll;
+    gap: 20px;
 }
 
 .item {
-    width: 200px;
-    height: 270px;
     padding: 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     background: #02041E;
@@ -297,6 +295,7 @@ nav span img {
     justify-content: space-evenly;
     align-items: center;
     height: 50%;
+    margin-left: 10px;
 }
 .words .title {
     width: 100%;
@@ -413,15 +412,7 @@ nav span img {
     background: #cecece;
     color: #000;
     overflow-y: scroll;
-}
-.ql-toolbar {
-    width: 90%;
-    height: 40px;
-    display: flex;
-    justify-content: space-around;
-    background: #fff;
-    align-items: center;
-    margin-top: 20px;
+    border-radius: 5px;
 }
 .new-box form button {
     padding: 10px;

@@ -46,7 +46,7 @@
         </div>
         <div class="container-box">
             <div class="right" >
-                <form onsubmit="event.preventDefault(); createUser()" id="frm" autocomplete="">
+                <form onsubmit="tinyMCE.triggerSave(true,true); event.preventDefault(); createUser()" id="frm" autocomplete="">
                     <div class="title">SIGN UP</div>
                     <input type="email" name="email" id="email" placeholder="Email" >
                     <input type="text" name="name" id="name" placeholder="New User Name" autocomplete="new-password">
