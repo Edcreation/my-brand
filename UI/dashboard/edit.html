@@ -64,7 +64,7 @@
                 
             const Bloge = blog.BlogFetched
             document.getElementById("title").value = Bloge.title
-            document.getElementById("content").value = Bloge.content
+            tinymce.activeEditor.setContent(Bloge.content);
             const img = new Image()
             img.src = Bloge.imageUrl
             img.classList.add("insertedImage")
