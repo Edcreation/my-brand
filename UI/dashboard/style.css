@@ -283,6 +283,7 @@ nav span img {
     background: #02041E;
     border-radius: 10px;
     margin-bottom: 10px;
+    height: auto;
 }
 .img img {
     width: 200px;
@@ -467,6 +468,7 @@ nav span img {
     border-radius: 10px;
     padding: 5px;
     width: 40px;
+    font-size: 10px;
     
 }
 .msg-box .title button {

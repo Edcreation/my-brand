@@ -54,16 +54,16 @@
                               });
                             const messages = await rawResponse.json();
                             const Messages = messages.Messages
-                            console.log(Messages)
                             for(let i = 0; i < 100; i++){
                                 list.innerHTML += `<div class="msg" onclick="list()"><div class="msg-icon"><img src="../images/msg.png" alt="msg"></div>
-                                <div class="name"></div>
+                                <div class="name">${Messages[i].name}</div>
                                 <div class="content">${Messages[i].message}</div>
                                 <div class="ops">
                                     <button><img src="../images/reply.png" alt="reply"></button>
                                     <button onclick="deleteMessage(${Messages[i]._id})"> <img src="../images/trash.png" alt="trash"></button>
                                 </div></div>`
                             }
+                            countMessages();
                           }
                     </script>
                 </div>

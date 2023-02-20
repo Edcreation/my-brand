@@ -103,6 +103,10 @@ form .lock img {
     border: 1px solid #00d9e876;
     margin: 20px 0;
 }
+form input:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0 30px #02041E inset !important;
+    -webkit-text-fill-color: #00DAE8;
+}
 form a {
     margin-top: 15px;
     color: #fff;
@@ -142,6 +146,9 @@ form .pass .checkbox {
 form .pass .checkbox:checked {
     background: #00DAE8;
 }
+.have-account {
+    margin-top: 10px;
+}
 .container-box form button {
     background: #00DAE8;
     border-radius: 5px;
@@ -168,8 +175,8 @@ form .pass .checkbox:checked {
     font-size: 24px;
     color: #00DAE8;
 }
-.left a {
-    color: #535252;
+.right a {
+    color: #00DAE8;
 }
 .lock img {
     width: 250px;

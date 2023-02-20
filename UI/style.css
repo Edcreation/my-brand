@@ -15,6 +15,7 @@ body {
     margin: 0;
     background: #02041E;
 }
+
 #loading {
     width: 100%;
     height: 300px;
@@ -42,11 +43,13 @@ body {
 }
 #dashbutton {
     background: #00DAE8;
-    color: #000;
+    color: #02041E;
     padding: 5px;
     margin-right: 10px;
     cursor: pointer;
     font-weight: bold;
+    border: none;
+    outline: none;
 }
 /*--------------------Navbar--------------------*/
 @keyframes slideInFromLeft {
@@ -60,7 +63,6 @@ body {
 
 nav {
     width: 100%;
-    height: 60px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -71,8 +73,7 @@ nav {
     z-index: 4;
     top: 0;
     position: sticky;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.132);
-    
+    border-bottom: 1px solid #00d9e844;
 
 }
 #actions {
@@ -85,23 +86,24 @@ nav {
 }
 .links {
     margin-left: 10px;
+    margin-right: 10px;
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
-    transition: .8s;
+    transition: .5s;
 }
 .links a {
     padding: 10px;
     text-decoration: none;
-    color: #fff;
-    transition: 0.8s;
+    color: #e5e5e5;
+    transition: 0.5s;
 }
 .links a:hover {
     background: #00DAE8;
-    color: #000;
+    color: #02041E;
 }
 #active {
     color: #00DAE8;
@@ -116,7 +118,6 @@ nav {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    border: 1px solid #00d9e8aa;
 }
 .wow-menu {
     position: absolute;
@@ -127,7 +128,7 @@ nav {
     align-items: center;
     justify-content: center;
     right: 0;
-    top: 60px;
+    top: 41px;
 }
 .wow-menu button {
     display: flex;
@@ -158,6 +159,7 @@ nav {
     font-size: 17px;
     font-weight: bold;
     background-color: #00DAE8;
+    color: #02041E;
     border-radius: 2px;
     transition: 0.6s;
     border: none;
@@ -810,28 +812,30 @@ svg {
         margin-bottom: 10px;
     }
     .wow-menu {
-        top: 215px;
-        right: 80px;
+        top: 265px;
     }
 
     nav  {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
     }
     nav .logo {
         width: 100%;
         height: 50px;
-        padding: 20px 0 0 0;
+        padding: 0px 0 0 0;
         justify-content: space-between;
     }
     nav .links {
         flex-direction: column;
         width: auto;
+
     }
 
     #actions {
         display: none;
-        width: 40%;
+        width: 30%;
         position: absolute;
         flex-direction: column;
         justify-content: center;
@@ -856,6 +860,9 @@ svg {
         margin-left: 0;
         justify-content: center;
         align-items: center;
+    }
+    .links a {
+        color: #e5e5e5;
     }
     nav .logo .menu {
         display: block;

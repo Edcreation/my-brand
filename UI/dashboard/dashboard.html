@@ -53,12 +53,12 @@
                             <p id="likes"></p>
                         </div>
                     </div>
-                    <div class="box">
+                    <!-- <div class="box">
                         <div class="centered">
                             <img src="../images/comment.png" alt="">
                             <p id="comments"></p>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="box">
                         <div class="centered">
                             <img src="../images/note.png" alt="">
@@ -82,16 +82,14 @@
     <script>
         window.onload = blogList();
         window.onload = countLikes();
-        window.onload = countBlogs();
-        window.onload = countUsers();
         window.onload = countComments();
+        window.onload = countUsers();
         async function blogList() {
         const list = document.querySelector('#box');
         const url = "https://my-brand-production.up.railway.app/blogs"
         const data= await fetch(url);
         var blogs = await data.json();
         const Blogs = blogs.Blogs
-        console.log(Blogs)
         const List = document.querySelector("#box")
         if(Blogs){
             document.getElementById("loading").style.display = "none"

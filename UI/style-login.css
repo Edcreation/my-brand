@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 700px;
+    height: 600px;
 }
 #loginbutton {
     height: 30px;
@@ -50,10 +50,10 @@ nav a {
 .container-box {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-top: 30px;
-    width: 60%;
+    width: 50%;
     padding: 10px;
     border: 0.1px solid #fff;
     border-radius: 8px;
@@ -62,10 +62,9 @@ nav a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-left: 2px solid #00DAE8;
     justify-content: center;
     height: 100%;
-    width: 50%;
+    width: 100%;
 }
 .container-box form {
     display: flex;
@@ -84,6 +83,10 @@ form input {
     border-bottom: 2px solid #00DAE8;
     outline: none;
     transition: .8s;
+}
+form input:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0 30px #02041E inset !important;
+    -webkit-text-fill-color: #00DAE8;
 }
 form input:focus {
     border-bottom: 2px solid #e90101;
@@ -165,13 +168,15 @@ form .pass .checkbox:checked {
     font-size: 24px;
     color: #00DAE8;
 }
-.left a {
-    color: #535252;
+.right a {
+    color: #00DAE8;
 }
 .lock img {
     width: 250px;
 }
-
+.noaccount {
+    margin-top: 10px;
+}
 /*--------------------------------Responsiveness-----------------*/
 
 @media screen and (max-width: 700px) {
@@ -192,11 +197,10 @@ form .pass .checkbox:checked {
     }
 }
 @media screen and (max-width: 400px) {
-    .container-box .left {
-        display: none;
-    }
+
     .container-box {
         width: 80%;
+        border: none;
     }
     
     

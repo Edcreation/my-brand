@@ -84,15 +84,6 @@ async function getMessage() {
   }
   
 }
-function deleteAllMessages() {
-  Messages = []
-  window.localStorage.removeItem("Messages");
-  popContact("All Messages Deleted")
-  setTimeout( () => {
-      location.reload();
-
-  } , 1000)
-}
 function deleteMessage(m) {
   let Messages = JSON.parse(localStorage.getItem("Messages"));
   if (m > -1) { // only splice array when item is found
@@ -558,38 +549,51 @@ function userDelete(id) {
 }
 
 /**---------------------------Dashboard Count Users, Blogs, Messages, Comments and Likes-------------*/
-function countLikes() {
-  let blogLikes = JSON.parse(window.localStorage.getItem("Blogs"));
-  let count = 0;
-  for (let i = 0; i < blogLikes.length; i++) {
-    
-    count = blogLikes[i].likeCount + count
+async function countLikes() {
+  const url = "https://my-brand-production.up.railway.app/blogs"
+
+  const data= await fetch(url);
+  var blogs = await data.json();
+  const Blogs = blogs.Blogs
+  let likes = 0
+
+  for (let i = 0; i < Blogs.length; i++) {
+    likes = likes + Blogs[i].liked.length
   }
-  const likes = document.getElementById("likes")
-  likes.innerHTML = count + " Total Likes"
+  document.getElementById("likes").innerHTML = `${likes} Total Likes`
 }
-function countComments() {
-  let blogComments = JSON.parse(window.localStorage.getItem("Blogs"));
-  let count = 0;
-  for (let i = 0; i < blogComments.length; i++) {
-    
-    count = blogComments[i].comments.length + count
-  }
-  const likes = document.getElementById("comments")
-  likes.innerHTML = count + " Total Comments"
+async function countComments() {
+  const url = "https://my-brand-production.up.railway.app/blogs"
+  const data= await fetch(url);
+  var blogs = await data.json();
+  const Blogs = blogs.Blogs
+  document.getElementById("blogscount").innerHTML = `${Blogs.length} Total Blogs`
 }
-function countBlogs() {
-  let blogs = JSON.parse(window.localStorage.getItem("Blogs")).length;
-  const blogscount = document.getElementById("blogscount")
-  blogscount.innerHTML = blogs + " Blogs"
+async function countUsers() {
+  const token = localStorage.getItem("cooltoken")
+  const url = "https://my-brand-production.up.railway.app/users"
+  const data= await fetch(url,{
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  var users = await data.json();
+  const Users = users.Users
+  document.getElementById("visits").innerHTML = `${Users.length} Users`
 }
-function countUsers() {
-  let users = JSON.parse(window.localStorage.getItem("Users")).length;
-  const blogscount = document.getElementById("visits")
-  blogscount.innerHTML = users + " Accounts"
+async function countMessages() {
+  const token = localStorage.getItem("cooltoken")
+  const url = "https://my-brand-production.up.railway.app/messages"
+  const data= await fetch(url,{
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  var msg = await data.json();
+  const Msg = msg.Messages
+  document.getElementById("msgcount").innerHTML = `${Msg.length} Message(s)`
 }
-function countMessages() {
-  let Messages = JSON.parse(window.localStorage.getItem("Messages")).length;
-  const messagescount = document.getElementById("msgcount")
-  messagescount.innerHTML = Messages
-}
+
+
