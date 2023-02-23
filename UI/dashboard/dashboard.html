@@ -95,13 +95,14 @@
             document.getElementById("loading").style.display = "none"
         }
         for(let i = 0; i < 100; i++){
+            let w = new Date(Blogs[i].date).toLocaleDateString()
             List.innerHTML += `
             <div class="item">
                 <div class="img"><img src="${Blogs[i].imageUrl}" alt="image"></div>
                 <div class="words">
                     <div class="title">${Blogs[i].title}</div>
                     
-                    <div class="date">${Blogs[i].date}<Button onclick="toeditBlog('${Blogs[i]._id}')"> <img src="../images/edit.png" alt="trash"></Button><Button onclick="deleteBlog('`+ Blogs[i]._id +`')"> <img src="../images/trash.png" alt="trash"></Button> </div>
+                    <div class="date">${w}<Button onclick="toeditBlog('${Blogs[i]._id}')"> <img src="../images/edit.png" alt="trash"></Button><Button onclick="deleteBlog('`+ Blogs[i]._id +`')"> <img src="../images/trash.png" alt="trash"></Button> </div>
                 </div>
             </div>`
         }

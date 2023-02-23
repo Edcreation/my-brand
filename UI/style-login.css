@@ -79,14 +79,15 @@ form input {
     font-size: 18px;
     color: #fff;
     border: none;
-    background: #02041E;
+    background: #02041e00;
     border-bottom: 2px solid #00DAE8;
     outline: none;
     transition: .8s;
 }
 form input:-webkit-autofill{
-    -webkit-box-shadow: 0 0 0 30px #02041E inset !important;
-    -webkit-text-fill-color: #00DAE8;
+    -webkit-box-shadow: 0 0 0 30px #00000000 inset !important;
+    -webkit-text-fill-color: #000;
+    
 }
 form input:focus {
     border-bottom: 2px solid #e90101;

@@ -60,28 +60,13 @@
                                 <div class="content">${Messages[i].message}</div>
                                 <div class="ops">
                                     <button><img src="../images/reply.png" alt="reply"></button>
-                                    <button onclick="deleteMessage(${Messages[i]._id})"> <img src="../images/trash.png" alt="trash"></button>
+                                    <button onclick="deleteMessage('${Messages[i]._id}')"> <img src="../images/trash.png" alt="trash"></button>
                                 </div></div>`
                             }
-                            countMessages();
                           }
                     </script>
                 </div>
             </div>
-            <!-- <div class="msg-box">
-                <div class="title">Blog Suggestions</div>
-                <div class="msg-container">
-                    <div class="msg">
-                        <div class="msg-icon"><img src="../images/msg.png" alt="msg"></div>
-                        <div class="name">Topic Here</div>
-                        <div class="content">Suggestion here</div>
-                        <div class="ops">
-                            <BUTton><img src="../images/reply.png" alt="reply"></BUTton>
-                            <BUTton><img src="../images/trash.png" alt="trash"></BUTton>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
     <link rel="icon" href="../images/icon.png" >

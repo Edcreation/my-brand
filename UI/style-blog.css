@@ -83,7 +83,6 @@
     padding: 20px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    /*background: rgb(224, 224, 224);*/
     
 }
 
@@ -103,7 +102,7 @@
     width: 300px;
     -webkit-box-shadow: 10px 10px 61px -17px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 61px -17px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 61px -17px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 61px -17px rgba(0, 0, 0, 0.466);
     transition: .5s;
 }
 .blog-card:hover {

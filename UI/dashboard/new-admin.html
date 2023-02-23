@@ -31,36 +31,30 @@
             <a href="./dashboard.html">Dashboard</a>
             <a href="./new.html">New Blog</a>
             <a href="./messages.html">Messages</a>
-            <a href="">Settings</a>
+            <a href="./settings.html">Settings</a>
             
         </div>
         <div class="settings">
-            <div class="settings-container">
-                <a href="./users.html" class="set-box">
-                    <img src="../images/usrdp.png" alt="img">
-                    Manage Users
-                </a>
-                <a href="./new-admin.html" class="set-box">
-                    <img src="../images/dpicon.png" alt="">
-                    Add Admin
-                </a>
-                <div class="set-box">
-                    <img src="../images/passw.png" alt="">
-                    Change Password
-                </div>
-                <div class="set-box">
-                    <img src="../images/kill.png" alt="">
-                    Delete Account
-                </div>
-                <div class="set-box">
-                    <img src="../images/brain.png" alt="">
-                    Add Skill
-                </div>
-                <div class="set-box">
-                    <img src="../images/timeline.png" alt="">
-                    Change Quote
-                </div>
-
+            <div class="admin-form">
+                <div class="title">Add New Admin</div>
+                <form onsubmit="event.preventDefault(); createAdmin()" autocomplete="off">
+                    <div id="popcontact">
+            
+                    </div>
+                    <div class="text">
+                        <p>Username</p>
+                        <input type="text" id="name">
+                    </div>
+                    <div class="text">
+                        <p>Email</p>
+                        <input type="text" id="email">
+                    </div>
+                    <div class="text">
+                        <p>Password</p>
+                        <input type="password" id="pass">
+                    </div>
+                    <button>Add Admin</button>
+                </form>
             </div>
         </div>
     </div>

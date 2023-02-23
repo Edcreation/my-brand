@@ -46,7 +46,7 @@
         </div>
         <div class="container-box">
             <div class="right" >
-                <form onsubmit="tinyMCE.triggerSave(true,true); event.preventDefault(); createUser()" id="frm" autocomplete="">
+                <form onsubmit="event.preventDefault(); createUser()" id="frm" autocomplete="">
                     <div class="title">SIGN UP</div>
                     <input type="email" name="email" id="email" placeholder="Email" >
                     <input type="text" name="name" id="name" placeholder="New User Name" autocomplete="new-password">
@@ -54,7 +54,7 @@
                         <input type="password" name="pass" id="pass"  placeholder="New Password" autocomplete="new-password">
                        
                     </div>
-                    <button>Sign Up</button>
+                    <button id="button">Sign Up</button>
                     <div class="have-account">
                         Already a member? <a href="./login.html">Log In</a>
                     </div>
@@ -78,23 +78,7 @@
         </div>
     </div>
     <script>
-        fileEl = document.getElementById('image')
-        fileEl.addEventListener('change', () => {
-            const fr = new FileReader();
-            fr.readAsDataURL(fileEl.files[0]);
-            fr.addEventListener('load', () => {
-                url = fr.result;
-                img = document.getElementById("imageReceiver")
-                img.src = url;
-                try {
-                    window.localStorage.setItem('tempImage', url);
-                  } catch(e) {
-                    if (e.code == 22) {
-                      popContact("Image Too Big", "red")
-                    }
-                  }
-            })
-        }) 
+        
         document.getElementById("loginbutton").style.display = "none" 
         function togglePasswordVisibility() {
             var x = document.getElementById("pass");

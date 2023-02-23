@@ -84,24 +84,32 @@ async function getMessage() {
   }
   
 }
-function deleteMessage(m) {
-  let Messages = JSON.parse(localStorage.getItem("Messages"));
-  if (m > -1) { // only splice array when item is found
-      Messages.splice(m, 1); // 2nd parameter means remove one item only
-      window.localStorage.setItem("Messages", JSON.stringify(Messages));
-      popContact("Message Deleted")
-      setTimeout( () => {
-        location.reload();
+async function deleteMessage(id) {
+  const token = localStorage.getItem("cooltoken")
+  const rawResponse = await fetch(`https://my-brand-production.up.railway.app/messages/delete/${id}`, {
+    method: 'DELETE',
+    headers: {
+    'Authorization' : `Bearer ${token}`
+  }
+  });
+  const content = await rawResponse.json();
   
-      } , 1000)
+  if (content.Error) {
+    popContact(content.Error,"red")
+  } else if(content.message) {
+    popContact(content.message ,"green")
+    location.reload()
   }
 }
+
 /** ------------------- Authentication-----------*/
 async function createUser() {
-  let Users = JSON.parse(localStorage.getItem("Users") || "[]");
   const email = document.getElementById('email').value;
   const name = document.getElementById('name').value;
   const password = document.getElementById('pass').value;
+  document.getElementById("button").disabled = true
+  document.getElementById("button").innerHTML = "Loading..."
+  document.getElementById("button").style.background = "#8c8c8d"
   const details = {
     username: name,
     email: email,
@@ -143,18 +151,23 @@ async function createUser() {
         popContact(content.Error,"red")
       } else if(content.message) {
         popContact(content.message ,"green")
+        document.getElementById("frm").reset()
+        document.getElementById("button").disabled = false
+        document.getElementById("button").innerHTML = "Sign Up"
+        document.getElementById("button").style.background = "#00DAE8"
       }
       } else {
         popContact("Invalid Email","red")
       }
   }
-  
-
 }
 async function loginUser() {
 
   const email = document.getElementById('email').value
   const pass = document.getElementById('pass').value
+  document.getElementById("button").disabled = true
+  document.getElementById("button").innerHTML = "Loading..."
+  document.getElementById("button").style.background = "#8c8c8d"
   const details = {
     email: email,
     password: pass
@@ -175,12 +188,19 @@ async function loginUser() {
     const userId = content.userId
     const userAlpha = await fetch(`https://my-brand-production.up.railway.app/users/u/${userId}`)
     const user = await userAlpha.json();
+    
     console.log(content)
     if (content.Error) {
       popContact(content.Error,"red")
+      document.getElementById("button").disabled = false
+      document.getElementById("button").innerHTML = "Sign Up"
+      document.getElementById("button").style.background = "#00DAE8"
     } else if(content.message) {
       popContact(content.message ,"red")
       document.getElementById('frm').reset()
+      document.getElementById("button").disabled = false
+      document.getElementById("button").innerHTML = "Sign Up"
+      document.getElementById("button").style.background = "#00DAE8"
     }
     else {
       localStorage.setItem("tempLog", JSON.stringify(user.data))
@@ -212,7 +232,7 @@ async function createBlog() {
   const blogcontent = tinymce.activeEditor.getContent();
   const token = localStorage.getItem("cooltoken")
   //-----------Form Validation----------------
-  if (title == "" || content == "<p><br></p>" || image.value == "" ) {
+  if (title == "" || blogcontent == "" || image.value == "" ) {
     popContact("Please Fill out All Fields", "red")
   } else {
     if (title.length > 500) {
@@ -288,13 +308,6 @@ async function editBlog(id) {
     }
   }
 }
-function deleteAllBlogs() {
-  let Bloga = JSON.parse(localStorage.getItem("Blogs") || "[]");
-  Bloga = []
-  window.localStorage.removeItem("Blogs");
-  popContact("All Blogs Deleted", "yellow")
-  location.reload();
-}
 async function deleteBlog(id) {
   const token = localStorage.getItem("cooltoken")
   const rawResponse = await fetch(`https://my-brand-production.up.railway.app/blogs/delete/${id}`, {
@@ -364,6 +377,9 @@ async function displayComments(id) {
     const userdata= await fetch(userUrl);
     var userdetails = await userdata.json();
     var user = userdetails.data
+    if (user.imageUrl == "") {
+      user.imageUrl = "./images/dpicon.png"
+    }
     output += " <div class=\"comment\">"  + " <div class=\"com-name\"> "+ "<img src="+ user.imageUrl + " alt=\"image \">" + user.username +  "</div> "
     + " <div class=\"com-content\"> " + comments[i].comment + "</div> " +
     "<div class=\"com-date\">" + "" + "</div> </div>"
@@ -511,40 +527,125 @@ async function changeprofilepic() {
 }
 
 /** ---------------------------Admin Manage User ------------------------------------------ */
-function userToTable() {
-  const table = document.getElementById("table")
-  const users = JSON.parse(window.localStorage.getItem("Users"))
+async function userToTable() {
+  const token = localStorage.getItem("cooltoken")
+  const data = await fetch(`https://my-brand-production.up.railway.app/users`, {
+    method: 'GET',
+    headers: {
+      'accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+    }).catch(err => console.log(err))
+  const datas = await data.json()
+  const users = await datas.Users
   for (let i = 0; i < users.length; i++) {
     const tr = document.createElement("tr");
-    const tdimage = document.createElement("img");
     const tdname = document.createElement("td");
     const tdemail = document.createElement("td");
+    const role = document.createElement("td");
     const deleteButton = document.createElement("button")
     deleteButton.innerText = "Delete"
     deleteButton.setAttribute("id", "btn")
-    const x = "userDelete("+ "'"+ users[i].id+"'" + ")"
+    const x = "userDelete("+ "'"+ users[i]._id+"'" + ")"
     deleteButton.setAttribute("onclick", x)
-    tdimage.src = users[i].image;
-    tr.appendChild(tdimage);
+    if (users[i].imageUrl == "") {
+      const tdimage = document.createElement("img");
+      tdimage.src = "../images/dpicon.png";
+      tr.appendChild(tdimage); 
+    }
+    else {
+      const tdimage = document.createElement("img");
+      tdimage.src = users[i].imageUrl;
+      tr.appendChild(tdimage); 
+    }
     tr.appendChild(tdname);
     tr.appendChild(tdemail);
+    tr.appendChild(role);
     tr.appendChild(deleteButton);
     table.appendChild(tr);
-    tdname.innerText = users[i].name;
-    tdemail.innerText = users[i].id;
+    tdname.innerText = users[i].username;
+    tdemail.innerText = users[i].email;
+
+    if (users[i].admin !== true) {
+      role.innerHTML = "User"
+    }
+    else {
+      role.innerHTML = "Admin"
+      role.style.color = "green"
+      tdemail.style.color = "green"
+      tdname.style.color = "green"
+    }
   }
 }
-function userDelete(id) {
-  const users = JSON.parse(window.localStorage.getItem("Users"))
-  for(var i = 0; i <= users.length - 1; i++){
-    if(users[i].id == id){
-        users.splice(i,1);
-        localStorage.setItem('Users', JSON.stringify(users));
-        popContact("User Deleted", "yellow")
-        setTimeout(() => {
-          location.reload()
-        }, 1500);
+async function userDelete(id) {
+  const token = localStorage.getItem("cooltoken")
+  const rawResponse = await fetch(`https://my-brand-production.up.railway.app/users/delete/${id}`, {
+    method: 'DELETE',
+    headers: {
+    'Authorization' : `Bearer ${token}`
+  }
+  });
+  const content = await rawResponse.json();
+  
+  if (content.Error) {
+    popContact(content.Error,"red")
+  } else if(content.message) {
+    popContact(content.message ,"green")
+    setTimeout(() => {
+      location.reload()
+    }, 5000);
+  }
+}
+async function createAdmin() {
+  let Users = JSON.parse(localStorage.getItem("Users") || "[]");
+  const email = document.getElementById('email').value;
+  const name = document.getElementById('name').value;
+  const password = document.getElementById('pass').value;
+  const details = {
+    username: name,
+    email: email,
+    password: password,
+  }
+  let image = window.localStorage.getItem("tempImage");
+  let id = Math.floor(Math.random() * 1000000) + 100000000;
+  if ( image == null ) {
+    image = "./images/dpicon.png"
+  }
+  function ValidateEmail(inputText)
+  {
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(inputText.match(mailformat))
+    {
+      return true;
     }
+    else
+    {
+      return false;
+    }
+  }
+  if (email === "" || name === "" || password === "" ) {
+    popContact("Please Fill out All Fields.", "red")
+  }
+  else {
+    if ( ValidateEmail(email) ) {
+      const rawResponse = await fetch('https://my-brand-production.up.railway.app/users/signup-admin', {
+        method: 'POST',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(details)
+      });
+      const content = await rawResponse.json();
+      console.log(details)
+      if (content.Error) {
+        popContact(content.Error,"red")
+      } else if(content.message) {
+        popContact(content.message ,"green")
+      }
+      } else {
+        popContact("Invalid Email","red")
+      }
   }
 }
 
@@ -595,5 +696,19 @@ async function countMessages() {
   const Msg = msg.Messages
   document.getElementById("msgcount").innerHTML = `${Msg.length} Message(s)`
 }
+async function countCommentsSingle(id) {
+  const com = document.getElementById('commentHolder')
+  const token = localStorage.getItem("cooltoken")
+  const data = await fetch(`https://my-brand-production.up.railway.app/blogs/b/${id}/c`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+    }).catch(err => console.log(err))
+  var comments = await data.json();
+  const Comments = comments.Comments
+  com.innerHTML = Comments.length
+}
+
 
 

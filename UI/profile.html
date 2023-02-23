@@ -116,7 +116,6 @@
         function displayPP() {
         if(JSON.parse(localStorage.getItem("tempLog")).imageUrl != "")
             document.getElementById("profilePic").src = JSON.parse(localStorage.getItem("tempLog")).imageUrl
-            document.getElementById("imageReceiver").src = JSON.parse(localStorage.getItem("tempLog")).imageUrl
         }
         fileEl = document.getElementById('image')
         fileEl.addEventListener('change', () => {
@@ -126,13 +125,6 @@
                 url = fr.result;
                 img = document.getElementById("imageReceiver")
                 img.src = url;
-                try {
-                    window.localStorage.setItem('tempImage', url);
-                  } catch(e) {
-                    if (e.code == 22) {
-                      popContact("Image Too Big", "red")
-                    }
-                  }
             })
         }) 
         document.getElementById("loginbutton").style.display = "none"

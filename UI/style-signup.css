@@ -64,7 +64,7 @@ form input {
     font-size: 18px;
     color: #fff;
     border: none;
-    background: #02041E;
+    background: #02041e00;
     border-bottom: 2px solid #00DAE8;
     outline: none;
     transition: .8s;
@@ -104,8 +104,14 @@ form .lock img {
     margin: 20px 0;
 }
 form input:-webkit-autofill{
-    -webkit-box-shadow: 0 0 0 30px #02041E inset !important;
-    -webkit-text-fill-color: #00DAE8;
+    -webkit-box-shadow: 0 0 0 30px #02041e04 inset !important;
+    -webkit-text-fill-color: #000;
+}
+form button:disabled,
+form button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 form a {
     margin-top: 15px;

@@ -66,6 +66,7 @@
         <p>All rights reserved by M.J.Eddy 2022 &copy;</p>
     </div>
 </div>
+
     
     
     <script>
@@ -84,15 +85,26 @@
             const Blogsd = blog.BlogFetched
             const date = Blogsd.date
             const List = document.querySelector('#view');
+            const d = Blogsd.date
+            const w = new Date(d)
+            
+            console.log()
             List.innerHTML = `
-                <div class="bimage" style="background: url(${Blogsd.imageUrl}) no-repeat; background-size: 100% 376px; background-attachment: fixed;">
+                <div class="front-image">
+                    <div class="bimage" style="background: url(${Blogsd.imageUrl}) no-repeat; background-size: 100% 376px; background-attachment: fixed;">
+                    </div>
+                    <img class="front-img" src="${Blogsd.imageUrl}" alt="blog image">
                 </div>
-
+                
                 <div class="blog-title">
                     ${Blogsd.title}
                 </div>
+                <div class="ico">
+                    <div class="like"><div class="l1" onclick="getLikes('${Blogsd._id}')" id="l"></div><p>${Blogsd.liked.length}</p></div>
+                    <div class="like"><div class="com" id="l"></div><p id="commentHolder"></p></div>
+                </div>
                 <div class="date">
-                    ${Blogsd.date} 
+                    ${w.toDateString()} 
                 </div>
                 <div class="blog-content">
                     ${Blogsd.content}
@@ -117,6 +129,7 @@
                 </div>`
                 window.onload =  displayComments(m);
                 window.onload = showcommentform();
+                countCommentsSingle(Blogsd._id)
         }
     </script>
     <script>

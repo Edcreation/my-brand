@@ -13,7 +13,7 @@ html {
 }
 body {
     margin: 0;
-    background: #02041E;
+    background: #000000e5
 }
 
 #loading {
@@ -100,6 +100,7 @@ nav {
     text-decoration: none;
     color: #e5e5e5;
     transition: 0.5s;
+    padding: 20px;
 }
 .links a:hover {
     background: #00DAE8;
@@ -128,7 +129,7 @@ nav {
     align-items: center;
     justify-content: center;
     right: 0;
-    top: 41px;
+    top: 60px;
 }
 .wow-menu button {
     display: flex;
@@ -812,7 +813,7 @@ svg {
         margin-bottom: 10px;
     }
     .wow-menu {
-        top: 265px;
+        top: 345px;
     }
 
     nav  {
@@ -835,15 +836,14 @@ svg {
 
     #actions {
         display: none;
-        width: 30%;
+        width: 50%;
         position: absolute;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         background: #05092E;
-        top: 60px;
+        top: 50px;
         right: 0;
-        /* /animation: slideInFromLeft .8s; */
         
     }
     .login {

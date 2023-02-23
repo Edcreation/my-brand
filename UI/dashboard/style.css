@@ -6,13 +6,11 @@ body {
     padding: 0;
 }
 .insertedImage {
-    width: 80%;
-    height: 300px;
+    width: 100%;
     align-self: center;
     top: 50px;
     right: 0;
     border: 2px solid #00d9e895;
-    border-radius: 8px;
 }
 #loading {
     width: 100%;
@@ -25,7 +23,7 @@ body {
     width: 30px;
 }
 .imageholder {
-    width: 100%;
+    width: 350px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -182,21 +180,20 @@ nav span img {
 /*-------------------------Dashboard--------------------------*/
 .dashboard {
     width: 100%;
-    height: 900px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-end;
+    padding-top: 100px;
+    align-items: center;
+    margin-left: 150px;
 }
 .dash-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width:  80%;
+    width:  97%;
     height: 500px;
     align-items: center;
-    margin-top: 100px;
-    margin-right: 20px;
 }
 .dash-box-up {
     width: 100%;
@@ -353,17 +350,18 @@ nav span img {
     justify-content: center;
     align-items: center;
     width: 100%; 
+    margin-left: 150px;
 }
 .new-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 600px;
+    width: 100%;
     background: #05092E;
     box-shadow: 8px 8px 20px 5px rgba(0, 0, 0, 0.25);
-    border-radius: 8px;
-    margin-top: 50px;
+    border-radius: 0px;
+    margin-top: 45px;
     margin-bottom: 30px;
 }
 .new-box form {
@@ -405,7 +403,7 @@ nav span img {
     height: 30px;
 }
 #content {
-    width: 90%;
+    width: 100%;
     height: 500px;
     font-size: 20px;
     outline: none;
@@ -670,6 +668,41 @@ tr img:hover {
     margin-left: 20px;
     margin-right: 20px;
 }
+/* ---------------------------------Login------------------------- */
+.admin-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+    flex-direction: column;
+    background: #000;
+    padding: 20px;
+    width: 40%;
+}
+form {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+form input {
+    padding: 5px;
+    font-size: 15px;
+    outline: none;
+    border: none;
+    width: 90%;
+}
+form .text {
+    width: 100%;
+}
+form button {
+    margin-top: 20px;
+    cursor: pointer;
+    padding: 10px;
+    background: #00d9e8;
+    color: #000;
+}
 
 /*-------------------------Responsiveness----------------------------*/
 @media screen and (max-width: 1190px) {
@@ -703,8 +736,11 @@ tr img:hover {
         top: 0;
         margin-top: 40px;
     }
-    .dash-box {
-        margin-top: 100px;
+    .dashboard {
+        margin-left: 0;
+    }
+    .new {
+        margin-left: 0;
     }
     .msg-container {
         display: grid;
