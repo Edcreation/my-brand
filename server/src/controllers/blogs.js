@@ -22,7 +22,7 @@ const getBlogs = ((req,res) => {
                 Error: err,
             })
         }
-    })
+    }).sort({'date': -1})
 
 
 })
