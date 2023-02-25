@@ -17,7 +17,11 @@ const CommentsSchema = new Schema({
     likeCount: {
         type: Number,
         default: 0
-    }
+    },
+    date: {
+        type: Date,
+        default: Date.now
+     }
  });
  
  export default model('comments', CommentsSchema);

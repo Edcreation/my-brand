@@ -40,7 +40,7 @@ const getComments = ((req,res) => {
                         Comments: data
                     })
                 }
-            })   
+            }).sort({'date': -1})   
         }
         if (err) {
             res.status(404).json({
