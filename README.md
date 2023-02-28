@@ -3,5 +3,4 @@
 # my-brand
 ## My Brand Capstone project
 
-### UI uses local storage to store Blogs, create your blogs by going to log in and using "admin@mail.com" and "pass" as Email and password. then CRUD blogs and users
-### Ucan also SignUp and LogIn as a user.
+### This UI is Pure Html, CSS and JavaScript. The perfected Design using **_REACT_** is [My Portfolio/Brand Website](https://my-brand-react-production.up.railway.app/)
