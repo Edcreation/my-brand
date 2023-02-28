@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.99% </span>
+                <span class="strong">67.87% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>110/193</span>
+                <span class='fraction'>131/193</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>12/14</span>
+                <span class='fraction'>16/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/8</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.99% </span>
+                <span class="strong">67.87% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>110/193</span>
+                <span class='fraction'>131/193</span>
             </div>
         
             
@@ -364,30 +364,30 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -555,31 +555,31 @@ const getSingleUser = (<span class="fstat-no" title="function not covered" >(req
 <span class="cstat-no" title="statement not covered" ></span>
 })
 &nbsp;
-const editUserName = ( <span class="fstat-no" title="function not covered" >async (req,res) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    const username = req.body.username;</span>
-<span class="cstat-no" title="statement not covered" >    User.findOneAndUpdate( { _id: req.user._id },{ $set: { "username" : username } },{ new:true }, (err,data) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        if (!err) {</span>
-<span class="cstat-no" title="statement not covered" >            res.status(200).json({</span>
-<span class="cstat-no" title="statement not covered" >                code: 200,</span>
-<span class="cstat-no" title="statement not covered" >                message: "UserName updated",</span>
-<span class="cstat-no" title="statement not covered" >                UpdatedUser: data,</span>
-<span class="cstat-no" title="statement not covered" >            })</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" >    })</span>
+const editUserName = ( async (req,res) =&gt; {
+&nbsp;
+    const username = req.body.username;
+    User.findOneAndUpdate( { _id: req.user._id },{ $set: { "username" : username } },{ new:true }, (err,data) =&gt; {
+        if (!err) {
+            res.status(200).json({
+                code: 200,
+                message: "UserName updated",
+                UpdatedUser: data,
+            })
+        }
+    })
 })
 &nbsp;
-const editPassword = ( <span class="fstat-no" title="function not covered" >async (req,res) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const password = await hash(req.body.password, 10);</span>
-<span class="cstat-no" title="statement not covered" >    User.findOneAndUpdate( { _id: req.user._id } ,{ $set: { "password" : password } },{ new:true }, (err,data) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        if (!err) {</span>
-<span class="cstat-no" title="statement not covered" >            res.status(200).json({</span>
-<span class="cstat-no" title="statement not covered" >                code: 200,</span>
-<span class="cstat-no" title="statement not covered" >                message: "Password Changed",</span>
-<span class="cstat-no" title="statement not covered" >                UpdatedUser: data,</span>
-<span class="cstat-no" title="statement not covered" >            })</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" >    })</span>
+const editPassword = ( async (req,res) =&gt; {
+    const password = await hash(req.body.password, 10);
+    User.findOneAndUpdate( { _id: req.user._id } ,{ $set: { "password" : password } },{ new:true }, (err,data) =&gt; {
+        if (!err) {
+            res.status(200).json({
+                code: 200,
+                message: "Password Changed",
+                UpdatedUser: data,
+            })
+        }
+    })
 })
 &nbsp;
 const editDp = ( async (req,res) =&gt; {
@@ -646,7 +646,7 @@ export  {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-02-28T18:40:44.222Z
+                at 2023-02-28T18:55:35.080Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

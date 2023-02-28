@@ -23,11 +23,18 @@ const __dirname = path.dirname(__filename);
 
 const app = express()
 
+app.use(cors())
+const allowCrossDomain = (req, res, next) => {
+  res.header(`Access-Control-Allow-Origin`, `*/*`);
+  res.header(`Access-Control-Allow-Methods`, `GET,PUT,POST,DELETE`);
+  res.header(`Access-Control-Allow-Headers`, `Content-Type`);
+  next();
+};
+app.use(allowCrossDomain);
 const specs = swaggerJSDoc(options)  
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs,  { explorer: true }))
 
-app.use(cors())
 
 
 app.use(cookieParser('SercetStringForCookies'));
@@ -59,7 +66,8 @@ app.use(bodyParser.json());
 app.use('/users', users_route)
 app.use('/blogs', blogs_route)
 app.use('/messages', messages_route)
-app.listen(process.env.PORT, () => console.log(`app listening on port ${process.env.PORT}!`))
+
+app.listen(process.env.PORT || 500, () => console.log(`app listening on port ${process.env.PORT}!`))
 
 export default app;
 
