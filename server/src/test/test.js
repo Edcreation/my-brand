@@ -204,7 +204,7 @@ describe('Database Testing... Waiting for Connection', function() {
               res.body.should.be.a('object');
           });
           chai.request(server)
-            .get(`/blogs/search`)
+            .post(`/blogs/search`)
             .send({ search: "admin" })
             .end((err, res) => {
               res.should.have.status(200);
