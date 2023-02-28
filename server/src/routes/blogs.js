@@ -332,7 +332,7 @@
 
 
 import { Router } from 'express'
-import { getBlogs, getSingleBlog, createBlog, editBlog, deleteBlog, likeBlog } from '../controllers/blogs.js'
+import { getBlogs, getSingleBlog, createBlog, editBlog, deleteBlog, likeBlog, searchBlogs } from '../controllers/blogs.js'
 import Joi from 'joi'
 import errorMessage from '../utils/errormessage.js'
 import { validate } from '../middleware/validation.js'
@@ -359,6 +359,7 @@ const CommentSchema = Joi.object().keys({
 }).unknown(true);
 
 router.get('/', getBlogs)
+router.get('/search', searchBlogs)
 router.get('/b/:id', getSingleBlog)
 
 router.post('/b/:id/c',passport.authenticate('jwt', { session: false }), validate(CommentSchema, { abortEarly: false } ), postComment)

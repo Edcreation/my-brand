@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.8% </span>
+                <span class="strong">97.63% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>662/670</span>
+                <span class='fraction'>661/677</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.37% </span>
+                <span class="strong">86.36% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>76/86</span>
+                <span class='fraction'>76/88</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.8% </span>
+                <span class="strong">97.63% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>662/670</span>
+                <span class='fraction'>661/677</span>
             </div>
         
             
@@ -734,7 +734,14 @@
 <a name='L669'></a><a href='#L669'>669</a>
 <a name='L670'></a><a href='#L670'>670</a>
 <a name='L671'></a><a href='#L671'>671</a>
-<a name='L672'></a><a href='#L672'>672</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L672'></a><a href='#L672'>672</a>
+<a name='L673'></a><a href='#L673'>673</a>
+<a name='L674'></a><a href='#L674'>674</a>
+<a name='L675'></a><a href='#L675'>675</a>
+<a name='L676'></a><a href='#L676'>676</a>
+<a name='L677'></a><a href='#L677'>677</a>
+<a name='L678'></a><a href='#L678'>678</a>
+<a name='L679'></a><a href='#L679'>679</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1051,7 +1058,14 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1609,7 +1623,14 @@ describe('Database Testing... Waiting for Connection', function() {
             .end((err, res) =&gt; {
               res.should.have.status(200);
               res.body.should.be.a('object');
-            });
+          });
+          chai.request(server)
+            .get(`/blogs/search`)
+            .send({ search: "admin" })
+            .end((err, res) =&gt; {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+          });
           chai.request(server)
             .get('/blogs')
             .end((err, res) =&gt; {
@@ -1715,14 +1736,14 @@ describe('Database Testing... Waiting for Connection', function() {
                       res.should.have.status(200);
                       res.body.should.be.a('object');
                 });
-&nbsp;
-                chai.request(server)
-                .get('/users')
-                .set({ "Authorization": `Bearer ${token2}` })
-                .end((err, res) =&gt; {
-                    res.should.have.status(401);
-                    res.body.should.be.a('object');
-                });
+<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >                chai.request(server)</span>
+<span class="cstat-no" title="statement not covered" >                .get('/users')</span>
+<span class="cstat-no" title="statement not covered" >                .set({ "Authorization": `Bearer ${token2}` })</span>
+<span class="cstat-no" title="statement not covered" >                .end((err, res) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                    res.should.have.status(401);</span>
+<span class="cstat-no" title="statement not covered" >                    res.body.should.be.a('object');</span>
+<span class="cstat-no" title="statement not covered" >                });</span>
               })
               
               chai.request(server)
@@ -1834,7 +1855,7 @@ describe('Database Testing... Waiting for Connection', function() {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
               });
-            })
+<span class="branch-0 cbranch-no" title="branch not covered" >            }</span>)
 &nbsp;
             chai.request(server)
             .delete('/users/delete/' + user)
@@ -2066,7 +2087,7 @@ describe('Database Testing... Waiting for Connection', function() {
           });
         });
   
-        })
+      })
       
 &nbsp;
     })
@@ -2083,7 +2104,7 @@ describe('Database Testing... Waiting for Connection', function() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-02-17T16:24:24.996Z
+                at 2023-02-28T18:40:44.128Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

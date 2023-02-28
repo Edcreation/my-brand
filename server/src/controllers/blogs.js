@@ -23,8 +23,6 @@ const getBlogs = ((req,res) => {
             })
         }
     }).sort({'date': -1})
-
-
 })
 
 const getSingleBlog = (( req,res ) => {
@@ -39,6 +37,22 @@ const getSingleBlog = (( req,res ) => {
             res.status(404).json({
                 code: 404,
                 message: "Blog Not Found",
+            })
+        }
+    })
+})
+
+const searchBlogs = ((req, res) => {
+    const item = {
+        text: req.body.search
+    }
+    const search = new RegExp(req.body.search, "i")
+    Blogs.find( { title: {$regex: search} }, (err, blog) => {
+        if (blog) {
+            res.status(200).json({
+                code: 200,
+                message: "Single Blog Fetched",
+                BlogFetched: blog,
             })
         }
     })
@@ -182,4 +196,5 @@ export  {
     editBlog,
     deleteBlog,
     likeBlog,
+    searchBlogs,
 }

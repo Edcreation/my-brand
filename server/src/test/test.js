@@ -202,7 +202,14 @@ describe('Database Testing... Waiting for Connection', function() {
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
-            });
+          });
+          chai.request(server)
+            .get(`/blogs/search`)
+            .send({ search: "admin" })
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+          });
           chai.request(server)
             .get('/blogs')
             .end((err, res) => {
@@ -659,7 +666,7 @@ describe('Database Testing... Waiting for Connection', function() {
           });
         });
   
-        })
+      })
       
 
     })
