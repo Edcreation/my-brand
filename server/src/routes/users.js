@@ -406,7 +406,6 @@ passport.use('signup',
                   done(error);
                 }
             }
-
         })
     }
   )
